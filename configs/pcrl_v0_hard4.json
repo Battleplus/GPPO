@@ -1,0 +1,237 @@
+{
+  "version": "pcrl-v0-hard-4",
+  "protocol_kind": "separately_versioned_engineering_protocol",
+  "predecessor_protocol": "pcrl-v0-hard-3",
+  "base_protocol": "gppo-v2-hard-3",
+  "base_scenario_config": "configs/gppo_v2_hard.json",
+  "frozen_gppo_implementation_hash": "a62c17f721688e2ae0c36c6fe11ef1a6cced365c8468155bfacbf4f286ea01a6",
+  "frozen_checkpoint_registry": "configs/pcrl_v0_frozen_checkpoints.json",
+  "protocol_documents": {
+    "baseline": "docs/PCRL_BASELINE_PROTOCOL_HARD4.md",
+    "objectives": "docs/PCRL_V0_OBJECTIVES_HARD4.md",
+    "acceptance": "docs/PCRL_V0_ACCEPTANCE_PLAN_HARD4.md"
+  },
+  "output_namespace": "outputs/pcrl_v0/hard4",
+  "scenario": {
+    "max_uavs": 4,
+    "max_tasks": 24,
+    "active_uavs": 3,
+    "initial_tasks": 20,
+    "max_decisions": 200,
+    "mission_deadline": 16.0,
+    "stop_at_deadline": false,
+    "task_chain_length": 5,
+    "workload_scale": 1.8,
+    "periodic_interval": 2.0,
+    "weather_probability": 0.06,
+    "failure_probability": 0.02,
+    "task_change_probability": 0.04,
+    "communication_drop_probability": 0.04,
+    "include_engineering_rewards": false
+  },
+  "train_scales": ["3x16", "3x20", "4x24"],
+  "evaluation_scales": ["2x12", "3x16", "3x20", "4x24"],
+  "scale_deadlines": {
+    "2x12": 14.0,
+    "3x16": 13.0,
+    "3x20": 18.0,
+    "4x24": 16.0
+  },
+  "training_task_release_modes": ["phase_staggered"],
+  "training_preference_target_mode": "nominal",
+  "training_preference_sampler": {
+    "mode": "moderate_anchor_hull",
+    "calibration_priority_share": 0.40,
+    "concentration": 0.70,
+    "anchor_probability": 0.30,
+    "anchor_jitter": 0.10
+  },
+  "phase_staggered_deadline_scale": 0.70,
+  "evaluation_suites": [
+    {
+      "name": "controllability_phase",
+      "task_release_mode": "phase_staggered",
+      "deadline_scale": 0.70,
+      "preference_target_mode": "nominal",
+      "primary": true
+    },
+    {
+      "name": "chain_compatibility",
+      "task_release_mode": "chain",
+      "deadline_scale": 1.0,
+      "preference_target_mode": "dependency_feasible_projection",
+      "primary": false
+    }
+  ],
+  "controllability": {
+    "target": "suite_specific",
+    "targets_by_suite": {
+      "controllability_phase": "nominal",
+      "chain_compatibility": "dependency_feasible_projection"
+    },
+    "feedback_observation": "preference_deficit",
+    "preference_semantics": "scheduling_priority_mass",
+    "primary_mix": "priority_weighted_assignment_mix",
+    "primary_error": "preference_l1",
+    "assignment_priority_decay": 2.0,
+    "assignment_weight": "exp(-2.0 * assignment_time / max(1, mission_deadline))",
+    "priority_share": 0.40,
+    "background_share": 0.20
+  },
+  "preference_profile_family": {
+    "id": "dynamic-priority-share-v1",
+    "generator": "calibration_priority_profiles",
+    "priority_share": 0.40,
+    "background_share": 0.20,
+    "same_family_training_required": true,
+    "profile_names": [
+      "balanced",
+      "calibration_search_priority",
+      "calibration_reconnaissance_priority",
+      "calibration_strike_priority",
+      "calibration_recovery_priority",
+      "calibration_search_strike_interp",
+      "calibration_recon_recovery_interp",
+      "calibration_asymmetric_search_recon_recovery"
+    ],
+    "profile_vectors": {
+      "balanced": [0.25, 0.25, 0.25, 0.25],
+      "calibration_search_priority": [0.40, 0.20, 0.20, 0.20],
+      "calibration_reconnaissance_priority": [0.20, 0.40, 0.20, 0.20],
+      "calibration_strike_priority": [0.20, 0.20, 0.40, 0.20],
+      "calibration_recovery_priority": [0.20, 0.20, 0.20, 0.40],
+      "calibration_search_strike_interp": [0.30, 0.20, 0.30, 0.20],
+      "calibration_recon_recovery_interp": [0.20, 0.30, 0.20, 0.30],
+      "calibration_asymmetric_search_recon_recovery": [0.30, 0.26, 0.20, 0.24]
+    },
+    "training_sampler_contract": "continuous_samples_must_remain_in_the_convex_hull_of_the_four_priority_anchors",
+    "held_out_contract": "the_three_interpolations_are_not_inserted_as_named_training_anchors"
+  },
+  "training_anchor_profiles": [
+    "balanced",
+    "calibration_search_priority",
+    "calibration_reconnaissance_priority",
+    "calibration_strike_priority",
+    "calibration_recovery_priority"
+  ],
+  "held_out_profiles": [
+    "calibration_search_strike_interp",
+    "calibration_recon_recovery_interp",
+    "calibration_asymmetric_search_recon_recovery"
+  ],
+  "training_seeds": [1, 2, 3, 4, 5],
+  "updates": 100,
+  "episodes_per_update": 18,
+  "hidden_dim": 64,
+  "learning_rate": 0.0003,
+  "gamma": 0.99,
+  "gae_lambda": 0.95,
+  "update_epochs": 4,
+  "minibatch_size": 256,
+  "entropy_coefficient": 0.001,
+  "validation_episodes": 20,
+  "validation_interval": 10,
+  "validation_seed": 40000,
+  "evaluation_episodes": 100,
+  "evaluation_seed": 50000,
+  "artifact_groups": {
+    "pilot20": {
+      "output_subdirectory": "pilot20",
+      "purpose": "five-seed go_no_go pilot; not formal evidence",
+      "training_seeds": [1, 2, 3, 4, 5],
+      "updates": 20,
+      "episodes_per_update": 18,
+      "evaluation_episodes": 20,
+      "evaluation_seed": 76000,
+      "evaluation_seed_range": [76000, 76019],
+      "may_initialize_formal": false
+    },
+    "formal100": {
+      "output_subdirectory": "formal100",
+      "purpose": "confirmatory evidence after all unlock gates pass",
+      "training_seeds": [1, 2, 3, 4, 5],
+      "updates": 100,
+      "episodes_per_update": 18,
+      "evaluation_episodes": 100,
+      "evaluation_seed": 50000,
+      "evaluation_seed_range": [50000, 50099],
+      "requires_fresh_training": true,
+      "may_initialize_from_pilot": false
+    }
+  },
+  "methods": [
+    "greedy_preference",
+    "gppo_event",
+    "gppo_event_single_head",
+    "ls_ppo_none_fixed_balanced",
+    "ls_gppo_adaptive_fixed_balanced",
+    "pcrl_gppo_adaptive",
+    "pcrl_gppo_single_head",
+    "pcrl_gppo_adaptive_no_conditioning"
+  ],
+  "optional_ablation": "sdmgrad_gppo_adaptive",
+  "acceptance": {
+    "primary_suite": "controllability_phase",
+    "preference_error_reduction_vs_no_conditioning": 0.30,
+    "max_deadline_completion_drop_vs_gppo_event": 0.03,
+    "max_makespan_increase_ratio_vs_gppo_event": 0.05,
+    "min_stable_seeds": 4,
+    "max_required_task_coverage_loss": 0.05,
+    "confidence_level": 0.95,
+    "paired_seed_confidence_intervals": true,
+    "pool_evaluation_suites": false,
+    "pool_protocol_versions": false,
+    "formal_locked_until_pilot_passes": true
+  },
+  "run_identity": {
+    "required_fields": [
+      "protocol_version",
+      "protocol_config_sha256",
+      "artifact_group",
+      "output_namespace",
+      "base_protocol",
+      "scenario_version",
+      "scenario_config_sha256",
+      "scenario_hash",
+      "frozen_gppo_implementation_hash",
+      "source_gppo_checkpoint_sha256",
+      "pcrl_implementation_hash",
+      "method_id",
+      "algorithm",
+      "graph_mode",
+      "preference_conditioning",
+      "training_seed",
+      "evaluation_seed",
+      "evaluation_suite",
+      "scale",
+      "task_release_mode",
+      "deadline_scale",
+      "preference_target_mode",
+      "assignment_priority_decay",
+      "preference_profile_family",
+      "priority_share",
+      "background_share",
+      "preference_profile",
+      "preference_profile_vector",
+      "updates",
+      "episodes_per_update",
+      "evaluation_episodes"
+    ],
+    "reject_if": [
+      "protocol_version_is_not_pcrl-v0-hard-4",
+      "artifact_group_is_missing_or_unknown",
+      "priority_share_is_not_0.40",
+      "assignment_priority_decay_is_not_2.0",
+      "profile_name_or_vector_is_not_in_the_frozen_family",
+      "hard2_or_hard3_rows_are_pooled_or_relabeled",
+      "pilot_and_formal_rows_are_pooled",
+      "frozen_gppo_hash_or_checkpoint_hash_mismatch"
+    ]
+  },
+  "evidence_boundary": {
+    "engineering_protocol_not_paper_numeric_reproduction": true,
+    "hard3_artifacts_must_not_be_relabeled": true,
+    "world_model_and_jepa_out_of_scope": true,
+    "training_started": false
+  }
+}

@@ -1,0 +1,283 @@
+{
+  "version": "pcrl-v0-hard-6-calibration20-analysis-v1",
+  "improvements": {
+    "primary_five": {
+      "per_seed": {
+        "11": 0.0769436869117888,
+        "12": 0.17841587259180172,
+        "13": 0.23230956666261815
+      },
+      "ci95": {
+        "mean": 0.1625563753887362,
+        "lower": -0.03341173473771916,
+        "upper": 0.35852448551519156
+      },
+      "positive_seeds": 3
+    },
+    "held_out_three": {
+      "per_seed": {
+        "11": 0.08790864757205802,
+        "12": 0.20605376808187928,
+        "13": 0.30019121550945593
+      },
+      "ci95": {
+        "mean": 0.19805121038779774,
+        "lower": -0.06617981492847783,
+        "upper": 0.46228223570407334
+      },
+      "positive_seeds": 3
+    },
+    "all_profiles": {
+      "per_seed": {
+        "11": 0.0802995838906191,
+        "12": 0.1871160133392426,
+        "13": 0.2532569894896031
+      },
+      "ci95": {
+        "mean": 0.17355752890648826,
+        "lower": -0.04323868439713521,
+        "upper": 0.39035374221011176
+      },
+      "positive_seeds": 3
+    }
+  },
+  "directions": {
+    "calibration_search_priority": {
+      "component": 0,
+      "per_seed": {
+        "11": 0.007106589525938034,
+        "12": 0.01813366636633873,
+        "13": 0.009214834868907928
+      },
+      "ci95": {
+        "mean": 0.011485030253728231,
+        "lower": -0.003056078632441535,
+        "upper": 0.026026139139898
+      },
+      "positive_seeds": 3
+    },
+    "calibration_reconnaissance_priority": {
+      "component": 1,
+      "per_seed": {
+        "11": 0.0070939183235168455,
+        "12": 0.011721099913120269,
+        "13": 0.014981383830308915
+      },
+      "ci95": {
+        "mean": 0.011265467355648677,
+        "lower": 0.0014197766440361137,
+        "upper": 0.02111115806726124
+      },
+      "positive_seeds": 3
+    },
+    "calibration_strike_priority": {
+      "component": 2,
+      "per_seed": {
+        "11": 0.009279940277338028,
+        "12": 0.017399128153920175,
+        "13": 0.03311676122248173
+      },
+      "ci95": {
+        "mean": 0.01993194321791331,
+        "lower": -0.01017226720982346,
+        "upper": 0.050036153645650075
+      },
+      "positive_seeds": 3
+    },
+    "calibration_recovery_priority": {
+      "component": 3,
+      "per_seed": {
+        "11": 0.014496442023664713,
+        "12": 0.037685676477849483,
+        "13": 0.0407744575291872
+      },
+      "ci95": {
+        "mean": 0.030985525343567133,
+        "lower": -0.004694730455782739,
+        "upper": 0.066665781142917
+      },
+      "positive_seeds": 3
+    }
+  },
+  "efficiency_vs_gppo": {
+    "deadline_completion_delta": {
+      "per_seed": {
+        "11": -0.004811580882352895,
+        "12": -0.015577116663973434,
+        "13": -0.034899705074337595
+      },
+      "ci95": {
+        "mean": -0.018429467540221307,
+        "lower": -0.05630142676485003,
+        "upper": 0.019442491684407422
+      }
+    },
+    "makespan_increase_ratio": {
+      "per_seed": {
+        "11": 0.0024736432291032617,
+        "12": 0.016565114351924315,
+        "13": 0.040982917087975634
+      },
+      "ci95": {
+        "mean": 0.020007224889667736,
+        "lower": -0.02839377044755523,
+        "upper": 0.0684082202268907
+      }
+    },
+    "minimum_task_coverage_delta": {
+      "per_seed": {
+        "11": 0.012708330526947975,
+        "12": -0.023787203012034297,
+        "13": -0.03921874752268195
+      },
+      "ci95": {
+        "mean": -0.01676587333592276,
+        "lower": -0.08300808078580348,
+        "upper": 0.04947633411395795
+      }
+    },
+    "invalid_actions_delta": {
+      "per_seed": {
+        "11": 0.07500000000000001,
+        "12": 0.07499999999999996,
+        "13": 0.015625
+      },
+      "ci95": {
+        "mean": 0.055208333333333325,
+        "lower": -0.029948335275236153,
+        "upper": 0.1403650019419028
+      }
+    }
+  },
+  "checkpoints": {
+    "pcrl_gppo_adaptive/seed_11": {
+      "selection_passed": true,
+      "selected_update": 12,
+      "reasons": [],
+      "candidate_count": 11,
+      "candidate_files": [
+        "update_0000.pt",
+        "update_0002.pt",
+        "update_0004.pt",
+        "update_0006.pt",
+        "update_0008.pt",
+        "update_0010.pt",
+        "update_0012.pt",
+        "update_0014.pt",
+        "update_0016.pt",
+        "update_0018.pt",
+        "update_0020.pt"
+      ]
+    },
+    "pcrl_gppo_adaptive_no_conditioning/seed_11": {
+      "selection_passed": true,
+      "selected_update": 2,
+      "reasons": [],
+      "candidate_count": 11,
+      "candidate_files": [
+        "update_0000.pt",
+        "update_0002.pt",
+        "update_0004.pt",
+        "update_0006.pt",
+        "update_0008.pt",
+        "update_0010.pt",
+        "update_0012.pt",
+        "update_0014.pt",
+        "update_0016.pt",
+        "update_0018.pt",
+        "update_0020.pt"
+      ]
+    },
+    "pcrl_gppo_adaptive/seed_12": {
+      "selection_passed": true,
+      "selected_update": 18,
+      "reasons": [],
+      "candidate_count": 11,
+      "candidate_files": [
+        "update_0000.pt",
+        "update_0002.pt",
+        "update_0004.pt",
+        "update_0006.pt",
+        "update_0008.pt",
+        "update_0010.pt",
+        "update_0012.pt",
+        "update_0014.pt",
+        "update_0016.pt",
+        "update_0018.pt",
+        "update_0020.pt"
+      ]
+    },
+    "pcrl_gppo_adaptive_no_conditioning/seed_12": {
+      "selection_passed": true,
+      "selected_update": 8,
+      "reasons": [],
+      "candidate_count": 11,
+      "candidate_files": [
+        "update_0000.pt",
+        "update_0002.pt",
+        "update_0004.pt",
+        "update_0006.pt",
+        "update_0008.pt",
+        "update_0010.pt",
+        "update_0012.pt",
+        "update_0014.pt",
+        "update_0016.pt",
+        "update_0018.pt",
+        "update_0020.pt"
+      ]
+    },
+    "pcrl_gppo_adaptive/seed_13": {
+      "selection_passed": true,
+      "selected_update": 18,
+      "reasons": [],
+      "candidate_count": 11,
+      "candidate_files": [
+        "update_0000.pt",
+        "update_0002.pt",
+        "update_0004.pt",
+        "update_0006.pt",
+        "update_0008.pt",
+        "update_0010.pt",
+        "update_0012.pt",
+        "update_0014.pt",
+        "update_0016.pt",
+        "update_0018.pt",
+        "update_0020.pt"
+      ]
+    },
+    "pcrl_gppo_adaptive_no_conditioning/seed_13": {
+      "selection_passed": true,
+      "selected_update": 18,
+      "reasons": [],
+      "candidate_count": 11,
+      "candidate_files": [
+        "update_0000.pt",
+        "update_0002.pt",
+        "update_0004.pt",
+        "update_0006.pt",
+        "update_0008.pt",
+        "update_0010.pt",
+        "update_0012.pt",
+        "update_0014.pt",
+        "update_0016.pt",
+        "update_0018.pt",
+        "update_0020.pt"
+      ]
+    }
+  },
+  "gates": {
+    "primary_mean_ge_30pct": false,
+    "primary_positive_3_of_3": true,
+    "held_out_mean_ge_20pct": false,
+    "held_out_positive_3_of_3": true,
+    "all_directions_positive_3_of_3": true,
+    "deadline_guard": true,
+    "makespan_guard": true,
+    "coverage_guard": true,
+    "relative_invalid_guard": false,
+    "all_selections_pass": true,
+    "all_candidate_sets_complete": true
+  },
+  "passed": false,
+  "decision": "Hard-6 calibration does not pass every preregistered gate; pilot20 remains locked."
+}

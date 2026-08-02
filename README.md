@@ -1,10 +1,15 @@
-# GPPO-v2: Event-Triggered Graph PPO for Multi-UAV Task Assignment
+# GPPO-v2 and PCRL-v0 for Multi-UAV Task Assignment
 
 This repository contains the accepted first-stage engineering baseline for
 multi-UAV dynamic task assignment under weak communication. It is an independent
 mechanism-level implementation of Yu et al., *Multi-UAV Dynamic Task Assignment
 Based on Event-Triggered Graph Reinforcement Learning Under Weak Communication*
 (IEEE TASE, 2025).
+
+The `pcrl-hard6-progress` branch also contains the current second-stage
+preference-conditioned reinforcement-learning work. PCRL is still an
+engineering prototype and has **not** passed its preregistered controllability
+gate. JEPA and world-model integration remain intentionally locked.
 
 The original authors did not publish their complete environment, instance
 generator, communication simulator, or training code. Consequently, this work
@@ -46,6 +51,51 @@ See:
 - [`docs/GPPO_V2_ACCEPTANCE.md`](docs/GPPO_V2_ACCEPTANCE.md) for the acceptance decision;
 - [`artifacts/summary/acceptance_analysis.json`](artifacts/summary/acceptance_analysis.json) for machine-readable gates.
 
+## PCRL-v0 progress
+
+The frozen `gppo-v2-hard-3` implementation and checkpoints are retained as the
+comparison baseline. Hard-6 adds:
+
+- raw four-dimensional task preference conditioning for the actor and mapped
+  seven-dimensional objective conditioning for the critic/PreCo path;
+- an explicit legal five-group mass controller for Search, Reconnaissance,
+  Strike, Recovery and Noop;
+- a bounded state-dependent calibration head that preserves frozen GPPO's
+  assignment/noop rhythm and within-group action ranking;
+- four complete trajectories per sampled preference and full-batch cached
+  PreCo directions before PPO minibatch shuffling;
+- deficit-aware task-mass auxiliary loss, balanced capability coverage and
+  unchanged action masks/weak-communication cache;
+- anchor-only checkpoint selection, relative invalid-action guards and every
+  validation candidate saved with SHA-256.
+
+The three-seed hard-6 `calibration20` screen is complete:
+
+| Gate | Result |
+| --- | ---: |
+| Primary-five L1 reduction vs true no-conditioning | 16.26%, 3/3 positive seeds |
+| Primary 95% CI | [-3.34%, 35.85%] |
+| Held-out-three L1 reduction | 19.81%, 3/3 positive seeds |
+| Four priority directions | all positive in 3/3 seeds |
+| Deadline delta vs GPPO | -0.01843 |
+| Makespan increase vs GPPO | +2.00% |
+| Minimum coverage delta vs GPPO | -0.01677 |
+| Invalid-action delta vs GPPO | +0.05521 |
+
+The required 30% primary improvement was not reached and the mean relative
+invalid-action delta exceeded the `+0.05` calibration guard. Therefore
+`pilot20`, `formal100`, JEPA and the world model remain locked. Negative and
+uncertain results are preserved rather than relaxed after inspection.
+
+See:
+
+- [`docs/PCRL_BASELINE_PROTOCOL_HARD6.md`](docs/PCRL_BASELINE_PROTOCOL_HARD6.md);
+- [`docs/PCRL_V0_OBJECTIVES_HARD6.md`](docs/PCRL_V0_OBJECTIVES_HARD6.md);
+- [`docs/PCRL_V0_ACCEPTANCE_PLAN_HARD6.md`](docs/PCRL_V0_ACCEPTANCE_PLAN_HARD6.md);
+- [`docs/PCRL_HARD5_GAIN_SCREEN.md`](docs/PCRL_HARD5_GAIN_SCREEN.md);
+- [`artifacts/pcrl_hard6/summary/PCRL_HARD6_CALIBRATION.md`](artifacts/pcrl_hard6/summary/PCRL_HARD6_CALIBRATION.md);
+- [`artifacts/pcrl_hard6/summary/summary.json`](artifacts/pcrl_hard6/summary/summary.json).
+
 ## Implemented mechanisms
 
 - UAV/task heterogeneous graph with capability and precedence relations;
@@ -69,7 +119,7 @@ python -m pip install -r requirements.txt
 python -m pip install -e .
 ```
 
-Run the first-stage tests:
+Run all GPPO/PCRL tests:
 
 ```bash
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q
@@ -99,6 +149,39 @@ python evaluate_paper_gppo.py --help
 python summarize_gppo_v2.py --help
 ```
 
+PCRL entry points are:
+
+```bash
+python train_pcrl_v0.py --help
+python evaluate_pcrl_v0.py --help
+python run_pcrl_v0.py --help
+python analyze_pcrl_hard6_calibration.py --help
+```
+
+PCRL verifies the accepted checkpoints against their frozen hashes. The branch
+stores those checkpoints under `artifacts/checkpoints`; before running PCRL,
+materialize the paths used by the frozen protocol. On PowerShell:
+
+```powershell
+$base = 'outputs/paper_aligned/gppo_v2_hard/formal/train'
+foreach ($method in @('gppo_event', 'gppo_event_single_head')) {
+  New-Item -ItemType Directory -Force -Path "$base/$method" | Out-Null
+  Copy-Item -Recurse -Force "artifacts/checkpoints/$method/seed_*" "$base/$method/"
+}
+```
+
+Run the hard-6 smoke workflow:
+
+```bash
+python run_pcrl_v0.py --protocol configs/pcrl_v0_hard6.json \
+  --artifact-group calibration20 --phase all --smoke \
+  --methods pcrl_gppo_adaptive pcrl_gppo_adaptive_no_conditioning gppo_event \
+  --seeds 11 --output-root outputs/pcrl_v0/hard6/smoke
+```
+
+The full three-seed calibration uses the same command without `--smoke` and
+with `--seeds 11 12 13`. It is screening evidence, not formal evidence.
+
 The accepted adaptive and single-head five-seed checkpoints are included under
 [`artifacts/checkpoints`](artifacts/checkpoints). Summary CSV/JSON files and
 rendered curves are included under [`artifacts/summary`](artifacts/summary).
@@ -115,7 +198,5 @@ src/uav_assignment/      environment, graph model and frozen protocol helpers
 tests/                   first-stage regression and protocol tests
 artifacts/checkpoints/   accepted adaptive and single-head checkpoints
 artifacts/summary/       formal aggregate results, audits and curves
+artifacts/pcrl_hard6/    compact calibration manifests and aggregate result
 ```
-
-PCRL and world-model development are intentionally outside this first-stage
-submission.

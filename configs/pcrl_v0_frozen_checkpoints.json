@@ -1,0 +1,20 @@
+{
+  "frozen_gppo_implementation_hash": "a62c17f721688e2ae0c36c6fe11ef1a6cced365c8468155bfacbf4f286ea01a6",
+  "checkpoints": [
+    {"method": "gppo_event", "seed": 1, "path": "outputs/paper_aligned/gppo_v2_hard/formal/train/gppo_event/seed_1/checkpoint.pt", "sha256": "5e419533809124c111733e579cf350e41ea6a8814a6607fb2dc40246090c9065"},
+    {"method": "gppo_event", "seed": 2, "path": "outputs/paper_aligned/gppo_v2_hard/formal/train/gppo_event/seed_2/checkpoint.pt", "sha256": "a80d76c511896c23b216de7d1fb910af9f1715c36a8c89e89e5090924126976f"},
+    {"method": "gppo_event", "seed": 3, "path": "outputs/paper_aligned/gppo_v2_hard/formal/train/gppo_event/seed_3/checkpoint.pt", "sha256": "558602df51d71efeeebbaef8635459ae1b304e7000f91b01e0d8699d5b65acda"},
+    {"method": "gppo_event", "seed": 4, "path": "outputs/paper_aligned/gppo_v2_hard/formal/train/gppo_event/seed_4/checkpoint.pt", "sha256": "6f76c102f901eaf9db699f0e25b57811c89cfc9eb92aa395c85dd93c0e5f7069"},
+    {"method": "gppo_event", "seed": 5, "path": "outputs/paper_aligned/gppo_v2_hard/formal/train/gppo_event/seed_5/checkpoint.pt", "sha256": "7c768aca18cbbfaea6ed1e49a35759b309b2ed47e0cee1b7a801c9b9274f58f2"},
+    {"method": "gppo_event_single_head", "seed": 1, "path": "outputs/paper_aligned/gppo_v2_hard/formal/train/gppo_event_single_head/seed_1/checkpoint.pt", "sha256": "5b1a988d8410a1adbf37614a2c99a9f20477c72a662b3be4c866d7093bb61ba0"},
+    {"method": "gppo_event_single_head", "seed": 2, "path": "outputs/paper_aligned/gppo_v2_hard/formal/train/gppo_event_single_head/seed_2/checkpoint.pt", "sha256": "721188f33bd9629ba44fa73a16ea9678bcb06848b1be588bf304283c157dc3b7"},
+    {"method": "gppo_event_single_head", "seed": 3, "path": "outputs/paper_aligned/gppo_v2_hard/formal/train/gppo_event_single_head/seed_3/checkpoint.pt", "sha256": "5e7be48014cc54cc79d44c8f901185bfeb4cd69e8aceba8c3cc39ed6790ab833"},
+    {"method": "gppo_event_single_head", "seed": 4, "path": "outputs/paper_aligned/gppo_v2_hard/formal/train/gppo_event_single_head/seed_4/checkpoint.pt", "sha256": "0fe8c4467d5a3d2e3572b5288ddfeae6dd930b7f7319f422993efd927f55ad45"},
+    {"method": "gppo_event_single_head", "seed": 5, "path": "outputs/paper_aligned/gppo_v2_hard/formal/train/gppo_event_single_head/seed_5/checkpoint.pt", "sha256": "c35b74e098d687f605d1e27ed124ee22e310eb6b8a644df513729f959818f459"},
+    {"method": "ppo_event", "seed": 1, "path": "outputs/paper_aligned/gppo_v2_hard/formal/train/ppo_event/seed_1/checkpoint.pt", "sha256": "1fc6f3ac738cf7e483760611490c328bc21e355a4a3dce180d7b774e0d169f22"},
+    {"method": "ppo_event", "seed": 2, "path": "outputs/paper_aligned/gppo_v2_hard/formal/train/ppo_event/seed_2/checkpoint.pt", "sha256": "b39971842f2f5bee34855a59bbaf30aafe185749fe720a640b61649b42663265"},
+    {"method": "ppo_event", "seed": 3, "path": "outputs/paper_aligned/gppo_v2_hard/formal/train/ppo_event/seed_3/checkpoint.pt", "sha256": "7d8d5e83e53b13d1b6b9517c3763e006fa7fa7eee4115ec2e9ce433df11be805"},
+    {"method": "ppo_event", "seed": 4, "path": "outputs/paper_aligned/gppo_v2_hard/formal/train/ppo_event/seed_4/checkpoint.pt", "sha256": "1d3b042f735d1d47e085b3e8e5dd2b7f9f8671d15374c0f9cbbf89f26ff02774"},
+    {"method": "ppo_event", "seed": 5, "path": "outputs/paper_aligned/gppo_v2_hard/formal/train/ppo_event/seed_5/checkpoint.pt", "sha256": "e9d169a3c9648688ea35cf023f3d965fa9849c09134f313b4c638a9a719356ce"}
+  ]
+}

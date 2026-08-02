@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "uav-gppo-stage1"
-version = "2.0.0"
-description = "Accepted event-triggered graph PPO baseline for multi-UAV dynamic task assignment"
+version = "2.1.0"
+description = "Accepted GPPO baseline and PCRL preference-control prototype for multi-UAV assignment"
 requires-python = ">=3.10"
 dependencies = [
   "numpy>=1.24",
