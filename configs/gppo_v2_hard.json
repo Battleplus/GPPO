@@ -1,0 +1,57 @@
+{
+  "version": "gppo-v2-hard-3",
+  "scenario": {
+    "max_uavs": 4,
+    "max_tasks": 24,
+    "active_uavs": 3,
+    "initial_tasks": 20,
+    "max_decisions": 200,
+    "mission_deadline": 16.0,
+    "stop_at_deadline": false,
+    "task_chain_length": 5,
+    "workload_scale": 1.8,
+    "periodic_interval": 2.0,
+    "weather_probability": 0.06,
+    "failure_probability": 0.02,
+    "task_change_probability": 0.04,
+    "communication_drop_probability": 0.04,
+    "include_engineering_rewards": false
+  },
+  "train_scales": ["3x16", "3x20", "4x24"],
+  "evaluation_scales": ["2x12", "3x16", "3x20", "4x24"],
+  "scale_deadlines": {
+    "2x12": 14.0,
+    "3x16": 13.0,
+    "3x20": 18.0,
+    "4x24": 16.0
+  },
+  "learned_seeds": [1, 2, 3, 4, 5],
+  "updates": 100,
+  "episodes_per_update": 18,
+  "hidden_dim": 64,
+  "learning_rate": 0.0003,
+  "entropy_coefficient": 0.001,
+  "gamma": 0.99,
+  "gae_lambda": 0.95,
+  "update_epochs": 4,
+  "minibatch_size": 256,
+  "validation_episodes": 20,
+  "validation_interval": 10,
+  "validation_seed": 40000,
+  "evaluation_episodes": 100,
+  "evaluation_seed": 50000,
+  "methods": [
+    "random_event",
+    "greedy_event",
+    "ppo_none",
+    "ppo_event",
+    "gppo_none",
+    "gppo_event",
+    "gppo_periodic",
+    "gppo_always"
+  ],
+  "supplementary_methods": [
+    "gppo_event_single_head",
+    "gppo_event_no_gate"
+  ]
+}

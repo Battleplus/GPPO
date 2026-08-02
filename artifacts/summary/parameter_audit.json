@@ -1,0 +1,29 @@
+{
+  "rows": [
+    {
+      "graph_mode": "none",
+      "total_parameters": 155223,
+      "active_path_parameters": 24899,
+      "nonzero_gradient_parameters": 20674
+    },
+    {
+      "graph_mode": "single_head",
+      "total_parameters": 155223,
+      "active_path_parameters": 58703,
+      "nonzero_gradient_parameters": 54477
+    },
+    {
+      "graph_mode": "adaptive_no_gate",
+      "total_parameters": 155223,
+      "active_path_parameters": 121419,
+      "nonzero_gradient_parameters": 104713
+    },
+    {
+      "graph_mode": "adaptive",
+      "total_parameters": 155223,
+      "active_path_parameters": 121419,
+      "nonzero_gradient_parameters": 117194
+    }
+  ],
+  "interpretation": "All modes share an equal-size checkpoint container, but their active forward-path capacity differs. Performance comparisons must not attribute all gains solely to the adaptive gate."
+}

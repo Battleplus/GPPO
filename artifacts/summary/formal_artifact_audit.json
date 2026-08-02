@@ -1,0 +1,25 @@
+{
+  "valid": true,
+  "manifest_version": "gppo-v2-hard-3",
+  "expected": {
+    "checkpoints": 40,
+    "training_histories": 40,
+    "validation_histories": 40,
+    "evaluations": 42,
+    "event_logs": 42,
+    "evaluation_rows": 16800,
+    "summary_artifacts": 11
+  },
+  "observed": {
+    "checkpoints": 40,
+    "training_histories": 40,
+    "validation_histories": 40,
+    "evaluations": 42,
+    "event_logs": 42,
+    "evaluation_rows": 16800,
+    "event_rows": 935138,
+    "summary_artifacts": 11
+  },
+  "protocol_validation_valid": true,
+  "errors": []
+}

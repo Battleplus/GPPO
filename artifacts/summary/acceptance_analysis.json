@@ -1,0 +1,283 @@
+{
+  "overall_pass": true,
+  "gates": {
+    "protocol_complete": true,
+    "clearly_better_than_random": true,
+    "approaches_greedy": true,
+    "stable_across_training_seeds": true,
+    "mechanism_directions_correct": true,
+    "event_communication_tradeoff": true
+  },
+  "macro_metrics": {
+    "gppo_always": {
+      "deadline_completion_rate": 0.7789007431045794,
+      "makespan": 20.18064198791218,
+      "communication_events": 42.831
+    },
+    "gppo_event": {
+      "deadline_completion_rate": 0.7773837324546724,
+      "makespan": 20.261909578729874,
+      "communication_events": 21.6495
+    },
+    "gppo_event_no_gate": {
+      "deadline_completion_rate": 0.7763835882840519,
+      "makespan": 20.34698438200997,
+      "communication_events": 21.6435
+    },
+    "gppo_event_single_head": {
+      "deadline_completion_rate": 0.786538277488709,
+      "makespan": 20.11154447837029,
+      "communication_events": 21.646
+    },
+    "gppo_none": {
+      "deadline_completion_rate": 0.747231218277318,
+      "makespan": 79.60466230170914,
+      "communication_events": 0.0
+    },
+    "gppo_periodic": {
+      "deadline_completion_rate": 0.7777309127537708,
+      "makespan": 21.61212458805946,
+      "communication_events": 9.8345
+    },
+    "greedy_event": {
+      "deadline_completion_rate": 0.7807103152069584,
+      "makespan": 20.446698321874607,
+      "communication_events": 21.6625
+    },
+    "ppo_event": {
+      "deadline_completion_rate": 0.7748994744315076,
+      "makespan": 20.5344068516349,
+      "communication_events": 21.677500000000002
+    },
+    "ppo_none": {
+      "deadline_completion_rate": 0.7303375138324307,
+      "makespan": 80.95011805852225,
+      "communication_events": 0.0
+    },
+    "random_event": {
+      "deadline_completion_rate": 0.7246066818589196,
+      "makespan": 21.96205440546021,
+      "communication_events": 21.8575
+    }
+  },
+  "paired_macro_comparisons": {
+    "gppo_event_minus_random": {
+      "deadline_completion_rate": {
+        "mean": 0.05277705059575264,
+        "ci95_lower": 0.047949733102248066,
+        "ci95_upper": 0.057604368089257216
+      },
+      "makespan": {
+        "mean": -1.7001448267303325,
+        "ci95_lower": -1.814111486958036,
+        "ci95_upper": -1.586178166502629
+      },
+      "communication_events": {
+        "mean": -0.20800000000000124,
+        "ci95_lower": -0.25748370867265663,
+        "ci95_upper": -0.15851629132734585
+      }
+    },
+    "gppo_event_minus_greedy": {
+      "deadline_completion_rate": {
+        "mean": -0.0033265827522861668,
+        "ci95_lower": -0.00815390024579074,
+        "ci95_upper": 0.0015007347412184075
+      },
+      "makespan": {
+        "mean": -0.18478874314472762,
+        "ci95_lower": -0.298755403372431,
+        "ci95_upper": -0.07082208291702424
+      },
+      "communication_events": {
+        "mean": -0.013000000000000966,
+        "ci95_lower": -0.062483708672656346,
+        "ci95_upper": 0.03648370867265441
+      }
+    },
+    "gppo_event_minus_ppo_event": {
+      "deadline_completion_rate": {
+        "mean": 0.0024842580231646317,
+        "ci95_lower": -0.006398889728356115,
+        "ci95_upper": 0.011367405774685377
+      },
+      "makespan": {
+        "mean": -0.2724972729050187,
+        "ci95_lower": -0.3830376182932064,
+        "ci95_upper": -0.16195692751683094
+      },
+      "communication_events": {
+        "mean": -0.027999999999998693,
+        "ci95_lower": -0.0601345232421455,
+        "ci95_upper": 0.004134523242148115
+      }
+    },
+    "gppo_event_minus_gppo_none": {
+      "deadline_completion_rate": {
+        "mean": 0.030152514177354296,
+        "ci95_lower": 0.017146760737173677,
+        "ci95_upper": 0.04315826761753491
+      },
+      "makespan": {
+        "mean": -59.34275272297924,
+        "ci95_lower": -62.258953773249225,
+        "ci95_upper": -56.42655167270926
+      },
+      "communication_events": {
+        "mean": 21.649500000000003,
+        "ci95_lower": 21.600016291327346,
+        "ci95_upper": 21.69898370867266
+      }
+    },
+    "gppo_event_minus_gppo_always": {
+      "deadline_completion_rate": {
+        "mean": -0.0015170106499071468,
+        "ci95_lower": -0.008313308050926081,
+        "ci95_upper": 0.005279286751111787
+      },
+      "makespan": {
+        "mean": 0.08126759081769919,
+        "ci95_lower": -0.09932940046097535,
+        "ci95_upper": 0.26186458209637375
+      },
+      "communication_events": {
+        "mean": -21.181499999999996,
+        "ci95_lower": -21.421714243158057,
+        "ci95_upper": -20.941285756841935
+      }
+    },
+    "single_head_minus_gppo_event": {
+      "deadline_completion_rate": {
+        "mean": 0.009154545034036721,
+        "ci95_lower": 0.0021838592876072893,
+        "ci95_upper": 0.016125230780466154
+      },
+      "makespan": {
+        "mean": -0.15036510035958628,
+        "ci95_lower": -0.3571720390445674,
+        "ci95_upper": 0.056441838325394844
+      },
+      "communication_events": {
+        "mean": -0.0035000000000003696,
+        "ci95_lower": -0.10180822944189657,
+        "ci95_upper": 0.09480822944189585
+      }
+    },
+    "no_gate_minus_gppo_event": {
+      "deadline_completion_rate": {
+        "mean": -0.0010001441706204207,
+        "ci95_lower": -0.011065757361379058,
+        "ci95_upper": 0.009065469020138217
+      },
+      "makespan": {
+        "mean": 0.08507480328009223,
+        "ci95_lower": -0.1700387957019661,
+        "ci95_upper": 0.3401884022621505
+      },
+      "communication_events": {
+        "mean": -0.006000000000000938,
+        "ci95_lower": -0.056217985781991574,
+        "ci95_upper": 0.044217985781989703
+      }
+    },
+    "gppo_event_minus_periodic": {
+      "deadline_completion_rate": {
+        "mean": -0.00034718029909854844,
+        "ci95_lower": -0.012385161671721203,
+        "ci95_upper": 0.011690801073524106
+      },
+      "makespan": {
+        "mean": -1.3502150093295797,
+        "ci95_lower": -2.2764561326932267,
+        "ci95_upper": -0.4239738859659329
+      },
+      "communication_events": {
+        "mean": 11.815000000000001,
+        "ci95_lower": 11.359421904082296,
+        "ci95_upper": 12.270578095917706
+      }
+    }
+  },
+  "gap_closure": {
+    "deadline_completion_rate": 0.9407064649155683,
+    "makespan": 1.1219441061717252
+  },
+  "random_scale_wins": 4,
+  "random_reverse_scales": [],
+  "stable_seed_count": 5,
+  "catastrophic_seeds": [],
+  "gppo_event_seed_details": [
+    {
+      "seed": 1,
+      "deadline_completion_rate": 0.7774058991857105,
+      "deadline_completion_delta_vs_random": 0.052799217326790826,
+      "makespan": 20.316741703886883,
+      "makespan_delta_vs_random": -1.645312701573328,
+      "simultaneous_win": true,
+      "catastrophic": false
+    },
+    {
+      "seed": 2,
+      "deadline_completion_rate": 0.7798074633877063,
+      "deadline_completion_delta_vs_random": 0.05520078152878671,
+      "makespan": 20.300791885515267,
+      "makespan_delta_vs_random": -1.6612625199449447,
+      "simultaneous_win": true,
+      "catastrophic": false
+    },
+    {
+      "seed": 3,
+      "deadline_completion_rate": 0.7715047052177006,
+      "deadline_completion_delta_vs_random": 0.046898023358781016,
+      "makespan": 20.35260658940465,
+      "makespan_delta_vs_random": -1.6094478160555603,
+      "simultaneous_win": true,
+      "catastrophic": false
+    },
+    {
+      "seed": 4,
+      "deadline_completion_rate": 0.7817599621978617,
+      "deadline_completion_delta_vs_random": 0.05715328033894207,
+      "makespan": 20.125201429885994,
+      "makespan_delta_vs_random": -1.8368529755742173,
+      "simultaneous_win": true,
+      "catastrophic": false
+    },
+    {
+      "seed": 5,
+      "deadline_completion_rate": 0.7764406322843822,
+      "deadline_completion_delta_vs_random": 0.05183395042546257,
+      "makespan": 20.2142062849566,
+      "makespan_delta_vs_random": -1.7478481205036118,
+      "simultaneous_win": true,
+      "catastrophic": false
+    }
+  ],
+  "gppo_event_best_updates": [
+    60,
+    60,
+    50,
+    90,
+    20
+  ],
+  "validation_update_80_to_100": {
+    "deadline_completion_rate": {
+      "mean": -0.005287530800638129,
+      "ci95_lower": -0.02244058051415146,
+      "ci95_upper": 0.0118655189128752
+    },
+    "makespan": {
+      "mean": 0.10901933008133965,
+      "ci95_lower": -0.23863788094210772,
+      "ci95_upper": 0.45667654110478706
+    }
+  },
+  "negative_results": {
+    "total": 367,
+    "by_effect": {
+      "inconclusive": 321,
+      "negative": 46
+    },
+    "all_holm_p_values_equal_one": true
+  }
+}

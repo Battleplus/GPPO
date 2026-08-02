@@ -1,0 +1,90 @@
+{
+  "methods": [
+    "gppo_always",
+    "gppo_event",
+    "gppo_event_no_gate",
+    "gppo_event_single_head",
+    "gppo_none",
+    "gppo_periodic",
+    "ppo_event",
+    "ppo_none"
+  ],
+  "training_seeds": {
+    "gppo_always": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "gppo_event": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "gppo_event_no_gate": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "gppo_event_single_head": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "gppo_none": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "gppo_periodic": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "ppo_event": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "ppo_none": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "validation_metrics": [
+    "deadline_completion_rate",
+    "mission_success",
+    "makespan",
+    "throughput",
+    "communication_events",
+    "heartbeat_messages",
+    "invalid_actions",
+    "reallocation_success_rate"
+  ],
+  "training_metrics": [
+    "deadline_completion_rate",
+    "mission_success",
+    "makespan",
+    "throughput",
+    "communication_events",
+    "deadline_remaining_tasks",
+    "completion_rate",
+    "actor_loss"
+  ]
+}
