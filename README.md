@@ -114,6 +114,21 @@ engineering extensions, not uniquely specified by the paper.
 
 ## Installation and tests
 
+Install Git LFS and materialize archived model files before running experiments:
+
+```bash
+git lfs install
+git lfs pull
+```
+
+For an exact dependency resolution with `uv`:
+
+```bash
+uv sync --locked
+```
+
+Alternatively, install the minimal dependency set with pip:
+
 ```bash
 python -m pip install -r requirements.txt
 python -m pip install -e .
@@ -182,12 +197,25 @@ python run_pcrl_v0.py --protocol configs/pcrl_v0_hard6.json \
 The full three-seed calibration uses the same command without `--smoke` and
 with `--seeds 11 12 13`. It is screening evidence, not formal evidence.
 
-The accepted adaptive and single-head five-seed checkpoints are included under
-[`artifacts/checkpoints`](artifacts/checkpoints). Summary CSV/JSON files and
-rendered curves are included under [`artifacts/summary`](artifacts/summary).
-Large raw evaluation JSON files and event logs are intentionally excluded from
-Git because of repository-size limits; their hashes and audit conclusions are
-preserved in the summary artifacts and reports.
+The accepted adaptive and single-head five-seed GPPO checkpoints are included
+under [`artifacts/checkpoints`](artifacts/checkpoints). Summary CSV/JSON files
+and rendered curves are included under [`artifacts/summary`](artifacts/summary).
+
+The hard-6 archive additionally contains the six final PCRL/no-conditioning
+checkpoints, all three-seed raw evaluation CSV/JSON files, training and
+validation histories, run manifests and candidate indexes under
+[`artifacts/pcrl_hard6/runs`](artifacts/pcrl_hard6/runs). PCRL checkpoint tensors
+are stored with Git LFS.
+
+The 409.25 MB GPPO formal raw event archive and the 66 intermediate PCRL
+validation checkpoint tensors are intentionally excluded from ordinary Git
+history. Every retained external file is listed with size and SHA-256 in
+[`artifacts/manifests/external_archive_sha256.csv`](artifacts/manifests/external_archive_sha256.csv).
+The 162-file repository snapshot is independently indexed in
+[`artifacts/manifests/repository_sha256.csv`](artifacts/manifests/repository_sha256.csv).
+See [`docs/ARCHIVE_INVENTORY.md`](docs/ARCHIVE_INVENTORY.md) for the authoritative
+file inventory, retention policy, reference-paper record and explicit
+exclusions.
 
 ## Repository structure
 
@@ -198,5 +226,7 @@ src/uav_assignment/      environment, graph model and frozen protocol helpers
 tests/                   first-stage regression and protocol tests
 artifacts/checkpoints/   accepted adaptive and single-head checkpoints
 artifacts/summary/       formal aggregate results, audits and curves
-artifacts/pcrl_hard6/    compact calibration manifests and aggregate result
+artifacts/pcrl_hard6/    hard-6 manifests, raw evaluations and final checkpoints
+artifacts/manifests/     SHA-256 inventory for large external evidence
+uv.lock                  exact dependency resolution
 ```

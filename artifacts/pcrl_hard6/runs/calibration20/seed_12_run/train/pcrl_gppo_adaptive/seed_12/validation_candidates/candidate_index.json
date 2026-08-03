@@ -1,0 +1,143 @@
+[
+  {
+    "update": 0,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_12_run\\train\\pcrl_gppo_adaptive\\seed_12\\validation_candidates\\update_0000.pt",
+    "sha256": "196ab890cc021d0d8669aaec63628e278dc244ee63e5cb943489525d428a4a4e",
+    "reference_only": true
+  },
+  {
+    "update": 2,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_12_run\\train\\pcrl_gppo_adaptive\\seed_12\\validation_candidates\\update_0002.pt",
+    "sha256": "3b30e646c3884b968a3c99f985c25bb3afd85661bc723b25981bd7dadcf5505d",
+    "selection_key": [
+      1.0,
+      -0.2507865695233806,
+      0.7354213352007468,
+      -15.409894975435304,
+      0.6282222286860148,
+      -2.0
+    ],
+    "selection_feasible": true
+  },
+  {
+    "update": 4,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_12_run\\train\\pcrl_gppo_adaptive\\seed_12\\validation_candidates\\update_0004.pt",
+    "sha256": "c9cfa9c55a71089f072b3297b955b1a69d9450f98a22d7900a3b67b8495a442a",
+    "selection_key": [
+      1.0,
+      -0.2516645723543403,
+      0.7287149859943977,
+      -15.461625897676221,
+      0.6222222300370535,
+      -4.0
+    ],
+    "selection_feasible": true
+  },
+  {
+    "update": 6,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_12_run\\train\\pcrl_gppo_adaptive\\seed_12\\validation_candidates\\update_0006.pt",
+    "sha256": "8a77f288416fbe7246939590e577f0861624343cfb9f835c7f4469bfe7a90e1c",
+    "selection_key": [
+      1.0,
+      -0.24767884719571404,
+      0.7263347338935574,
+      -15.560431975856327,
+      0.6130000082651774,
+      -6.0
+    ],
+    "selection_feasible": true
+  },
+  {
+    "update": 8,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_12_run\\train\\pcrl_gppo_adaptive\\seed_12\\validation_candidates\\update_0008.pt",
+    "sha256": "a24d2cd007f08dea3b755ffedf044b849999d4bf754e2e7cf4d1897fe5330e9c",
+    "selection_key": [
+      1.0,
+      -0.2473750770056598,
+      0.7204035947712418,
+      -16.051079748301145,
+      0.5957301664352417,
+      -8.0
+    ],
+    "selection_feasible": true
+  },
+  {
+    "update": 10,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_12_run\\train\\pcrl_gppo_adaptive\\seed_12\\validation_candidates\\update_0010.pt",
+    "sha256": "ebccb6ca4228b7e8d03a2dc978a62c0f0de1ba6b9bac69488ce394ec320b417d",
+    "selection_key": [
+      0.0,
+      -0.5378626819267048,
+      0.4408348329412164,
+      -0.2500168817853978,
+      -10.0
+    ],
+    "selection_feasible": false
+  },
+  {
+    "update": 12,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_12_run\\train\\pcrl_gppo_adaptive\\seed_12\\validation_candidates\\update_0012.pt",
+    "sha256": "30b43e4af206627cc8c4070768d69862ec00321d750ca415363960de4fafd020",
+    "selection_key": [
+      0.0,
+      -0.1939423675639959,
+      1.1893396489817945,
+      -0.2352910903663374,
+      -12.0
+    ],
+    "selection_feasible": false
+  },
+  {
+    "update": 14,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_12_run\\train\\pcrl_gppo_adaptive\\seed_12\\validation_candidates\\update_0014.pt",
+    "sha256": "e9db40baf3fcc04736514bfc089cb8d530650d7229edf14ff2280dfe14a5074a",
+    "selection_key": [
+      0.0,
+      -0.7300437612337126,
+      0.339789769346069,
+      -0.23675065440241308,
+      -14.0
+    ],
+    "selection_feasible": false
+  },
+  {
+    "update": 16,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_12_run\\train\\pcrl_gppo_adaptive\\seed_12\\validation_candidates\\update_0016.pt",
+    "sha256": "f53f82fde9e951ab93b4d4553e30b1165fddd5137215ce7aa99937c905838921",
+    "selection_key": [
+      0.0,
+      -0.14115035322697173,
+      1.27116371649899,
+      -0.2355623888368613,
+      -16.0
+    ],
+    "selection_feasible": false
+  },
+  {
+    "update": 18,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_12_run\\train\\pcrl_gppo_adaptive\\seed_12\\validation_candidates\\update_0018.pt",
+    "sha256": "24cab89906eda4baa31ca7e2c7ee9bc6d3d0606080675ca6a3c229cff24cc202",
+    "selection_key": [
+      1.0,
+      -0.23412954291134136,
+      0.7227896825396825,
+      -16.125167082833887,
+      0.6060158830881118,
+      -18.0
+    ],
+    "selection_feasible": true
+  },
+  {
+    "update": 20,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_12_run\\train\\pcrl_gppo_adaptive\\seed_12\\validation_candidates\\update_0020.pt",
+    "sha256": "bdd33370b002145cbf4a3c7963ce7a96cd2a001ff59bf78bccec2c114af56335",
+    "selection_key": [
+      0.0,
+      -0.09388847018284435,
+      1.3930256813178572,
+      -0.2322097742970906,
+      -20.0
+    ],
+    "selection_feasible": false
+  }
+]

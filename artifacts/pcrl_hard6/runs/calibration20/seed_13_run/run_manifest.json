@@ -1,0 +1,236 @@
+{
+  "version": "pcrl-v0-1",
+  "protocol": "E:\\Z博士\\configs\\pcrl_v0_hard6.json",
+  "protocol_version": "pcrl-v0-hard-6",
+  "base_protocol_version": "pcrl-v0-hard-6",
+  "calibration_variant": null,
+  "gppo_implementation_hash": "a62c17f721688e2ae0c36c6fe11ef1a6cced365c8468155bfacbf4f286ea01a6",
+  "pcrl_implementation_hash": "c9f929c828c0578847634f3308720a879361aec29d2bf27b277a90028c02b3c1",
+  "phase": "all",
+  "artifact_group": "calibration20",
+  "artifact_group_config": {
+    "output_subdirectory": "calibration20",
+    "purpose": "three-seed hard-6 mechanism screening; never formal evidence",
+    "training_seeds": [
+      11,
+      12,
+      13
+    ],
+    "source_checkpoint_seed_map": {
+      "11": 1,
+      "12": 2,
+      "13": 3
+    },
+    "methods": [
+      "pcrl_gppo_adaptive",
+      "pcrl_gppo_adaptive_no_conditioning",
+      "gppo_event"
+    ],
+    "updates": 20,
+    "episodes_per_update": 20,
+    "validation_episodes": 10,
+    "validation_interval": 2,
+    "validation_seed": 88500,
+    "evaluation_episodes": 10,
+    "evaluation_seed": 89000,
+    "evaluation_seed_range": [
+      89000,
+      89009
+    ],
+    "evaluation_suites": [
+      "controllability_phase"
+    ],
+    "allow_failed_selection_diagnostic": true,
+    "may_initialize_pilot": false
+  },
+  "output_subdirectory": "calibration20",
+  "updates": 20,
+  "episodes_per_update": 20,
+  "evaluation_episodes": 10,
+  "evaluation_seed": 89000,
+  "protocol_budget": {
+    "updates": 20,
+    "episodes_per_update": 20,
+    "evaluation_episodes": 10,
+    "evaluation_seed": 89000
+  },
+  "smoke": false,
+  "profile_collection": "formal_evaluation_profiles",
+  "methods": [
+    "pcrl_gppo_adaptive",
+    "pcrl_gppo_adaptive_no_conditioning",
+    "gppo_event"
+  ],
+  "seeds": [
+    13
+  ],
+  "training_task_release_modes": [
+    "phase_staggered"
+  ],
+  "phase_staggered_deadline_scale": 0.7,
+  "assignment_priority_decay": 2.0,
+  "capability_coverage_mode": "balanced_cyclic_min2_v1",
+  "preference_input_mode": "split_task_mass_v3",
+  "checkpoint_selection": {
+    "mode": "gppo_efficiency_relative_v2",
+    "profile_paired_validation": true,
+    "validation_profiles": [
+      "balanced",
+      "calibration_search_priority",
+      "calibration_reconnaissance_priority",
+      "calibration_strike_priority",
+      "calibration_recovery_priority"
+    ],
+    "max_invalid_action_increase_vs_gppo": 0.05,
+    "save_all_candidates": true,
+    "fallback_is_diagnostic_only": true
+  },
+  "source_checkpoint_seed_map": {
+    "11": 1,
+    "12": 2,
+    "13": 3
+  },
+  "training_preference_target_mode": "nominal",
+  "training_preference_sampler": {
+    "mode": "moderate_anchor_hull",
+    "calibration_priority_share": 0.4,
+    "concentration": 0.7,
+    "anchor_probability": 0.3,
+    "anchor_jitter": 0.1
+  },
+  "training_preference_sampler_profile_vectors": {
+    "balanced": [
+      0.25,
+      0.25,
+      0.25,
+      0.25
+    ],
+    "calibration_search_priority": [
+      0.4000000059604645,
+      0.20000000298023224,
+      0.20000000298023224,
+      0.20000000298023224
+    ],
+    "calibration_reconnaissance_priority": [
+      0.20000000298023224,
+      0.4000000059604645,
+      0.20000000298023224,
+      0.20000000298023224
+    ],
+    "calibration_strike_priority": [
+      0.20000000298023224,
+      0.20000000298023224,
+      0.4000000059604645,
+      0.20000000298023224
+    ],
+    "calibration_recovery_priority": [
+      0.20000000298023224,
+      0.20000000298023224,
+      0.20000000298023224,
+      0.4000000059604645
+    ],
+    "calibration_search_strike_interp": [
+      0.30000001192092896,
+      0.20000000298023224,
+      0.30000001192092896,
+      0.20000000298023224
+    ],
+    "calibration_recon_recovery_interp": [
+      0.20000000298023224,
+      0.30000001192092896,
+      0.20000000298023224,
+      0.30000001192092896
+    ],
+    "calibration_asymmetric_search_recon_recovery": [
+      0.29999998211860657,
+      0.25999999046325684,
+      0.20000000298023224,
+      0.24000000953674316
+    ]
+  },
+  "preference_profile_family": "dynamic-priority-share-v1",
+  "evaluation_suites": [
+    {
+      "name": "controllability_phase",
+      "task_release_mode": "phase_staggered",
+      "deadline_scale": 0.7,
+      "preference_target_mode": "nominal",
+      "primary": true
+    }
+  ],
+  "artifacts": [
+    {
+      "kind": "train",
+      "method": "pcrl_gppo_adaptive",
+      "seed": 13,
+      "source_checkpoint_seed": 3,
+      "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\train\\pcrl_gppo_adaptive\\seed_13\\checkpoint.pt",
+      "status": "created"
+    },
+    {
+      "kind": "train",
+      "method": "pcrl_gppo_adaptive_no_conditioning",
+      "seed": 13,
+      "source_checkpoint_seed": 3,
+      "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\train\\pcrl_gppo_adaptive_no_conditioning\\seed_13\\checkpoint.pt",
+      "status": "created"
+    },
+    {
+      "kind": "eval",
+      "suite": "controllability_phase",
+      "task_release_mode": "phase_staggered",
+      "deadline_scale": 0.7,
+      "preference_target_mode": "nominal",
+      "method": "pcrl_gppo_adaptive",
+      "seed": 13,
+      "source_checkpoint_seed": 3,
+      "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\eval\\controllability_phase\\pcrl_gppo_adaptive\\seed_13\\evaluation.json",
+      "status": "created"
+    },
+    {
+      "kind": "eval",
+      "suite": "controllability_phase",
+      "task_release_mode": "phase_staggered",
+      "deadline_scale": 0.7,
+      "preference_target_mode": "nominal",
+      "method": "pcrl_gppo_adaptive_no_conditioning",
+      "seed": 13,
+      "source_checkpoint_seed": 3,
+      "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\eval\\controllability_phase\\pcrl_gppo_adaptive_no_conditioning\\seed_13\\evaluation.json",
+      "status": "created"
+    },
+    {
+      "kind": "eval",
+      "suite": "controllability_phase",
+      "task_release_mode": "phase_staggered",
+      "deadline_scale": 0.7,
+      "preference_target_mode": "nominal",
+      "method": "gppo_event",
+      "seed": 13,
+      "source_checkpoint_seed": 3,
+      "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\eval\\controllability_phase\\gppo_event\\seed_13\\evaluation.json",
+      "status": "created"
+    }
+  ],
+  "protocol_config_sha256": "24adc5b73c36356a501575228e8fbb8a0929758e02a8da75d8e5ab15c727f46e",
+  "scenario_config_sha256": "6b3e7f79a7b58d7871a08344525ebc14061b66d6832d865f36b7b789ddcf99d8",
+  "output_namespace": "outputs/pcrl_v0/hard6",
+  "base_protocol": "gppo-v2-hard-3",
+  "checkpoint_selection_validation_profiles": [
+    "balanced",
+    "calibration_search_priority",
+    "calibration_reconnaissance_priority",
+    "calibration_strike_priority",
+    "calibration_recovery_priority"
+  ],
+  "profiles": [
+    "balanced",
+    "calibration_search_priority",
+    "calibration_reconnaissance_priority",
+    "calibration_strike_priority",
+    "calibration_recovery_priority",
+    "calibration_search_strike_interp",
+    "calibration_recon_recovery_interp",
+    "calibration_asymmetric_search_recon_recovery"
+  ]
+}

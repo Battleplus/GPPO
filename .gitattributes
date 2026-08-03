@@ -1,3 +1,4 @@
 * text=auto eol=lf
 *.pt binary
 *.png binary
+artifacts/pcrl_hard6/runs/**/*.pt filter=lfs diff=lfs merge=lfs -text

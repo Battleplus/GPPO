@@ -1,0 +1,148 @@
+[
+  {
+    "update": 0,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\train\\pcrl_gppo_adaptive_no_conditioning\\seed_13\\validation_candidates\\update_0000.pt",
+    "sha256": "c4af5ee0f207444bc092f489d595cef3b615cbd8f80349f5613f46b3d7d1b382",
+    "reference_only": true
+  },
+  {
+    "update": 2,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\train\\pcrl_gppo_adaptive_no_conditioning\\seed_13\\validation_candidates\\update_0002.pt",
+    "sha256": "0eb5354239b453623519e074d18465d83645191a39666dfb3bcc80395ca12655",
+    "selection_key": [
+      1.0,
+      -0.2656334965241639,
+      0.7387803454715219,
+      -15.724046668830143,
+      0.6127777844667435,
+      -2.0
+    ],
+    "selection_feasible": true
+  },
+  {
+    "update": 4,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\train\\pcrl_gppo_adaptive_no_conditioning\\seed_13\\validation_candidates\\update_0004.pt",
+    "sha256": "325004b8eafc25a25e032e37faea411a4713961e80841e365f3a507e61f6074e",
+    "selection_key": [
+      1.0,
+      -0.2656334965241639,
+      0.7387803454715219,
+      -15.724046668830143,
+      0.6127777844667435,
+      -4.0
+    ],
+    "selection_feasible": true
+  },
+  {
+    "update": 6,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\train\\pcrl_gppo_adaptive_no_conditioning\\seed_13\\validation_candidates\\update_0006.pt",
+    "sha256": "c399736710af2349ea1ac848fcefba10b1ff07eef1aa783fa73f3235ff863aef",
+    "selection_key": [
+      1.0,
+      -0.2656334965241639,
+      0.7387803454715219,
+      -15.724046668830143,
+      0.6127777844667435,
+      -6.0
+    ],
+    "selection_feasible": true
+  },
+  {
+    "update": 8,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\train\\pcrl_gppo_adaptive_no_conditioning\\seed_13\\validation_candidates\\update_0008.pt",
+    "sha256": "4ba2d8716939410401c40edd4fce68f4228e03d2fd5dce8678a8c08aaa2b28c7",
+    "selection_key": [
+      1.0,
+      -0.26560791766507663,
+      0.7404470121381886,
+      -15.572585207438326,
+      0.6127777844667435,
+      -8.0
+    ],
+    "selection_feasible": true
+  },
+  {
+    "update": 10,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\train\\pcrl_gppo_adaptive_no_conditioning\\seed_13\\validation_candidates\\update_0010.pt",
+    "sha256": "c510f079079d3d313a7389f07727bbe8723e1700105b69615d23c01ea55a3ec7",
+    "selection_key": [
+      1.0,
+      -0.26560791766507663,
+      0.7404470121381886,
+      -15.57327774604392,
+      0.6127777844667435,
+      -10.0
+    ],
+    "selection_feasible": true
+  },
+  {
+    "update": 12,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\train\\pcrl_gppo_adaptive_no_conditioning\\seed_13\\validation_candidates\\update_0012.pt",
+    "sha256": "b60995888dfd50da236a36f1fae8f26c14fbc06e36949de913d31f39dec2eac9",
+    "selection_key": [
+      1.0,
+      -0.26560791766507663,
+      0.7404470121381886,
+      -15.57327774604392,
+      0.6127777844667435,
+      -12.0
+    ],
+    "selection_feasible": true
+  },
+  {
+    "update": 14,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\train\\pcrl_gppo_adaptive_no_conditioning\\seed_13\\validation_candidates\\update_0014.pt",
+    "sha256": "559df1f2e79e93d872538a09dabbb4ed62dacab9c78b6624e10e3bdfab01332a",
+    "selection_key": [
+      1.0,
+      -0.26560791766507663,
+      0.7404470121381886,
+      -15.57327774604392,
+      0.6127777844667435,
+      -14.0
+    ],
+    "selection_feasible": true
+  },
+  {
+    "update": 16,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\train\\pcrl_gppo_adaptive_no_conditioning\\seed_13\\validation_candidates\\update_0016.pt",
+    "sha256": "935d5b75c4845d05ea328a38b3f22804bb5be4b4b76ade46eca64ccf002cb35b",
+    "selection_key": [
+      1.0,
+      -0.26584882570176055,
+      0.7411414565826331,
+      -15.735341113600485,
+      0.6103968322277069,
+      -16.0
+    ],
+    "selection_feasible": true
+  },
+  {
+    "update": 18,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\train\\pcrl_gppo_adaptive_no_conditioning\\seed_13\\validation_candidates\\update_0018.pt",
+    "sha256": "2f95c2357265ad7b4362b47474847ab9369aeadc4c01554ca28a8bc40c2124c8",
+    "selection_key": [
+      1.0,
+      -0.26518123285978534,
+      0.7422852474323062,
+      -15.855178550447132,
+      0.6115079432725906,
+      -18.0
+    ],
+    "selection_feasible": true
+  },
+  {
+    "update": 20,
+    "path": "outputs\\pcrl_v0\\hard6\\calibration20\\seed_13_run\\train\\pcrl_gppo_adaptive_no_conditioning\\seed_13\\validation_candidates\\update_0020.pt",
+    "sha256": "80f3348977ac9000b236f0fcf0a3cddfaa1a359e8237e444d081dd73fb72b377",
+    "selection_key": [
+      1.0,
+      -0.266393094706524,
+      0.7401493930905696,
+      -15.852700431766705,
+      0.6115079422791799,
+      -20.0
+    ],
+    "selection_feasible": true
+  }
+]
