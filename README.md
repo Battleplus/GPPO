@@ -28,6 +28,7 @@
 - 想理解复现逻辑：阅读“复现边界”“算法流程”和“环境与模型输入”；
 - 想运行代码：阅读“安装与测试”“训练示例”和“评测示例”；
 - 想核对结论：阅读“稳定性结果”“收敛判断”和 `artifacts/summary/` 原始汇总；
+- 想理解每张图究竟表达什么：阅读 [`docs/GPPO_V1_RESULTS_INTERPRETATION_ZH.md`](docs/GPPO_V1_RESULTS_INTERPRETATION_ZH.md)；
 - 想继续研究：先查看“已知限制”，再决定是否进入 PCRL 改造。
 
 ## 1. 项目背景
@@ -255,6 +256,8 @@ GPPO-v1 支持：
 
 ## 11. GPPO-v1 稳定性结果
 
+这部分图表需要联合阅读：makespan 回答“完成得快不快”，完成率检查“是否真的把任务做完”，运行诊断检查“通信、无效动作和失效恢复是否健康”。完整逐图解释见 [`GPPO_V1_RESULTS_INTERPRETATION_ZH.md`](docs/GPPO_V1_RESULTS_INTERPRETATION_ZH.md)。
+
 ### 11.1 Makespan 与完成率
 
 ![四种方法的多尺度 makespan 与 95% 置信区间](assets/readme/benchmark_makespan.png)
@@ -317,6 +320,8 @@ GPPO-v1 支持：
 - invalid actions 的晚期斜率不显著为正。
 
 因此 GPPO-v1 达到“基本收敛”标准，但不能声称所有训练种子都在 100 updates 前严格完全收敛。
+
+这组曲线表达的不是“最后一个 update 一定最好”，而是大多数种子在 40～80 updates 后进入平台区；seed 1 的最佳点仍位于 update 100，因此只能称为基本收敛。
 
 <details>
 <summary>展开查看训练阶段完整曲线</summary>
