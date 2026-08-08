@@ -65,6 +65,9 @@ Google Colab 的分阶段训练、CPU/GPU 实测与断点恢复说明见
 
 Colab 一键完成六模型训练、test100、基线、通信重放、报告和 ZIP：
 
+- Notebook：[`colab/GPPO_Colab_One_Click.ipynb`](colab/GPPO_Colab_One_Click.ipynb)
+- Shell 入口：`colab/run_everything_once.sh`
+
 ```bash
 OUTPUT_ROOT=/content/drive/MyDrive/GPPO_one_click bash colab/run_everything_once.sh
 ```

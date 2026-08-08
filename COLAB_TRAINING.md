@@ -1,5 +1,9 @@
 # Colab training protocol
 
+For the simplest workflow, open
+[`colab/GPPO_Colab_One_Click.ipynb`](colab/GPPO_Colab_One_Click.ipynb) in Colab
+and select **Runtime -> Run all**.
+
 This workflow answers two different questions in order:
 
 1. Does Colab GPU reduce **end-to-end** training time for this simulator?
