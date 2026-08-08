@@ -4,6 +4,7 @@ set -euo pipefail
 # Usage:
 #   bash colab/run_colab_validation.sh smoke
 #   bash colab/run_colab_validation.sh benchmark
+#   bash colab/run_colab_validation.sh one-click
 #   DEVICE=cpu bash colab/run_colab_validation.sh quick
 #   SCALE=T5-10-48 DEVICE=cpu bash colab/run_colab_validation.sh formal-scale
 #   DEVICE=cpu bash colab/run_colab_validation.sh formal-all
@@ -123,15 +124,77 @@ run_formal_all() {
     --root "${FORMAL_ROOT}" --output "${FORMAL_ROOT}/formal_summary.json"
 }
 
+run_one_click() {
+  echo "[one-click] 1/4 formula, resume, and save smoke tests"
+  run_smoke
+
+  echo "[one-click] 2/4 end-to-end CPU/CUDA benchmark"
+  run_benchmark
+  DEVICE="$(python -c "import json; print(json.load(open(r'${OUTPUT_ROOT}/DEVICE_BENCHMARK.json', encoding='utf-8'))['recommended_device'])")"
+  if [[ "${DEVICE}" == "cuda" ]]; then
+    # The model is small. Two jobs overlap CPU rollout generation while sharing
+    # the L4; override with ONE_CLICK_JOBS=1 if the runtime has only one vCPU.
+    JOBS="${ONE_CLICK_JOBS:-2}"
+    export PAPER_TORCH_THREADS="${ONE_CLICK_TORCH_THREADS:-1}"
+  else
+    JOBS="${ONE_CLICK_JOBS:-2}"
+    export PAPER_TORCH_THREADS="${ONE_CLICK_TORCH_THREADS:-1}"
+  fi
+  echo "[one-click] selected DEVICE=${DEVICE}, JOBS=${JOBS}, PAPER_TORCH_THREADS=${PAPER_TORCH_THREADS}"
+
+  echo "[one-click] 3/4 six-model training, test100, baselines, and report"
+  run_quick
+
+  echo "[one-click] 4/4 result manifest and ZIP archive"
+  python - "${OUTPUT_ROOT}" "${QUICK_ROOT}" <<'PY'
+import hashlib
+import json
+import shutil
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+output_root = Path(sys.argv[1]).resolve()
+quick_root = Path(sys.argv[2]).resolve()
+report = quick_root / "QUICK_MECHANISM_REPORT_ZH.md"
+result = quick_root / "quick_mechanism_result.json"
+if not report.exists() or not result.exists():
+    raise FileNotFoundError("one-click report artifacts are incomplete")
+checkpoints = sorted(quick_root.glob("**/checkpoint.pt"))
+manifest = {
+    "version": "paper-faithful-colab-one-click-v1",
+    "completed_at_utc": datetime.now(timezone.utc).isoformat(),
+    "quick_root": str(quick_root),
+    "checkpoint_count": len(checkpoints),
+    "checkpoints": [
+        {
+            "path": str(path.relative_to(quick_root)),
+            "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        }
+        for path in checkpoints
+    ],
+    "report": str(report),
+    "machine_result": str(result),
+}
+(output_root / "ONE_CLICK_MANIFEST.json").write_text(
+    json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8"
+)
+archive = shutil.make_archive(str(output_root), "zip", root_dir=output_root)
+print(json.dumps({"completed": True, "archive": archive, **manifest}, indent=2, ensure_ascii=False))
+PY
+  echo "[one-click] complete: ${OUTPUT_ROOT}.zip"
+}
+
 case "${PHASE}" in
   smoke) run_smoke ;;
   benchmark) run_benchmark ;;
   quick) run_quick ;;
+  one-click) run_one_click ;;
   formal-scale) run_formal_scale ;;
   formal-all) run_formal_all ;;
   *)
     echo "Unknown phase: ${PHASE}" >&2
-    echo "Expected: smoke, benchmark, quick, formal-scale, formal-all" >&2
+    echo "Expected: smoke, benchmark, quick, one-click, formal-scale, formal-all" >&2
     exit 2
     ;;
 esac

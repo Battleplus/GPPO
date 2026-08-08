@@ -27,6 +27,44 @@ Do not put a GitHub token in a notebook. If the repository becomes private, use 
 
 ## 2. Smoke test
 
+### Recommended: run everything once
+
+The following single command performs the smoke tests, benchmarks CPU versus
+CUDA, selects the faster device, trains all six quick-validation models,
+evaluates test100, runs Random/Greedy and Event/Full, writes the Chinese report,
+and creates a ZIP archive:
+
+```bash
+!OUTPUT_ROOT=/content/drive/MyDrive/GPPO_one_click \
+  bash colab/run_everything_once.sh
+```
+
+To start a browser download of the final ZIP automatically after all work is
+complete, add `AUTO_DOWNLOAD=1`:
+
+```bash
+!OUTPUT_ROOT=/content/drive/MyDrive/GPPO_one_click AUTO_DOWNLOAD=1 \
+  bash colab/run_everything_once.sh
+```
+
+No model switching is required. Up to two training jobs run concurrently by
+default; set `ONE_CLICK_JOBS=1` if the assigned runtime has only one CPU core.
+If Colab disconnects, execute the exact same command again: completed models
+are skipped and incomplete models resume from `resume_latest.pt`.
+
+Final files:
+
+```text
+MyDrive/GPPO_one_click/quick_seed1_100/QUICK_MECHANISM_REPORT_ZH.md
+MyDrive/GPPO_one_click/ONE_CLICK_MANIFEST.json
+MyDrive/GPPO_one_click.zip
+```
+
+Without Google Drive, omit `OUTPUT_ROOT`; results are saved under
+`outputs/colab_one_click`, but they disappear when the Colab VM is deleted.
+
+### Manual staged mode
+
 ```bash
 !OUTPUT_ROOT=/content/drive/MyDrive/GPPO_colab \
   DEVICE=auto bash colab/run_colab_validation.sh smoke

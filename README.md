@@ -63,6 +63,12 @@ python -m pytest -q
 Google Colab 的分阶段训练、CPU/GPU 实测与断点恢复说明见
 [`COLAB_TRAINING.md`](COLAB_TRAINING.md)。不要仅凭运行时分配了 GPU 就假定训练更快；先运行端到端 benchmark。
 
+Colab 一键完成六模型训练、test100、基线、通信重放、报告和 ZIP：
+
+```bash
+OUTPUT_ROOT=/content/drive/MyDrive/GPPO_one_click bash colab/run_everything_once.sh
+```
+
 Windows PowerShell 可直接运行六模型验证流水线（最多 4 个并行训练进程）：
 
 ```powershell
