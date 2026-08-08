@@ -1,0 +1,373 @@
+{
+  "version": "paper-faithful-quick-mechanism-v1",
+  "scope": "single-scale, single-training-seed, 100-iteration quick mechanism validation",
+  "not_claimed": "This is not a multi-seed or paper-level statistical reproduction.",
+  "protocol": {
+    "scale": "T5-10-48",
+    "training_seed": 1,
+    "iterations": 100,
+    "rollout_steps": 512,
+    "batch_size": 512,
+    "validation_iterations": [
+      50,
+      100
+    ],
+    "validation_instances": 20,
+    "test_instances": 100
+  },
+  "methods": [
+    {
+      "method": "GPPO-event",
+      "label": "literal_expected_task_message_event",
+      "episode_return": {
+        "mean": -6.818457424499228,
+        "std": 1.3858092326455054,
+        "median": -6.818642258128075
+      },
+      "realized_makespan": {
+        "mean": 16.137606510395376,
+        "std": 1.568644178539009,
+        "median": 15.944891835827045
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 2788.32,
+        "std": 101.56222951789934,
+        "median": 2748.0
+      }
+    },
+    {
+      "method": "PPO-none",
+      "label": "ppo_mlp_expected_task_message_none",
+      "episode_return": {
+        "mean": -8.982107881408838,
+        "std": 1.5860882894063322,
+        "median": -8.882549678767322
+      },
+      "realized_makespan": {
+        "mean": 18.30125696730499,
+        "std": 1.6250021020451768,
+        "median": 18.122851893233644
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 1136.64,
+        "std": 109.20424012192045,
+        "median": 1152.0
+      }
+    },
+    {
+      "method": "PPO-event",
+      "label": "ppo_mlp_expected_task_message_event",
+      "episode_return": {
+        "mean": -8.444390885893563,
+        "std": 1.4970026811127797,
+        "median": -8.368409718722045
+      },
+      "realized_makespan": {
+        "mean": 17.76353997178971,
+        "std": 1.5260681227490014,
+        "median": 17.713197257758722
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 2891.36,
+        "std": 100.9349745673376,
+        "median": 2876.0
+      }
+    },
+    {
+      "method": "GPPO-none",
+      "label": "literal_expected_task_message_none",
+      "episode_return": {
+        "mean": -6.647458660416402,
+        "std": 1.315413869931885,
+        "median": -6.553691601735491
+      },
+      "realized_makespan": {
+        "mean": 15.966607746312553,
+        "std": 1.4063362629256502,
+        "median": 15.831992802943219
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 988.8,
+        "std": 92.48794625258041,
+        "median": 960.0
+      }
+    },
+    {
+      "method": "GPPO-NoGate-event",
+      "label": "literal_no_gate_expected_task_message_event",
+      "episode_return": {
+        "mean": -6.715221915137466,
+        "std": 1.2601701783213997,
+        "median": -6.526293855290527
+      },
+      "realized_makespan": {
+        "mean": 16.034371001033616,
+        "std": 1.2817488853931926,
+        "median": 15.950133220766624
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 2785.76,
+        "std": 83.91302856908672,
+        "median": 2748.0
+      }
+    },
+    {
+      "method": "GPPO-SingleHead-event",
+      "label": "literal_single_head_expected_task_message_event",
+      "episode_return": {
+        "mean": -6.797407432727942,
+        "std": 1.3220662430220984,
+        "median": -6.8342768956146065
+      },
+      "realized_makespan": {
+        "mean": 16.116556518624087,
+        "std": 1.5364629355053558,
+        "median": 15.904503220655997
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 2790.24,
+        "std": 98.90604867573299,
+        "median": 2748.0
+      }
+    }
+  ],
+  "comparisons": {
+    "GPPO-event_vs_PPO-none": {
+      "mean": -2.163650456909611,
+      "median": -2.2793177158653304,
+      "std": 1.540956769355506,
+      "ci95_low": -2.4694097111609503,
+      "ci95_high": -1.857891202658272,
+      "n_instances": 100
+    },
+    "GPPO-event_vs_PPO-event": {
+      "mean": -1.6259334613943357,
+      "median": -1.8963235008757602,
+      "std": 1.466611160584972,
+      "ci95_low": -1.9169409339301842,
+      "ci95_high": -1.3349259888584872,
+      "n_instances": 100
+    },
+    "GPPO-none_vs_PPO-none": {
+      "mean": -2.3346492209924374,
+      "median": -2.4428619011994757,
+      "std": 1.3983749578720495,
+      "ci95_low": -2.6121171505188006,
+      "ci95_high": -2.0571812914660743,
+      "n_instances": 100
+    },
+    "GPPO-event_vs_GPPO-none": {
+      "mean": 0.17099876408282597,
+      "median": 0.11551077461587766,
+      "std": 1.006206862832664,
+      "ci95_low": -0.028654507261684392,
+      "ci95_high": 0.3706520354273363,
+      "n_instances": 100
+    },
+    "Adaptive_vs_NoGate": {
+      "mean": 0.10323550936176275,
+      "median": 0.015931798616264814,
+      "std": 1.1048920223530838,
+      "ci95_low": -0.11599903861600323,
+      "ci95_high": 0.3224700573395287,
+      "n_instances": 100
+    },
+    "Adaptive_vs_SingleHead": {
+      "mean": 0.021049991771286525,
+      "median": 0.03555713488374668,
+      "std": 0.895738422541556,
+      "ci95_low": -0.15668394439560906,
+      "ci95_high": 0.19878392793818211,
+      "n_instances": 100
+    }
+  },
+  "baselines": {
+    "random": {
+      "episode_return": {
+        "mean": -11.08812170719863,
+        "std": 2.6259948187270648,
+        "median": -10.814772434568528
+      },
+      "realized_makespan": {
+        "mean": 20.40727079309478,
+        "std": 2.742986119089655,
+        "median": 20.21534120264991
+      },
+      "projected_makespan": {
+        "mean": 20.40727079309478,
+        "std": 2.742986119089655,
+        "median": 20.21534120264991
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "all_tasks_completed": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_events": {
+        "mean": 3.0,
+        "std": 0.0,
+        "median": 3.0
+      },
+      "communication_bytes": {
+        "mean": 3062.24,
+        "std": 178.27756817146488,
+        "median": 3068.0
+      },
+      "heartbeat_messages": {
+        "mean": 79.64,
+        "std": 11.142348010716555,
+        "median": 80.0
+      },
+      "decisions": {
+        "mean": 77.74,
+        "std": 4.591648105335635,
+        "median": 78.0
+      }
+    },
+    "greedy": {
+      "episode_return": {
+        "mean": -8.056078393191566,
+        "std": 1.789290726068068,
+        "median": -8.157764451936918
+      },
+      "realized_makespan": {
+        "mean": 17.375227479087712,
+        "std": 1.7953960479568931,
+        "median": 17.311408032045193
+      },
+      "projected_makespan": {
+        "mean": 17.375227479087712,
+        "std": 1.7953960479568931,
+        "median": 17.311408032045193
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "all_tasks_completed": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_events": {
+        "mean": 3.0,
+        "std": 0.0,
+        "median": 3.0
+      },
+      "communication_bytes": {
+        "mean": 2868.96,
+        "std": 116.45555965147122,
+        "median": 2876.0
+      },
+      "heartbeat_messages": {
+        "mean": 67.56,
+        "std": 7.278472478216951,
+        "median": 68.0
+      },
+      "decisions": {
+        "mean": 73.0,
+        "std": 3.0084057323614197,
+        "median": 73.0
+      }
+    }
+  },
+  "communication": {
+    "event_makespan": 16.137606510395376,
+    "full_makespan": 16.137606510395376,
+    "quality_gap_percent": 0.0,
+    "event_bytes": 2788.32,
+    "full_bytes": 4279957.44,
+    "communication_reduction_percent": 99.93485168861865
+  },
+  "checks": {
+    "gppo_better_than_paper_ppo_on_test100": true,
+    "gppo_better_than_random": true,
+    "gppo_within_5_percent_of_greedy": true,
+    "adaptive_better_than_nogate": false,
+    "adaptive_better_than_singlehead": false,
+    "event_within_5_percent_of_full": true,
+    "event_uses_fewer_bytes_than_full": true
+  },
+  "decision": "继续 GPPO 正式复现，但停止宣称 adaptive gate 有益并优先排查该模块",
+  "artifact_audit": {
+    "valid": true,
+    "checkpoint_count": 6,
+    "native_test100_evaluation_count": 6,
+    "checkpoint_rows": [
+      {
+        "directory": "literal_event_seed1",
+        "path": "T5-10-48/literal_event_seed1/checkpoint.pt",
+        "sha256": "229f19dcfd3f0f1c2c6b6e72099d5ab728da79ead0018fa8530d267e409f48ef"
+      },
+      {
+        "directory": "literal_no_gate_event_seed1",
+        "path": "T5-10-48/literal_no_gate_event_seed1/checkpoint.pt",
+        "sha256": "a26a4c7f075c09ea5636a5e81b521f3bb9ac279ca7014d485bd239bf5772141b"
+      },
+      {
+        "directory": "literal_none_seed1",
+        "path": "T5-10-48/literal_none_seed1/checkpoint.pt",
+        "sha256": "959b2bc97994c67382f8c99bae3352f6f9ea2c68189ea191f0efe40f50af0afa"
+      },
+      {
+        "directory": "literal_single_head_event_seed1",
+        "path": "T5-10-48/literal_single_head_event_seed1/checkpoint.pt",
+        "sha256": "44eaccf85c6e408e14df30deaa90b41f53999e0d5d37aad72b445c32c5c34843"
+      },
+      {
+        "directory": "ppo_mlp_event_seed1",
+        "path": "T5-10-48/ppo_mlp_event_seed1/checkpoint.pt",
+        "sha256": "ba0563c7c99b1bc354868a9fc5be8f9da60d657e9af603759ac724c0422881a4"
+      },
+      {
+        "directory": "ppo_mlp_none_seed1",
+        "path": "T5-10-48/ppo_mlp_none_seed1/checkpoint.pt",
+        "sha256": "0a53ac595e88a8ad8012f7dd90aeb0980382fdcab7313f1a56182ed7f9497023"
+      }
+    ],
+    "training_protocol_exact": true,
+    "validation_iterations_exact": true,
+    "unique_test_instances_per_method": 100,
+    "same_fixed_test_bank": true,
+    "same_fixed_event_tape_bank": true,
+    "all_tasks_completed": true,
+    "event_full_same_checkpoint": true,
+    "event_full_same_event_tapes": true
+  }
+}

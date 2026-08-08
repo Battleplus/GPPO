@@ -14,11 +14,28 @@
 - 平均通信量：`2738.4 bytes`；
 - 平均推理时间：`3.255 ms`；
 - adaptive gate 梯度 L2：`0.559243`，gate 分支实际参与决策；
-- 原工作区完整回归：`273 passed`；本独立精简分支：`31 passed`。
+- 原工作区完整回归：`274 passed`；本独立精简分支：`32 passed`。
 
 完整结果见 [`artifacts/paper_faithful/T5-10-48/literal_event_seed3`](artifacts/paper_faithful/T5-10-48/literal_event_seed3)。
 
 该结果是单规模、单训练种子证据，只证明训练、推理、事件通信和 gate 诊断链路可运行；它不能单独证明 GPPO 优于 PPO，也不能证明 Adaptive 优于 NoGate 或 SingleHead。
+
+### 100 轮六模型快速机制验证
+
+同一 `T5-10-48`、训练 seed 1、100 iterations、固定 test100 下，六模型快速筛查得到：
+
+| 方法 | realized makespan mean | median |
+|---|---:|---:|
+| GPPO-none | 15.9666 | 15.8320 |
+| GPPO-NoGate-event | 16.0344 | 15.9501 |
+| GPPO-SingleHead-event | 16.1166 | 15.9045 |
+| GPPO-event | 16.1376 | 15.9449 |
+| PPO-event | 17.7635 | 17.7132 |
+| PPO-none | 18.3013 | 18.1229 |
+
+GPPO-event 相对 PPO-none 的同实例差值为 `-2.1637`，实例级 95% CI 为 `[-2.4694, -1.8579]`；但 Adaptive 同时落后 NoGate 和 SingleHead，不能支持 adaptive gate 的独立正向贡献。相同 GPPO checkpoint 的 Event/Full 重放具有相同 makespan，Event 通信字节减少 `99.93%`。
+
+因此当前快速判定是：**继续 GPPO 正式复现，但停止宣称 adaptive gate 有益并优先排查该模块**。该实验仍是单规模、单训练种子、短训练预算证据，不能写成“GPPO 已稳定优于 PPO”。完整报告、精简 test100 行、六个 checkpoint 和哈希清单见 [`artifacts/paper_faithful/quick_seed1_100`](artifacts/paper_faithful/quick_seed1_100)。
 
 ## 主要实现
 
@@ -43,6 +60,14 @@ python -m pytest -q
 
 ## 快速单种子实验
 
+Windows PowerShell 可直接运行六模型验证流水线（最多 4 个并行训练进程）：
+
+```powershell
+.\run_paper_faithful_quick.ps1
+```
+
+单模型入口示例：
+
 ```bash
 python train_paper_faithful.py \
   --mode literal \
@@ -53,7 +78,7 @@ python train_paper_faithful.py \
   --rollout-steps 512 \
   --batch-size 512 \
   --update-epochs 4 \
-  --validation-interval 10 \
+  --validation-interval 50 \
   --validation-instances 20 \
   --output outputs/pilot/literal_event_seed1
 ```

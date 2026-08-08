@@ -1,0 +1,162 @@
+{
+  "version": "paper-faithful-quick-github-export-v1",
+  "scope": "single-scale, single-training-seed, 100-iteration quick mechanism validation",
+  "excluded": [
+    "optimizer resume checkpoints",
+    "candidate checkpoints",
+    "runner logs",
+    "per-transition traces (compact evaluations retain per-instance metrics)"
+  ],
+  "files": [
+    {
+      "path": "baselines_test100.json",
+      "size_bytes": 199647,
+      "sha256": "836f5527065356380b06879e4ea8768537061328b61b7333968a3d199c1eee6e"
+    },
+    {
+      "path": "quick_artifact_audit.json",
+      "size_bytes": 1674,
+      "sha256": "b1cebe2cdc44270435ddca386c0daf245864b3858b78da6feacce0f0b52fbadd"
+    },
+    {
+      "path": "QUICK_MECHANISM_REPORT_ZH.md",
+      "size_bytes": 2306,
+      "sha256": "ace780b4b5a5a199114bbb6eb6bb10a84f4e688fc98c2f069103c434c0bdd294"
+    },
+    {
+      "path": "quick_mechanism_result.json",
+      "size_bytes": 10742,
+      "sha256": "27226e73fc1f9c01e09494375c025298a3de3fcea69961f221959f0ccaeade82"
+    },
+    {
+      "path": "quick_summary.json",
+      "size_bytes": 62267,
+      "sha256": "0ea0a929de9a155fef9a398839a2426e3d09685dc5c727f42025bc7fd62610a3"
+    },
+    {
+      "path": "T5-10-48/literal_event_seed1/checkpoint.pt",
+      "size_bytes": 450204,
+      "sha256": "229f19dcfd3f0f1c2c6b6e72099d5ab728da79ead0018fa8530d267e409f48ef"
+    },
+    {
+      "path": "T5-10-48/literal_event_seed1/test_native_100_compact.json",
+      "size_bytes": 87904,
+      "sha256": "0be117fb7ededfdb83db8b67f4307d8514bc07fc93ec6096caa5ab366f23fb39"
+    },
+    {
+      "path": "T5-10-48/literal_event_seed1/test_native_always_100_compact.json",
+      "size_bytes": 88334,
+      "sha256": "d1acdf18eb4f63b64e60a42da37ef9fdfb41e01dae02abf3bd9c13204505cc89"
+    },
+    {
+      "path": "T5-10-48/literal_event_seed1/training_history.json",
+      "size_bytes": 14819,
+      "sha256": "b95299e82ea2460de0ebb25916f9ca70af8d94186ecebf04ffe16e099ae72592"
+    },
+    {
+      "path": "T5-10-48/literal_event_seed1/validation_history.json",
+      "size_bytes": 360,
+      "sha256": "f98e22cb0a1d772a8c2b82b02b00eb07e2febec7649e02b218c162e50be16e59"
+    },
+    {
+      "path": "T5-10-48/literal_no_gate_event_seed1/checkpoint.pt",
+      "size_bytes": 450268,
+      "sha256": "a26a4c7f075c09ea5636a5e81b521f3bb9ac279ca7014d485bd239bf5772141b"
+    },
+    {
+      "path": "T5-10-48/literal_no_gate_event_seed1/test_native_100_compact.json",
+      "size_bytes": 87584,
+      "sha256": "4eb359bd9a3d1cd78aef04ab6d3c63be3c4fb26a2278d4b01af7483e74a8a05a"
+    },
+    {
+      "path": "T5-10-48/literal_no_gate_event_seed1/training_history.json",
+      "size_bytes": 14808,
+      "sha256": "699c9ce21546ff4c74ef57edc8c932eec3c076008c335ecf541d671f9459ac97"
+    },
+    {
+      "path": "T5-10-48/literal_no_gate_event_seed1/validation_history.json",
+      "size_bytes": 359,
+      "sha256": "883f73d332186eafad38787bf818486887085a7c36713393416b3e678d0c95dc"
+    },
+    {
+      "path": "T5-10-48/literal_none_seed1/checkpoint.pt",
+      "size_bytes": 450204,
+      "sha256": "959b2bc97994c67382f8c99bae3352f6f9ea2c68189ea191f0efe40f50af0afa"
+    },
+    {
+      "path": "T5-10-48/literal_none_seed1/test_native_100_compact.json",
+      "size_bytes": 87822,
+      "sha256": "40b7c585fe1c770c9481ebc5e2c5e62718335c7636487599abb30d4dc076e410"
+    },
+    {
+      "path": "T5-10-48/literal_none_seed1/training_history.json",
+      "size_bytes": 14842,
+      "sha256": "f75f26f4c81520cd1cf670d77361865de12bf9762534a34e5cc4a5c0efdff74a"
+    },
+    {
+      "path": "T5-10-48/literal_none_seed1/validation_history.json",
+      "size_bytes": 359,
+      "sha256": "21115d63e4da5d7b30a6b1e8f19e82b60c102a7e2eb2402d903d5acf8f742686"
+    },
+    {
+      "path": "T5-10-48/literal_single_head_event_seed1/checkpoint.pt",
+      "size_bytes": 450268,
+      "sha256": "44eaccf85c6e408e14df30deaa90b41f53999e0d5d37aad72b445c32c5c34843"
+    },
+    {
+      "path": "T5-10-48/literal_single_head_event_seed1/test_native_100_compact.json",
+      "size_bytes": 87609,
+      "sha256": "ce503175d38227196ccecafba25e87cc0aa6c6d39e96ba5195567ff89779c6b3"
+    },
+    {
+      "path": "T5-10-48/literal_single_head_event_seed1/training_history.json",
+      "size_bytes": 14818,
+      "sha256": "3f1f2de9fff2e4145595668e048fe9f7205b17c5e8316d984725c76634d5aa7a"
+    },
+    {
+      "path": "T5-10-48/literal_single_head_event_seed1/validation_history.json",
+      "size_bytes": 360,
+      "sha256": "81ac0b0c2c04792fc83136ad7d0223f68a6da841a752dbf1a30f9b9b6ae3c1b0"
+    },
+    {
+      "path": "T5-10-48/ppo_mlp_event_seed1/checkpoint.pt",
+      "size_bytes": 450204,
+      "sha256": "ba0563c7c99b1bc354868a9fc5be8f9da60d657e9af603759ac724c0422881a4"
+    },
+    {
+      "path": "T5-10-48/ppo_mlp_event_seed1/test_native_100_compact.json",
+      "size_bytes": 87499,
+      "sha256": "6eaed9521c1a2cf56add9fda102eca956d7f3e3077abf1dfdb66d2ddb8bb8ec8"
+    },
+    {
+      "path": "T5-10-48/ppo_mlp_event_seed1/training_history.json",
+      "size_bytes": 14819,
+      "sha256": "abd3c550808272fcad232098dfb62e835c80805472f576126a0629a98aa0e76b"
+    },
+    {
+      "path": "T5-10-48/ppo_mlp_event_seed1/validation_history.json",
+      "size_bytes": 359,
+      "sha256": "3af60bbbc68e6967836e0fbf55de048e848098ca873f6c7d33bf1353031e7d87"
+    },
+    {
+      "path": "T5-10-48/ppo_mlp_none_seed1/checkpoint.pt",
+      "size_bytes": 450204,
+      "sha256": "0a53ac595e88a8ad8012f7dd90aeb0980382fdcab7313f1a56182ed7f9497023"
+    },
+    {
+      "path": "T5-10-48/ppo_mlp_none_seed1/test_native_100_compact.json",
+      "size_bytes": 87493,
+      "sha256": "f9af029452e457a1e97cf3397d0be346f0c2efe7a877b4269b384d500463bc10"
+    },
+    {
+      "path": "T5-10-48/ppo_mlp_none_seed1/training_history.json",
+      "size_bytes": 14839,
+      "sha256": "909f4772b0a8dbd67299b88efd0fbd85b514dcdc5997fdbbad813832386cb0fd"
+    },
+    {
+      "path": "T5-10-48/ppo_mlp_none_seed1/validation_history.json",
+      "size_bytes": 359,
+      "sha256": "6f506a3d27cf38d5a4e1f17ad7315cb0c4c1ae1543b052fb3d6fdcb05fcc7878"
+    }
+  ]
+}

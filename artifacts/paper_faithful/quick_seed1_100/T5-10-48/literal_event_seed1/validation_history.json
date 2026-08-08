@@ -1,0 +1,16 @@
+[
+  {
+    "reward": -6.839334323920927,
+    "realized_makespan": 16.62456145216272,
+    "completion_rate": 1.0,
+    "communication_events": 3.0,
+    "iteration": 50.0
+  },
+  {
+    "reward": -6.1214417999239545,
+    "realized_makespan": 15.906668928165747,
+    "completion_rate": 1.0,
+    "communication_events": 3.0,
+    "iteration": 100.0
+  }
+]
