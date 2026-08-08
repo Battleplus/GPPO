@@ -1,0 +1,65 @@
+{
+  "version": "paper-faithful-protocol-v1",
+  "classification": "independent mechanism-level reproduction",
+  "paper_scales": ["T5-10-48", "T10-10-53", "T15-8-66", "T20-10-92"],
+  "instances_per_scale": 100,
+  "instance_banks": {
+    "train": 100,
+    "validation": 100,
+    "test": 100,
+    "disjoint": true,
+    "shared_across_algorithms": true
+  },
+  "training_seeds": [1, 2, 3, 4, 5],
+  "environment": {
+    "all_tasks_must_finish": true,
+    "hard_deadline": false,
+    "primary_metric": "realized_makespan",
+    "task_reassignment": "fixed deterministic decision-step tape",
+    "weather_hazard_trigger": false,
+    "action_conflict_trigger": false
+  },
+  "checkpoint_selection": {
+    "metric": "validation realized_makespan",
+    "candidate_interval": 50,
+    "test_set_used_for_selection": false
+  },
+  "ppo": {
+    "learning_rate": 0.0002,
+    "gamma": 0.99,
+    "clip": 0.2,
+    "entropy_coefficient": 0.01,
+    "value_coefficient": 0.5,
+    "batch_size": 512,
+    "max_iterations": 2000
+  },
+  "methods": ["ppo_mlp", "literal", "literal_no_gate", "literal_single_head"],
+  "literal_gate_scope": {
+    "formal_default": "task_message",
+    "sensitivity_variants": ["score", "aggregate"],
+    "note": "Eq.(3) places f_{i,j,k} after the aggregate while describing edge-wise attention adjustment; scope is therefore preregistered as an explicit ambiguity variable."
+  },
+  "literal_gate_activation": {
+    "formal_default": "sigmoid",
+    "sensitivity_variants": ["softplus"],
+    "note": "The paper calls f_{i,j,k} a neural network but does not specify its output nonlinearity; sigmoid is retained as the frozen default and softplus tests positive amplification without allowing sign flips."
+  },
+  "rrelu_implementations": ["expected", "stochastic"],
+  "communication_modes": ["none", "event", "periodic", "always"],
+  "communication_comparison": {
+    "fixed_checkpoint": true,
+    "note": "Event/periodic/always comparisons replay the same event-trained checkpoint; communication mode is not retrained for the causal quality-cost comparison."
+  },
+  "communication_accounting": {
+    "heartbeat_bytes": 16,
+    "node_float_bytes": 4,
+    "full_sync": "all node and edge feature arrays",
+    "event_sync": "refreshed node arrays plus serialized event records",
+    "included_in_reward": false
+  },
+  "evaluation_audit": {
+    "trace": "per-decision projected and realized makespan, action, reward, event, synchronization",
+    "flops": "analytical multiply-add estimate for the active linear forward path",
+    "gate_statistics": "gate distribution and actual PPO probe gradient"
+  }
+}

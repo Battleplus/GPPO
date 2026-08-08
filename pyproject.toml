@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gppo-paper-faithful"
+version = "0.1.0"
+description = "Paper-faithful event-triggered graph PPO for multi-UAV task assignment"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "torch>=2.1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4", "matplotlib>=3.7"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

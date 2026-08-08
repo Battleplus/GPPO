@@ -1,0 +1,35 @@
+{
+  "version": "paper-faithful-seed3-export-v1",
+  "files": [
+    {
+      "path": "checkpoint.pt",
+      "bytes": 575989,
+      "sha256": "43959814bd29b2681b623193fbd38191eaf61a97405f88fe64c41eca9eb33ae8"
+    },
+    {
+      "path": "gate_diagnostic.json",
+      "bytes": 2314,
+      "sha256": "527061338e0048f9d2a13e7c52bec9e8b30de0724c53a7be423e67b5438fba20"
+    },
+    {
+      "path": "PILOT_RESULT_ZH.md",
+      "bytes": 1620,
+      "sha256": "350726feb71c64129bd1d966deab462ccfe3f275fd5b9144eee5e04c2fbb8206"
+    },
+    {
+      "path": "test_summary.json",
+      "bytes": 11201,
+      "sha256": "d66b695f5f4d789c1b93cd46355a4c972ccd5d189c6d1461eb75f21e49531fc2"
+    },
+    {
+      "path": "training_history.json",
+      "bytes": 299886,
+      "sha256": "b8463f976a05bb6a313cb29f7a028e9033eea4c0793fcbc361b6a7d67bf4814a"
+    },
+    {
+      "path": "validation_history.json",
+      "bytes": 7176,
+      "sha256": "b1dbccf693c78451c161b9be3818495db681afbd8305c8acc8749fa8ef63449a"
+    }
+  ]
+}
