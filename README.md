@@ -60,6 +60,9 @@ python -m pytest -q
 
 ## 快速单种子实验
 
+Google Colab 的分阶段训练、CPU/GPU 实测与断点恢复说明见
+[`COLAB_TRAINING.md`](COLAB_TRAINING.md)。不要仅凭运行时分配了 GPU 就假定训练更快；先运行端到端 benchmark。
+
 Windows PowerShell 可直接运行六模型验证流水线（最多 4 个并行训练进程）：
 
 ```powershell

@@ -52,6 +52,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--entropy-coefficient", type=float, default=0.01)
     parser.add_argument("--value-coefficient", type=float, default=0.5)
     parser.add_argument("--hidden-dim", type=int, default=64)
+    parser.add_argument(
+        "--device",
+        choices=("auto", "cpu", "cuda"),
+        default="auto",
+        help="Training device. auto uses CUDA when available, otherwise CPU.",
+    )
     parser.add_argument("--rrelu-mode", choices=("expected", "stochastic"), default="expected")
     parser.add_argument("--gate-bias-init", type=float, default=0.0)
     parser.add_argument(
@@ -73,12 +79,26 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def tensors(observation: dict[str, np.ndarray]) -> dict[str, torch.Tensor]:
+def resolve_device(value: str) -> torch.device:
+    if value == "auto":
+        return torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    if value == "cuda" and not torch.cuda.is_available():
+        raise RuntimeError("--device cuda requested, but torch.cuda.is_available() is false")
+    return torch.device(value)
+
+
+def tensors(
+    observation: dict[str, np.ndarray], device: torch.device | str = "cpu"
+) -> dict[str, torch.Tensor]:
     return {
-        "nodes": torch.as_tensor(observation["nodes"], dtype=torch.float32),
-        "edge_types": torch.as_tensor(observation["edge_types"], dtype=torch.long),
-        "edge_features": torch.as_tensor(observation["edge_features"], dtype=torch.float32),
-        "action_mask": torch.as_tensor(observation["action_mask"], dtype=torch.bool),
+        "nodes": torch.as_tensor(observation["nodes"], dtype=torch.float32, device=device),
+        "edge_types": torch.as_tensor(observation["edge_types"], dtype=torch.long, device=device),
+        "edge_features": torch.as_tensor(
+            observation["edge_features"], dtype=torch.float32, device=device
+        ),
+        "action_mask": torch.as_tensor(
+            observation["action_mask"], dtype=torch.bool, device=device
+        ),
     }
 
 
@@ -102,6 +122,7 @@ def collect(
     episode_offset: int,
     gamma: float,
     gae_lambda: float,
+    device: torch.device,
 ) -> tuple[dict[str, torch.Tensor], list[dict[str, object]], int]:
     keys = ("nodes", "edge_types", "edge_features", "action_mask")
     storage: dict[str, list[object]] = {key: [] for key in keys}
@@ -128,7 +149,7 @@ def collect(
         while not done:
             state = {key: observation[key] for key in keys}
             with torch.no_grad():
-                action, log_prob, value = model.act(tensors(observation))
+                action, log_prob, value = model.act(tensors(observation, device))
             observation, reward, done, _ = env.step(int(action.item()), sync_mode=sync_mode)
             states.append(state)
             actions.append(int(action.item()))
@@ -153,20 +174,36 @@ def collect(
         metrics.append(episode_metrics)
         episode += 1
     batch = {
-        "nodes": torch.as_tensor(np.asarray(storage["nodes"]), dtype=torch.float32),
-        "edge_types": torch.as_tensor(np.asarray(storage["edge_types"]), dtype=torch.long),
-        "edge_features": torch.as_tensor(np.asarray(storage["edge_features"]), dtype=torch.float32),
-        "action_mask": torch.as_tensor(np.asarray(storage["action_mask"]), dtype=torch.bool),
-        "actions": torch.as_tensor(storage["actions"], dtype=torch.long),
-        "old_log_probs": torch.as_tensor(storage["old_log_probs"], dtype=torch.float32),
-        "advantages": torch.as_tensor(storage["advantages"], dtype=torch.float32),
-        "returns": torch.as_tensor(storage["returns"], dtype=torch.float32),
+        "nodes": torch.as_tensor(np.asarray(storage["nodes"]), dtype=torch.float32, device=device),
+        "edge_types": torch.as_tensor(
+            np.asarray(storage["edge_types"]), dtype=torch.long, device=device
+        ),
+        "edge_features": torch.as_tensor(
+            np.asarray(storage["edge_features"]), dtype=torch.float32, device=device
+        ),
+        "action_mask": torch.as_tensor(
+            np.asarray(storage["action_mask"]), dtype=torch.bool, device=device
+        ),
+        "actions": torch.as_tensor(storage["actions"], dtype=torch.long, device=device),
+        "old_log_probs": torch.as_tensor(
+            storage["old_log_probs"], dtype=torch.float32, device=device
+        ),
+        "advantages": torch.as_tensor(
+            storage["advantages"], dtype=torch.float32, device=device
+        ),
+        "returns": torch.as_tensor(storage["returns"], dtype=torch.float32, device=device),
     }
     return batch, metrics, episode
 
 
 @torch.no_grad()
-def validate(model: PaperFaithfulActorCritic, config: PaperFaithfulConfig, sync_mode: str, count: int) -> dict[str, float]:
+def validate(
+    model: PaperFaithfulActorCritic,
+    config: PaperFaithfulConfig,
+    sync_mode: str,
+    count: int,
+    device: torch.device,
+) -> dict[str, float]:
     model.eval()
     bank = deterministic_instance_seeds(config.scale, split="validation")
     rows: list[dict[str, object]] = []
@@ -176,7 +213,7 @@ def validate(model: PaperFaithfulActorCritic, config: PaperFaithfulConfig, sync_
         done = False
         episode_return = 0.0
         while not done:
-            action, _, _ = model.act(tensors(observation), deterministic=True)
+            action, _, _ = model.act(tensors(observation, device), deterministic=True)
             observation, reward, done, _ = env.step(int(action.item()), sync_mode=sync_mode)
             episode_return += float(reward)
         row = env.metrics()
@@ -260,11 +297,34 @@ def recover_candidate(
     }
 
 
+def cpu_state_dict(model: nn.Module) -> dict[str, torch.Tensor]:
+    """Return a portable checkpoint that does not retain live GPU storage."""
+    return {name: value.detach().cpu().clone() for name, value in model.state_dict().items()}
+
+
+def optimizer_to(optimizer: torch.optim.Optimizer, device: torch.device) -> None:
+    """Move optimizer tensors restored with map_location=cpu to the active device."""
+    for state in optimizer.state.values():
+        for key, value in state.items():
+            if isinstance(value, torch.Tensor):
+                state[key] = value.to(device)
+
+
+def atomic_torch_save(payload: object, path: Path) -> None:
+    """Write a checkpoint atomically so a Colab reset cannot leave a partial file."""
+    temporary = path.with_name(f".{path.name}.tmp")
+    torch.save(payload, temporary)
+    temporary.replace(path)
+
+
 def main() -> None:
     args = parse_args()
+    device = resolve_device(args.device)
     random.seed(args.seed)
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
+    if device.type == "cuda":
+        torch.cuda.manual_seed_all(args.seed)
     torch.set_num_threads(max(1, int(os.environ.get("PAPER_TORCH_THREADS", "1"))))
     # The paper trains each scale independently; using exact capacity avoids
     # padded nodes/actions changing the optimization problem across scenes.
@@ -288,12 +348,12 @@ def main() -> None:
         gate_bias_init=args.gate_bias_init,
         gate_scope=args.gate_scope,
         gate_activation=args.gate_activation,
-    )
+    ).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, betas=(0.9, 0.999))
     args.output.mkdir(parents=True, exist_ok=True)
     history: list[dict[str, float]] = []
     validation_history: list[dict[str, float]] = []
-    best_state = copy.deepcopy(model.state_dict())
+    best_state = cpu_state_dict(model)
     best_makespan = float("inf")
     best_iteration = 0
     episode_offset = 0
@@ -305,6 +365,7 @@ def main() -> None:
         if resume.get("version") == "paper-faithful-resume-v1":
             model.load_state_dict(resume["model_state"])
             optimizer.load_state_dict(resume["optimizer_state"])
+            optimizer_to(optimizer, device)
             history = list(resume["history"])
             validation_history = list(resume["validation_history"])
             best_state = resume["best_state"]
@@ -314,6 +375,8 @@ def main() -> None:
             random.setstate(resume["python_random_state"])
             np.random.set_state(resume["numpy_random_state"])
             torch.set_rng_state(resume["torch_random_state"])
+            if device.type == "cuda" and resume.get("torch_cuda_random_state_all") is not None:
+                torch.cuda.set_rng_state_all(resume["torch_cuda_random_state_all"])
             recovery_info = resume.get("recovery_info")
             resume_events = list(resume.get("resume_events", []))
             resume_events.append(
@@ -346,7 +409,7 @@ def main() -> None:
     for iteration in range(start_iteration, args.iterations + 1):
         batch, rows, episodes = collect(
             model, config, args.sync_mode, args.rollout_steps, episode_offset,
-            args.gamma, args.gae_lambda,
+            args.gamma, args.gae_lambda, device,
         )
         episode_offset += episodes
         batch["advantages"] = (
@@ -355,7 +418,7 @@ def main() -> None:
         model.train()
         losses: list[float] = []
         for _ in range(args.update_epochs):
-            permutation = torch.randperm(len(batch["actions"]))
+            permutation = torch.randperm(len(batch["actions"]), device=device)
             for start in range(0, len(batch["actions"]), args.batch_size):
                 indices = permutation[start:start + args.batch_size]
                 distribution, value = model(
@@ -382,13 +445,15 @@ def main() -> None:
         }
         history.append(record)
         if iteration % args.validation_interval == 0 or iteration == args.iterations:
-            validation = validate(model, config, args.sync_mode, args.validation_instances)
+            validation = validate(
+                model, config, args.sync_mode, args.validation_instances, device
+            )
             validation["iteration"] = float(iteration)
             validation_history.append(validation)
-            torch.save(
+            atomic_torch_save(
                 {
                     "iteration": iteration,
-                    "model_state": model.state_dict(),
+                    "model_state": cpu_state_dict(model),
                     "validation": validation,
                 },
                 args.output / f"candidate_{iteration:04d}.pt",
@@ -396,12 +461,12 @@ def main() -> None:
             if validation["realized_makespan"] < best_makespan:
                 best_makespan = validation["realized_makespan"]
                 best_iteration = iteration
-                best_state = copy.deepcopy(model.state_dict())
-            torch.save(
+                best_state = cpu_state_dict(model)
+            atomic_torch_save(
                 {
                     "version": "paper-faithful-resume-v1",
                     "iteration": iteration,
-                    "model_state": model.state_dict(),
+                    "model_state": cpu_state_dict(model),
                     "optimizer_state": optimizer.state_dict(),
                     "history": history,
                     "validation_history": validation_history,
@@ -412,6 +477,9 @@ def main() -> None:
                     "python_random_state": random.getstate(),
                     "numpy_random_state": np.random.get_state(),
                     "torch_random_state": torch.get_rng_state(),
+                    "torch_cuda_random_state_all": (
+                        torch.cuda.get_rng_state_all() if device.type == "cuda" else None
+                    ),
                     "recovery_info": recovery_info,
                     "resume_events": resume_events,
                 },
@@ -422,7 +490,7 @@ def main() -> None:
     model.load_state_dict(best_state)
     checkpoint = {
         "version": "paper-faithful-literal-v1",
-        "model_state": model.state_dict(),
+        "model_state": cpu_state_dict(model),
         "model_config": {
             "node_feature_dim": observation["nodes"].shape[-1],
             "edge_feature_dim": observation["edge_features"].shape[-1],
@@ -444,8 +512,15 @@ def main() -> None:
         "validation_history": validation_history,
         "recovery_info": recovery_info,
         "resume_events": resume_events,
+        "runtime": {
+            "device": str(device),
+            "cuda_device_name": (
+                torch.cuda.get_device_name(device) if device.type == "cuda" else None
+            ),
+            "torch_version": torch.__version__,
+        },
     }
-    torch.save(checkpoint, args.output / "checkpoint.pt")
+    atomic_torch_save(checkpoint, args.output / "checkpoint.pt")
     print(json.dumps({"saved": str(args.output / "checkpoint.pt"), "best_iteration": best_iteration, "best_makespan": best_makespan}, ensure_ascii=False))
 
 

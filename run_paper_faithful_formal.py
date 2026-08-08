@@ -49,6 +49,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--update-epochs", type=int, default=4)
     parser.add_argument("--validation-interval", type=int, default=50)
     parser.add_argument("--validation-instances", type=int, default=100)
+    parser.add_argument(
+        "--device",
+        choices=("auto", "cpu", "cuda"),
+        default="auto",
+        help="Training device forwarded to every job.",
+    )
     parser.add_argument("--rrelu-mode", choices=("expected", "stochastic"), default="expected")
     parser.add_argument("--gate-bias-init", type=float, default=0.0)
     parser.add_argument("--gate-activation", choices=("sigmoid", "softplus"), default="sigmoid")
@@ -102,6 +108,7 @@ def command_for(job: Job, args: argparse.Namespace, output: Path) -> list[str]:
         "--rollout-steps", str(args.rollout_steps),
         "--batch-size", str(args.batch_size),
         "--update-epochs", str(args.update_epochs),
+        "--device", getattr(args, "device", "auto"),
         "--validation-interval", str(args.validation_interval),
         "--validation-instances", str(args.validation_instances),
         "--output", str(output),
@@ -128,6 +135,7 @@ def main() -> None:
         "update_epochs": args.update_epochs,
         "validation_interval": args.validation_interval,
         "validation_instances": args.validation_instances,
+        "device": args.device,
         "rrelu_mode": args.rrelu_mode,
         "gate_bias_init": args.gate_bias_init,
         "gate_activation": args.gate_activation,
