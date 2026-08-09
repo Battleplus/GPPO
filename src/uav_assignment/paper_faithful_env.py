@@ -127,12 +127,14 @@ class PaperFaithfulUAVEnv(PaperAlignedUAVEnv):
         )
         self._event_tape: dict[int, dict[str, Any]] = {}
         self.communication_bytes = 0
+        self.last_belief_sync_time = 0.0
         super().__init__(self.faithful_config.base_config())
 
     def reset(self, seed: int | None = None) -> dict[str, np.ndarray]:
         instance_seed = self.faithful_config.instance_seed if seed is None else int(seed)
         observation = super().reset(seed=instance_seed)
         self.communication_bytes = 0
+        self.last_belief_sync_time = 0.0
         self._event_tape = self._make_event_tape(instance_seed)
         return self.observe()
 
@@ -186,6 +188,8 @@ class PaperFaithfulUAVEnv(PaperAlignedUAVEnv):
             full=full,
             records=records,
         )
+        if full or updated:
+            self.last_belief_sync_time = float(self.current_time)
         if count_communication:
             records = records or []
             forced_tasks = {
@@ -238,6 +242,7 @@ class PaperFaithfulUAVEnv(PaperAlignedUAVEnv):
         if sync_mode not in {"none", "event", "periodic", "always"}:
             raise ValueError(f"unsupported sync mode: {sync_mode}")
         previous_makespan = self.makespan
+        cache_age_before = max(0.0, float(self.current_time - self.last_belief_sync_time))
         previous_heartbeats = self.heartbeat_messages
         _, _, done, info = super().step(action, sync_mode="none")
         self.communication_bytes += 16 * (
@@ -277,6 +282,10 @@ class PaperFaithfulUAVEnv(PaperAlignedUAVEnv):
                 "synchronized_uavs": updated,
                 "protocol": "paper-faithful",
                 "communication_bytes": self.communication_bytes,
+                "cache_age_before": cache_age_before,
+                "cache_age_after": max(
+                    0.0, float(self.current_time - self.last_belief_sync_time)
+                ),
             }
         )
         return self.observe(), float(reward), done, info

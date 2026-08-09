@@ -114,6 +114,24 @@ def tape_hash(env: PaperFaithfulUAVEnv) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
+def observation_hash(observation: dict[str, np.ndarray]) -> str:
+    digest = hashlib.sha256()
+    for key in ("nodes", "edge_types", "edge_features", "action_mask"):
+        array = np.ascontiguousarray(observation[key])
+        digest.update(key.encode("ascii"))
+        digest.update(str(array.dtype).encode("ascii"))
+        digest.update(np.asarray(array.shape, dtype=np.int64).tobytes())
+        digest.update(array.tobytes())
+    return digest.hexdigest()
+
+
+def embedding_signature(encoded: torch.Tensor, bins: int = 8) -> list[float]:
+    """Compact deterministic signature of the mean node embedding for causal replay."""
+    pooled = encoded.detach().mean(dim=-2).reshape(-1)
+    chunks = torch.tensor_split(pooled, bins)
+    return [float(chunk.mean()) if chunk.numel() else 0.0 for chunk in chunks]
+
+
 def final_projection_errors(
     transition_trace: list[dict[str, object]], final_realized_makespan: float
 ) -> np.ndarray:
@@ -227,10 +245,16 @@ def main() -> None:
         inference_seconds = 0.0
         decisions = 0
         transition_trace: list[dict[str, object]] = []
+        cache_ages_before: list[float] = []
+        cache_ages_after: list[float] = []
+        embedding_deltas: list[float] = []
+        synchronized_flags: list[bool] = []
         while not done:
+            before_hash = observation_hash(observation)
+            before_tensors = tensors(observation)
             start = time.perf_counter()
             with torch.no_grad():
-                action, _, _ = model.act(tensors(observation), deterministic=True)
+                action, _, _ = model.act(before_tensors, deterministic=True)
             if str(checkpoint["model_config"]["graph_mode"]) == "literal":
                 attention_module = model.literal_attention
                 if attention_module.last_gates is not None:
@@ -239,10 +263,27 @@ def main() -> None:
                     task_mask[:, : config.max_uavs] = False
                     gate_values.extend(attention_module.last_gates[0][task_mask].tolist())
             elapsed = time.perf_counter() - start
+            with torch.no_grad():
+                encoded_before = model._encode(
+                    before_tensors["nodes"], before_tensors["edge_types"], before_tensors["edge_features"]
+                ).detach()
             inference_seconds += elapsed
             decision_latencies_ms.append(1_000.0 * elapsed)
             action_id = int(action.item())
             observation, reward, done, info = env.step(action_id, sync_mode=sync_mode)
+            after_hash = observation_hash(observation)
+            after_tensors = tensors(observation)
+            with torch.no_grad():
+                encoded_after = model._encode(
+                    after_tensors["nodes"], after_tensors["edge_types"], after_tensors["edge_features"]
+                )
+            embedding_delta = float(torch.linalg.vector_norm(encoded_after - encoded_before))
+            cache_age_before = float(info.get("cache_age_before", 0.0))
+            cache_age_after = float(info.get("cache_age_after", 0.0))
+            cache_ages_before.append(cache_age_before)
+            cache_ages_after.append(cache_age_after)
+            embedding_deltas.append(embedding_delta)
+            synchronized_flags.append(bool(info.get("synchronized", False)))
             episode_return += float(reward)
             decisions += 1
             if args.trace:
@@ -255,6 +296,13 @@ def main() -> None:
                         "realized_makespan": float(env.realized_makespan),
                         "event": str(info.get("event", "none")),
                         "synchronized": bool(info.get("synchronized", False)),
+                        "cache_age_before": cache_age_before,
+                        "cache_age_after": cache_age_after,
+                        "observation_hash_before": before_hash,
+                        "observation_hash_after": after_hash,
+                        "observation_changed": before_hash != after_hash,
+                        "embedding_l2_delta": embedding_delta,
+                        "embedding_signature_after": embedding_signature(encoded_after),
                     }
                 )
         metrics = env.metrics()
@@ -284,6 +332,15 @@ def main() -> None:
                 "inference_seconds": inference_seconds,
                 "mean_inference_ms": 1_000.0 * inference_seconds / max(1, decisions),
                 "estimated_forward_flops": estimated_forward_flops,
+                "cache_age_mean": float(np.mean(cache_ages_before)),
+                "cache_age_max": float(max(cache_ages_before, default=0.0)),
+                "cache_age_after_sync_mean": float(
+                    np.mean([
+                        age for age, synchronized in zip(cache_ages_after, synchronized_flags)
+                        if synchronized
+                    ])
+                ) if any(synchronized_flags) else 0.0,
+                "embedding_l2_delta_mean": float(np.mean(embedding_deltas)),
                 "projection_error_relative_mean": projection_error_mean,
                 "projection_error_relative_p95": projection_error_p95,
                 **({"transition_trace": transition_trace} if args.trace else {}),
@@ -296,6 +353,8 @@ def main() -> None:
         "invalid_actions", "reallocated_tasks",
         "projection_error_relative_mean", "projection_error_relative_p95",
         "estimated_forward_flops",
+        "cache_age_mean", "cache_age_max", "cache_age_after_sync_mean",
+        "embedding_l2_delta_mean",
     )
     summary = {
         key: {
@@ -346,6 +405,7 @@ def main() -> None:
     )
     payload = {
         "version": "paper-faithful-evaluation-v1",
+        "communication_trace_version": "cache-observation-embedding-v1" if args.trace else None,
         "checkpoint": str(args.checkpoint),
         "checkpoint_sha256": file_hash(args.checkpoint),
         "checkpoint_kind": "candidate_overlay" if candidate_iteration is not None else "full",

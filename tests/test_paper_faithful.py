@@ -74,6 +74,8 @@ def test_only_fixed_tape_event_triggers_event_sync() -> None:
     _, _, _, info = env.step(action, sync_mode="event")
     assert env.decision_count == 2
     assert info["synchronized"]
+    assert info["cache_age_before"] >= 0.0
+    assert info["cache_age_after"] == 0.0
     assert [row["event_type"] for row in info["events"]] == [
         "task_distribution_changed"
     ]

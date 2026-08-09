@@ -4,7 +4,16 @@ import json
 import math
 from pathlib import Path
 
-from evaluate_paper_faithful import apply_inference_overrides, evaluation_label, final_projection_errors
+import numpy as np
+import torch
+
+from evaluate_paper_faithful import (
+    apply_inference_overrides,
+    evaluation_label,
+    final_projection_errors,
+    embedding_signature,
+    observation_hash,
+)
 from summarize_paper_faithful_formal import main as summarize_main
 from summarize_paper_faithful_formal import mean_ci
 from report_paper_faithful_formal_zh import _baseline_check, _direction_check, _paired_row
@@ -23,6 +32,26 @@ def test_evaluation_label_keeps_sync_and_gate_scope_separate() -> None:
     assert evaluation_label(config, "event") != evaluation_label(
         {**config, "gate_scope": "score"}, "event"
     )
+
+
+def test_observation_hash_is_deterministic_and_content_sensitive() -> None:
+    observation = {
+        "nodes": np.zeros((2, 3), dtype=np.float32),
+        "edge_types": np.zeros((2, 2), dtype=np.int64),
+        "edge_features": np.zeros((2, 2, 1), dtype=np.float32),
+        "action_mask": np.asarray([True, False]),
+    }
+    before = observation_hash(observation)
+    assert observation_hash(observation) == before
+    observation["nodes"][0, 0] = 1.0
+    assert observation_hash(observation) != before
+
+
+def test_embedding_signature_is_compact_and_deterministic() -> None:
+    encoded = torch.arange(2 * 4 * 16, dtype=torch.float32).reshape(2, 4, 16)
+    signature = embedding_signature(encoded)
+    assert len(signature) == 8
+    assert signature == embedding_signature(encoded.clone())
 
 
 def test_inference_overrides_are_explicit_and_do_not_mutate_checkpoint_config() -> None:

@@ -163,7 +163,11 @@ def main() -> None:
             output = evaluation_root / f"test_native_{sync_mode}_100.json"
             if output.is_file():
                 prior = read_json(output)
-                if prior.get("checkpoint_sha256") == sha256(checkpoint) and prior.get("instances") == 100:
+                if (
+                    prior.get("checkpoint_sha256") == sha256(checkpoint)
+                    and prior.get("instances") == 100
+                    and prior.get("communication_trace_version") == "cache-observation-embedding-v1"
+                ):
                     continue
             run([
                 args.python, str(repo / "evaluate_paper_faithful.py"), "--checkpoint", str(checkpoint),
@@ -176,6 +180,16 @@ def main() -> None:
         existing_variants.get(best_variant) or manifest["batches"][-1]["output"]
     )
     manifest["communication_replay_checkpoints"] = [str(path) for path in literal_event_checkpoints]
+    manifest["status"] = "communication_replay_completed"
+    write_manifest(manifest_path, manifest)
+    communication_audit = formal_root / "PHASE1_COMMUNICATION_CAUSAL_AUDIT.json"
+    run([
+        args.python, str(repo / "audit_phase1_communication.py"),
+        "--matrix-manifest", str(manifest_path), "--output", str(communication_audit),
+        "--report", str(repo / "reports" / "COMMUNICATION_CAUSAL_AUDIT.md"),
+    ], log, env)
+    manifest["communication_audit"] = str(communication_audit)
+    manifest["communication_audit_sha256"] = sha256(communication_audit)
     manifest["status"] = "completed"
     manifest["valid"] = True
     write_manifest(manifest_path, manifest)
