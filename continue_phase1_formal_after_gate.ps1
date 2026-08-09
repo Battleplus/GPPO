@@ -48,8 +48,10 @@ try {
     }
 
     "[$(Get-Date -Format o)] Starting remaining four-scale formal matrix." | Add-Content -LiteralPath $log
-    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File `
-        (Join-Path $FormalWorkspace "continue_paper_faithful_matrix.ps1") *>> $log
+    & $python (Join-Path $Repository "run_phase1_formal_matrix.py") `
+        --frozen-protocol (Join-Path $Repository "configs\PHASE1_FROZEN_PROTOCOL.json") `
+        --formal-root (Join-Path $FormalWorkspace "outputs\paper_faithful\formal") `
+        --legacy-literal-root $literalRoot --python $python --jobs 4 *>> $log
     if ($LASTEXITCODE -ne 0) {
         throw "Formal matrix continuation failed with code $LASTEXITCODE."
     }

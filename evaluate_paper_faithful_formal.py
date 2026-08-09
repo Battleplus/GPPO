@@ -7,6 +7,13 @@ import time
 from pathlib import Path
 
 
+def discover_checkpoints(root: Path) -> list[Path]:
+    """Prefer a validation-A-reselected Phase-1 checkpoint without deleting history."""
+    frozen = {path.parent: path for path in root.glob("**/checkpoint_phase1_frozen.pt")}
+    ordinary = {path.parent: path for path in root.glob("**/checkpoint.pt")}
+    return [frozen.get(parent, checkpoint) for parent, checkpoint in sorted(ordinary.items())]
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Evaluate all completed paper-faithful formal checkpoints")
     parser.add_argument("--root", type=Path, required=True)
@@ -27,7 +34,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     root = args.root.resolve()
-    checkpoints = sorted(root.glob("**/checkpoint.pt"))
+    checkpoints = discover_checkpoints(root)
     if not checkpoints:
         raise FileNotFoundError(f"no completed checkpoints under {root}")
     sync_modes: list[str | None] = list(args.sync_mode or [None])
