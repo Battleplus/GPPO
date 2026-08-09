@@ -14,6 +14,11 @@ def discover_checkpoints(root: Path) -> list[Path]:
     return [frozen.get(parent, checkpoint) for parent, checkpoint in sorted(ordinary.items())]
 
 
+def evaluation_directory(checkpoint: Path) -> Path:
+    name = "evaluations_phase1_frozen" if checkpoint.name == "checkpoint_phase1_frozen.pt" else "evaluations"
+    return checkpoint.parent / name
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Evaluate all completed paper-faithful formal checkpoints")
     parser.add_argument("--root", type=Path, required=True)
@@ -48,7 +53,7 @@ def main() -> None:
     while pending or active:
         while pending and len(active) < max(1, args.jobs):
             checkpoint, eval_scale, sync_mode = pending.pop(0)
-            output_dir = checkpoint.parent / "evaluations"
+            output_dir = evaluation_directory(checkpoint)
             output_dir.mkdir(parents=True, exist_ok=True)
             label = eval_scale or "native"
             if sync_mode is not None:

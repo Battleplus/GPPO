@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from evaluate_paper_faithful_formal import discover_checkpoints
+from evaluate_paper_faithful_formal import discover_checkpoints, evaluation_directory
 
 
 SCALES = ("T5-10-48", "T10-10-53", "T15-8-66", "T20-10-92")
@@ -158,7 +158,7 @@ def main() -> None:
     if len(literal_event_checkpoints) != 20:
         raise RuntimeError(f"Expected 20 Literal-event checkpoints for communication replay, found {len(literal_event_checkpoints)}")
     for checkpoint in literal_event_checkpoints:
-        evaluation_root = checkpoint.parent / "evaluations"
+        evaluation_root = evaluation_directory(checkpoint)
         for sync_mode in ("none", "event", "periodic", "always"):
             output = evaluation_root / f"test_native_{sync_mode}_100.json"
             if output.is_file():

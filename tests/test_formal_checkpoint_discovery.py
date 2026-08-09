@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from evaluate_paper_faithful_formal import discover_checkpoints
+from evaluate_paper_faithful_formal import discover_checkpoints, evaluation_directory
 
 
 def test_discovery_prefers_phase1_frozen_without_deleting_legacy(tmp_path) -> None:
@@ -15,3 +15,5 @@ def test_discovery_prefers_phase1_frozen_without_deleting_legacy(tmp_path) -> No
         first / "checkpoint_phase1_frozen.pt",
         second / "checkpoint.pt",
     ]
+    assert evaluation_directory(first / "checkpoint_phase1_frozen.pt") == first / "evaluations_phase1_frozen"
+    assert evaluation_directory(second / "checkpoint.pt") == second / "evaluations"
