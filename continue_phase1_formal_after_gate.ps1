@@ -16,6 +16,11 @@ try {
         throw "Gate screening post-processing ended without a valid summary."
     }
 
+    python (Join-Path $Repository "freeze_phase1_protocol.py") *>> $log
+    if ($LASTEXITCODE -ne 0) {
+        throw "Phase-1 protocol freeze failed with code $LASTEXITCODE."
+    }
+
     "[$(Get-Date -Format o)] Resuming preserved 2000-iteration Literal matrix." | Add-Content -LiteralPath $log
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File `
         (Join-Path $FormalWorkspace "resume_paper_faithful_first_batch.ps1") *>> $log
