@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -166,6 +167,7 @@ def main() -> None:
     payload = {
         "version": "paper-faithful-gate-diagnostic-v1",
         "checkpoint": str(args.checkpoint),
+        "checkpoint_sha256": hashlib.sha256(args.checkpoint.read_bytes()).hexdigest(),
         "scale": scale.name,
         "split": args.split,
         "instances": args.instances,
