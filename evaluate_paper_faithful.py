@@ -250,7 +250,7 @@ def main() -> None:
         embedding_deltas: list[float] = []
         synchronized_flags: list[bool] = []
         while not done:
-            before_hash = observation_hash(observation)
+            before_hash = observation_hash(observation) if args.trace else None
             before_tensors = tensors(observation)
             start = time.perf_counter()
             with torch.no_grad():
@@ -263,30 +263,39 @@ def main() -> None:
                     task_mask[:, : config.max_uavs] = False
                     gate_values.extend(attention_module.last_gates[0][task_mask].tolist())
             elapsed = time.perf_counter() - start
-            with torch.no_grad():
-                encoded_before = model._encode(
-                    before_tensors["nodes"], before_tensors["edge_types"], before_tensors["edge_features"]
-                ).detach()
+            encoded_before = None
+            if args.trace:
+                with torch.no_grad():
+                    encoded_before = model._encode(
+                        before_tensors["nodes"], before_tensors["edge_types"], before_tensors["edge_features"]
+                    ).detach()
             inference_seconds += elapsed
             decision_latencies_ms.append(1_000.0 * elapsed)
             action_id = int(action.item())
             observation, reward, done, info = env.step(action_id, sync_mode=sync_mode)
-            after_hash = observation_hash(observation)
-            after_tensors = tensors(observation)
-            with torch.no_grad():
-                encoded_after = model._encode(
-                    after_tensors["nodes"], after_tensors["edge_types"], after_tensors["edge_features"]
-                )
-            embedding_delta = float(torch.linalg.vector_norm(encoded_after - encoded_before))
+            after_hash = observation_hash(observation) if args.trace else None
+            encoded_after = None
+            embedding_delta = None
+            if args.trace:
+                after_tensors = tensors(observation)
+                with torch.no_grad():
+                    encoded_after = model._encode(
+                        after_tensors["nodes"], after_tensors["edge_types"], after_tensors["edge_features"]
+                    )
+                assert encoded_before is not None
+                embedding_delta = float(torch.linalg.vector_norm(encoded_after - encoded_before))
             cache_age_before = float(info.get("cache_age_before", 0.0))
             cache_age_after = float(info.get("cache_age_after", 0.0))
             cache_ages_before.append(cache_age_before)
             cache_ages_after.append(cache_age_after)
-            embedding_deltas.append(embedding_delta)
+            if embedding_delta is not None:
+                embedding_deltas.append(embedding_delta)
             synchronized_flags.append(bool(info.get("synchronized", False)))
             episode_return += float(reward)
             decisions += 1
             if args.trace:
+                assert before_hash is not None and after_hash is not None
+                assert embedding_delta is not None and encoded_after is not None
                 transition_trace.append(
                     {
                         "decision": decisions,
@@ -340,7 +349,9 @@ def main() -> None:
                         if synchronized
                     ])
                 ) if any(synchronized_flags) else 0.0,
-                "embedding_l2_delta_mean": float(np.mean(embedding_deltas)),
+                "embedding_l2_delta_mean": (
+                    float(np.mean(embedding_deltas)) if embedding_deltas else None
+                ),
                 "projection_error_relative_mean": projection_error_mean,
                 "projection_error_relative_p95": projection_error_p95,
                 **({"transition_trace": transition_trace} if args.trace else {}),
