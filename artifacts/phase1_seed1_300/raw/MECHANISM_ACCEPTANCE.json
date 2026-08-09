@@ -1,0 +1,352 @@
+{
+  "version": "gppo-mechanism-validation-v2",
+  "scope": "T5-10-48, training seed=1, 300 iterations, fixed test100",
+  "not_claimed": "not a five-seed paper-level statistical reproduction",
+  "decision": "机制验证未通过；暂停 PCRL/世界模型接入，按失败检查项修正 GPPO",
+  "checks": {
+    "formula_and_mechanism_tests_passed": true,
+    "training_protocol_exact": true,
+    "same_fixed_test100": true,
+    "same_fixed_event_tapes": true,
+    "gppo_event_better_than_ppo_none": true,
+    "graph_benefit_under_event": true,
+    "graph_benefit_under_none": true,
+    "adaptive_better_than_nogate": false,
+    "adaptive_better_than_singlehead": false,
+    "gppo_better_than_random": true,
+    "gppo_within_5_percent_of_greedy": true,
+    "event_full_same_checkpoint": true,
+    "event_full_same_tapes": true,
+    "event_within_5_percent_of_full": true,
+    "event_uses_fewer_bytes": true,
+    "gate_not_saturated_constant": true,
+    "gate_has_policy_gradient": true,
+    "gate_has_ppo_probe_gradient": true,
+    "baseline_heterogeneous_relations_present": true,
+    "baseline_graph_state_changes_over_time": true,
+    "baseline_literal_ahgnn_checkpoint_loaded": true,
+    "baseline_all_selected_actions_pass_mask": true,
+    "baseline_environment_received_no_invalid_actions": true,
+    "baseline_stepwise_subtask_uav_pairs_selected": true,
+    "baseline_all_subtasks_completed": true,
+    "baseline_event_tape_was_exercised": true,
+    "baseline_every_event_triggered_sync": true,
+    "baseline_non_events_did_not_trigger_state_sync": true,
+    "baseline_event_sync_is_sparser_than_decisions": true
+  },
+  "disturbance_checks": {
+    "failure_injected_all_instances": true,
+    "leader_elected_all_instances": true,
+    "running_task_released_all_instances": true,
+    "released_task_recovered_all_instances": true,
+    "failure_event_completion_at_least_95_percent": true
+  },
+  "protocol_errors": [],
+  "methods": {
+    "GPPO-event": {
+      "return": {
+        "mean": -6.848177805045271,
+        "std": 1.31509661843796,
+        "median": -6.840072185082209
+      },
+      "makespan": {
+        "mean": 16.16732689094142,
+        "std": 1.3563052549940717,
+        "median": 16.03687044176952
+      },
+      "completion": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 2790.88,
+        "std": 89.61616015884725,
+        "median": 2812.0
+      }
+    },
+    "PPO-none": {
+      "return": {
+        "mean": -7.852820317924555,
+        "std": 1.5817462566294656,
+        "median": -7.92659480516939
+      },
+      "makespan": {
+        "mean": 17.171969403820707,
+        "std": 1.6636777222783132,
+        "median": 17.147210276618637
+      },
+      "completion": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 1069.44,
+        "std": 106.9745858613251,
+        "median": 1088.0
+      }
+    },
+    "PPO-event": {
+      "return": {
+        "mean": -7.709888157601995,
+        "std": 1.5600206363717708,
+        "median": -7.534112874131972
+      },
+      "makespan": {
+        "mean": 17.029037243498145,
+        "std": 1.710886509122918,
+        "median": 16.778041470511166
+      },
+      "completion": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 2844.64,
+        "std": 113.06666666666668,
+        "median": 2812.0
+      }
+    },
+    "GPPO-none": {
+      "return": {
+        "mean": -6.7068439558928254,
+        "std": 1.2814935648870693,
+        "median": -6.614938209191506
+      },
+      "makespan": {
+        "mean": 16.025993041788972,
+        "std": 1.3485860244922243,
+        "median": 15.924225215309015
+      },
+      "completion": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 992.64,
+        "std": 87.95723478779419,
+        "median": 960.0
+      }
+    },
+    "GPPO-NoGate-event": {
+      "return": {
+        "mean": -6.654004490840845,
+        "std": 1.2484485508421652,
+        "median": -6.561604316490308
+      },
+      "makespan": {
+        "mean": 15.973153576736998,
+        "std": 1.276500236826732,
+        "median": 15.820602326544126
+      },
+      "completion": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 2776.8,
+        "std": 83.0606447547255,
+        "median": 2748.0
+      }
+    },
+    "GPPO-SingleHead-event": {
+      "return": {
+        "mean": -6.6197565499776445,
+        "std": 1.367327232844025,
+        "median": -6.705841047608653
+      },
+      "makespan": {
+        "mean": 15.938905635873796,
+        "std": 1.5256154647692757,
+        "median": 15.804940747771596
+      },
+      "completion": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 2776.8,
+        "std": 98.55193985145523,
+        "median": 2748.0
+      }
+    }
+  },
+  "comparisons": {
+    "GPPO-event_vs_PPO-none": {
+      "mean": -1.004642512879286,
+      "median": -0.9873645420589323,
+      "ci95_low": -1.3246040162625758,
+      "ci95_high": -0.6846810094959961,
+      "n": 100
+    },
+    "GPPO-event_vs_PPO-event": {
+      "mean": -0.8617103525567248,
+      "median": -0.7739573165468023,
+      "ci95_low": -1.1528607730302594,
+      "ci95_high": -0.5705599320831902,
+      "n": 100
+    },
+    "GPPO-none_vs_PPO-none": {
+      "mean": -1.1459763620317314,
+      "median": -1.1266230948675782,
+      "ci95_low": -1.427267578866793,
+      "ci95_high": -0.8646851451966697,
+      "n": 100
+    },
+    "GPPO-event_vs_GPPO-none": {
+      "mean": 0.14133384915244535,
+      "median": 0.045306718882240915,
+      "ci95_low": -0.038803608398911144,
+      "ci95_high": 0.32147130670380186,
+      "n": 100
+    },
+    "Adaptive_vs_NoGate": {
+      "mean": 0.1941733142044234,
+      "median": 0.1361595018364028,
+      "ci95_low": 0.006061390519646187,
+      "ci95_high": 0.38228523788920066,
+      "n": 100
+    },
+    "Adaptive_vs_SingleHead": {
+      "mean": 0.2284212550676262,
+      "median": 0.08959573330741044,
+      "ci95_low": 0.03170362156920539,
+      "ci95_high": 0.425138888566047,
+      "n": 100
+    }
+  },
+  "baselines": {
+    "random_makespan": 20.40727079309478,
+    "greedy_makespan": 17.375227479087712
+  },
+  "communication": {
+    "event_makespan": 16.16732689094142,
+    "full_makespan": 16.16732689094142,
+    "quality_gap_percent": 0.0,
+    "event_bytes": 2790.88,
+    "full_bytes": 4266481.04,
+    "reduction_percent": 99.93458590407799
+  },
+  "gate": {
+    "version": "paper-faithful-gate-diagnostic-v1",
+    "checkpoint": "/content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_event_seed1/checkpoint.pt",
+    "scale": "T5-10-48",
+    "split": "test",
+    "instances": 100,
+    "best_iteration": 250,
+    "gate": {
+      "count": 1011324,
+      "mean": 0.35169898856980947,
+      "std": 0.3298831924272945,
+      "median": 0.22439920902252197,
+      "p05": 0.01353483023121953,
+      "p95": 0.9358885079622269,
+      "fraction_gt_0_9": 0.07094758949654117,
+      "fraction_lt_0_1": 0.3840223311223703
+    },
+    "attention_on_task_edges": {
+      "count": 1011324,
+      "mean": 0.03408898507531261,
+      "std": 0.017461839894382096,
+      "median": 0.02931156661361456,
+      "p05": 0.01499499287456274,
+      "p95": 0.06874892935156822,
+      "fraction_gt_0_9": 0.0,
+      "fraction_lt_0_1": 0.9918384217125273
+    },
+    "task_attention_mass_per_uav": {
+      "count": 34810,
+      "mean": 0.9903765816741276,
+      "std": 0.04484735281761447,
+      "median": 0.9953556656837463,
+      "p05": 0.9766938090324402,
+      "p95": 0.998374342918396,
+      "fraction_gt_0_9": 0.9980178109738581,
+      "fraction_lt_0_1": 0.0019821890261419134
+    },
+    "removed_attention_mass_per_uav": {
+      "count": 34810,
+      "mean": 0.5631653236236485,
+      "std": 0.24447067173552325,
+      "median": 0.5487655103206635,
+      "p05": 0.18834404721856118,
+      "p95": 0.9450321227312087,
+      "fraction_gt_0_9": 0.12338408503303648,
+      "fraction_lt_0_1": 0.005688020683711577
+    },
+    "gate_gradient_l2_policy_sensitivity": 0.043516146202857,
+    "gate_gradient_norms": {
+      "literal_attention.gate.0.weight": 0.033563144505023956,
+      "literal_attention.gate.0.bias": 0.012637898325920105,
+      "literal_attention.gate.2.weight": 0.017836546525359154,
+      "literal_attention.gate.2.bias": 0.017009157687425613
+    },
+    "gate_gradient_l2_actual_ppo_probe": 0.10391017451616848,
+    "gate_gradient_norms_actual_ppo_probe": {
+      "literal_attention.gate.0.weight": 0.07294677197933197,
+      "literal_attention.gate.0.bias": 0.02043735235929489,
+      "literal_attention.gate.2.weight": 0.06511496752500534,
+      "literal_attention.gate.2.bias": 0.028608538210392
+    },
+    "gate_activation": "sigmoid",
+    "interpretation_limits": "The gradient is a local policy-sensitivity diagnostic, not a PPO update gradient."
+  },
+  "leader_failure_summary": {
+    "clean_event_makespan": 21.428545091680046,
+    "failure_event_makespan": 29.21335864093216,
+    "failure_full_makespan": 29.21335864093216,
+    "failure_event_completion": 1.0,
+    "failure_full_completion": 1.0,
+    "event_failure_invalid_actions": 0.0,
+    "event_failure_reallocation_success_rate": 1.0,
+    "failure_injection_coverage": 1.0,
+    "leader_election_coverage": 1.0,
+    "task_reallocation_coverage": 1.0,
+    "released_task_recovery_coverage": 1.0
+  },
+  "baseline_mechanism_evidence": {
+    "version": "gppo-stepwise-baseline-evidence-v1",
+    "checkpoint": "/content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_event_seed1/checkpoint.pt",
+    "checkpoint_sha256": "3bac3faf988e9e4d08aaa9d37bbe148d36547e8a8791ceecf56d8f5371ea3df6",
+    "instance_seed": 25104800,
+    "graph_mode": "literal",
+    "sync_mode": "event",
+    "relation_counts_across_decisions": {
+      "self": 4081,
+      "uav_communication": 1540,
+      "task_predecessor": 2926,
+      "uav_task_capability": 18480,
+      "task_successor": 2926
+    },
+    "unique_graph_state_versions": 77,
+    "decisions": 77,
+    "pair_assignments": 48,
+    "noop_decisions": 29,
+    "illegal_mask_selections": 0,
+    "environment_invalid_actions": 0,
+    "event_decisions": 3,
+    "event_decisions_synchronized": 3,
+    "non_event_decisions_synchronized": 0,
+    "communication_events": 3,
+    "communication_bytes": 2876,
+    "all_tasks_completed": true,
+    "checks": {
+      "heterogeneous_relations_present": true,
+      "graph_state_changes_over_time": true,
+      "literal_ahgnn_checkpoint_loaded": true,
+      "all_selected_actions_pass_mask": true,
+      "environment_received_no_invalid_actions": true,
+      "stepwise_subtask_uav_pairs_selected": true,
+      "all_subtasks_completed": true,
+      "event_tape_was_exercised": true,
+      "every_event_triggered_sync": true,
+      "non_events_did_not_trigger_state_sync": true,
+      "event_sync_is_sparser_than_decisions": true
+    }
+  }
+}

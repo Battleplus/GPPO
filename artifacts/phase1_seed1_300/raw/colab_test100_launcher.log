@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/content/GPPO/evaluate_paper_faithful_formal.py", line 93, in <module>
+    main()
+  File "/content/GPPO/evaluate_paper_faithful_formal.py", line 79, in main
+    raise RuntimeError(
+RuntimeError: evaluation failed: /content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_event_seed1/checkpoint.pt (None, None), code=1
+completed /content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_no_gate_event_seed1 (native)
+completed /content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_event_seed1 (native)
+completed /content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_single_head_event_seed1 (native)
+completed /content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_none_seed1 (native)
+completed /content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/ppo_mlp_event_seed1 (native)
+completed /content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/ppo_mlp_none_seed1 (native)
+completed /content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_no_gate_event_seed1 (native)
+completed /content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_event_seed1 (native)
+completed /content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_single_head_event_seed1 (native)
+completed /content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_none_seed1 (native)
+completed /content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/ppo_mlp_event_seed1 (native)
+completed /content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/ppo_mlp_none_seed1 (native)

@@ -39,9 +39,12 @@ def test_paper_scales_and_instance_bank_are_exact_and_deterministic() -> None:
     assert seeds == deterministic_instance_seeds(PAPER_SCALES[0])
     validation = deterministic_instance_seeds(PAPER_SCALES[0], split="validation")
     test = deterministic_instance_seeds(PAPER_SCALES[0], split="test")
-    assert set(seeds).isdisjoint(validation)
-    assert set(seeds).isdisjoint(test)
-    assert set(validation).isdisjoint(test)
+    validation_a = deterministic_instance_seeds(PAPER_SCALES[0], split="validation_a")
+    validation_b = deterministic_instance_seeds(PAPER_SCALES[0], split="validation_b")
+    banks = (seeds, validation, test, validation_a, validation_b)
+    for index, left in enumerate(banks):
+        for right in banks[index + 1 :]:
+            assert set(left).isdisjoint(right)
 
 
 def test_parent_task_hierarchy_has_exact_subtask_partition() -> None:
@@ -307,3 +310,20 @@ def test_four_structures_share_io_but_report_active_parameter_counts() -> None:
         counts[mode] = model.active_parameter_count()
     assert counts["literal"] > counts["literal_no_gate"]
     assert counts["ppo_mlp"] < counts["literal"]
+
+
+def test_gate_warmup_forces_identity_and_freezes_gate_parameters() -> None:
+    model = PaperFaithfulActorCritic(
+        node_feature_dim=24,
+        edge_feature_dim=5,
+        max_uavs=3,
+        max_tasks=7,
+        graph_mode="literal",
+        gate_bias_init=2.0,
+    )
+    model.set_gate_learning_enabled(False)
+    assert model.literal_attention.force_gate_one is True
+    assert all(not parameter.requires_grad for parameter in model.literal_attention.gate.parameters())
+    model.set_gate_learning_enabled(True)
+    assert model.literal_attention.force_gate_one is False
+    assert all(parameter.requires_grad for parameter in model.literal_attention.gate.parameters())

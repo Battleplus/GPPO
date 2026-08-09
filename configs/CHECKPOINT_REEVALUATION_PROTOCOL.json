@@ -1,0 +1,38 @@
+{
+  "version": "phase1-checkpoint-reevaluation-protocol-v1",
+  "frozen_before_evaluation": true,
+  "scope": "T5-10-48, training seed 1, candidates 50..300",
+  "models": {
+    "Adaptive": "literal_event_seed1",
+    "NoGate": "literal_no_gate_event_seed1",
+    "SingleHead": "literal_single_head_event_seed1"
+  },
+  "candidate_iterations": [50, 100, 150, 200, 250, 300],
+  "instance_banks": {
+    "validation_a": {
+      "count": 100,
+      "offset": 30000000,
+      "purpose": "checkpoint selection only"
+    },
+    "validation_b": {
+      "count": 100,
+      "offset": 40000000,
+      "purpose": "selection-result confirmation only"
+    },
+    "test": {
+      "count": 100,
+      "offset": 20000000,
+      "purpose": "frozen original test100; reporting only; never selection"
+    }
+  },
+  "sync_mode": "event",
+  "primary_metric": "realized_makespan",
+  "selection_rule": "minimum validation_a mean realized_makespan independently per model",
+  "tie_breaker": "earlier candidate iteration",
+  "prohibitions": [
+    "do not use validation_b to select a checkpoint",
+    "do not use test100 to select a checkpoint",
+    "do not retrain or modify frozen checkpoints",
+    "do not overwrite the phase1_seed1_300 raw baseline"
+  ]
+}

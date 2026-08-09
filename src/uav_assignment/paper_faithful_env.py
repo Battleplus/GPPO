@@ -90,11 +90,19 @@ class PaperFaithfulConfig:
 def deterministic_instance_seeds(
     scale: PaperScale,
     count: int = 100,
-    split: Literal["train", "validation", "test"] = "train",
+    split: Literal[
+        "train", "validation", "test", "validation_a", "validation_b"
+    ] = "train",
 ) -> tuple[int, ...]:
     """Stable disjoint instance banks, independent of algorithm/training seed."""
 
-    split_offset = {"train": 0, "validation": 10_000_000, "test": 20_000_000}[split]
+    split_offset = {
+        "train": 0,
+        "validation": 10_000_000,
+        "test": 20_000_000,
+        "validation_a": 30_000_000,
+        "validation_b": 40_000_000,
+    }[split]
     base = (
         split_offset
         + scale.uavs * 1_000_000

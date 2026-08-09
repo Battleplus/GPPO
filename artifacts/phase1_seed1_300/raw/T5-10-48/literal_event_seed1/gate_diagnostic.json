@@ -1,0 +1,64 @@
+{
+  "version": "paper-faithful-gate-diagnostic-v1",
+  "checkpoint": "/content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_event_seed1/checkpoint.pt",
+  "scale": "T5-10-48",
+  "split": "test",
+  "instances": 100,
+  "best_iteration": 250,
+  "gate": {
+    "count": 1011324,
+    "mean": 0.35169898856980947,
+    "std": 0.3298831924272945,
+    "median": 0.22439920902252197,
+    "p05": 0.01353483023121953,
+    "p95": 0.9358885079622269,
+    "fraction_gt_0_9": 0.07094758949654117,
+    "fraction_lt_0_1": 0.3840223311223703
+  },
+  "attention_on_task_edges": {
+    "count": 1011324,
+    "mean": 0.03408898507531261,
+    "std": 0.017461839894382096,
+    "median": 0.02931156661361456,
+    "p05": 0.01499499287456274,
+    "p95": 0.06874892935156822,
+    "fraction_gt_0_9": 0.0,
+    "fraction_lt_0_1": 0.9918384217125273
+  },
+  "task_attention_mass_per_uav": {
+    "count": 34810,
+    "mean": 0.9903765816741276,
+    "std": 0.04484735281761447,
+    "median": 0.9953556656837463,
+    "p05": 0.9766938090324402,
+    "p95": 0.998374342918396,
+    "fraction_gt_0_9": 0.9980178109738581,
+    "fraction_lt_0_1": 0.0019821890261419134
+  },
+  "removed_attention_mass_per_uav": {
+    "count": 34810,
+    "mean": 0.5631653236236485,
+    "std": 0.24447067173552325,
+    "median": 0.5487655103206635,
+    "p05": 0.18834404721856118,
+    "p95": 0.9450321227312087,
+    "fraction_gt_0_9": 0.12338408503303648,
+    "fraction_lt_0_1": 0.005688020683711577
+  },
+  "gate_gradient_l2_policy_sensitivity": 0.043516146202857,
+  "gate_gradient_norms": {
+    "literal_attention.gate.0.weight": 0.033563144505023956,
+    "literal_attention.gate.0.bias": 0.012637898325920105,
+    "literal_attention.gate.2.weight": 0.017836546525359154,
+    "literal_attention.gate.2.bias": 0.017009157687425613
+  },
+  "gate_gradient_l2_actual_ppo_probe": 0.10391017451616848,
+  "gate_gradient_norms_actual_ppo_probe": {
+    "literal_attention.gate.0.weight": 0.07294677197933197,
+    "literal_attention.gate.0.bias": 0.02043735235929489,
+    "literal_attention.gate.2.weight": 0.06511496752500534,
+    "literal_attention.gate.2.bias": 0.028608538210392
+  },
+  "gate_activation": "sigmoid",
+  "interpretation_limits": "The gradient is a local policy-sensitivity diagnostic, not a PPO update gradient."
+}

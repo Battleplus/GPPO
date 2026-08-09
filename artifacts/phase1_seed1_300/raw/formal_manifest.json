@@ -1,0 +1,59 @@
+{
+  "version": "paper-faithful-formal-runner-v1",
+  "protocol": "configs/paper_faithful_protocol.json",
+  "iterations": 300,
+  "rollout_steps": 512,
+  "batch_size": 512,
+  "update_epochs": 4,
+  "validation_interval": 50,
+  "validation_instances": 20,
+  "device": "auto",
+  "rrelu_mode": "expected",
+  "gate_bias_init": 0.0,
+  "gate_activation": "sigmoid",
+  "gate_scope": "task_message",
+  "jobs": [
+    {
+      "scale": "T5-10-48",
+      "mode": "literal",
+      "sync_mode": "event",
+      "seed": 1,
+      "output": "/content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_event_seed1"
+    },
+    {
+      "scale": "T5-10-48",
+      "mode": "ppo_mlp",
+      "sync_mode": "none",
+      "seed": 1,
+      "output": "/content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/ppo_mlp_none_seed1"
+    },
+    {
+      "scale": "T5-10-48",
+      "mode": "ppo_mlp",
+      "sync_mode": "event",
+      "seed": 1,
+      "output": "/content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/ppo_mlp_event_seed1"
+    },
+    {
+      "scale": "T5-10-48",
+      "mode": "literal",
+      "sync_mode": "none",
+      "seed": 1,
+      "output": "/content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_none_seed1"
+    },
+    {
+      "scale": "T5-10-48",
+      "mode": "literal_no_gate",
+      "sync_mode": "event",
+      "seed": 1,
+      "output": "/content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_no_gate_event_seed1"
+    },
+    {
+      "scale": "T5-10-48",
+      "mode": "literal_single_head",
+      "sync_mode": "event",
+      "seed": 1,
+      "output": "/content/drive/MyDrive/GPPO_mechanism_validation/mechanism_seed1_300/T5-10-48/literal_single_head_event_seed1"
+    }
+  ]
+}

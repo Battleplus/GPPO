@@ -14,6 +14,7 @@ def runner_args() -> SimpleNamespace:
     return SimpleNamespace(
         rrelu_mode="expected",
         gate_bias_init=0.0,
+        gate_warmup_iterations=0,
         gate_scope="task_message",
         iterations=2000,
         rollout_steps=512,
@@ -21,6 +22,7 @@ def runner_args() -> SimpleNamespace:
         update_epochs=4,
         validation_interval=50,
         validation_instances=100,
+        validation_split="validation",
     )
 
 

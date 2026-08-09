@@ -1,0 +1,154 @@
+{
+  "version": "phase1-gate-diagnostic-preregistration-v1",
+  "preregistered_before_new_variant_training": true,
+  "created_after": "phase1 candidate checkpoint reevaluation v1",
+  "objective": "Diagnose Eq.(3) implementation ambiguity without tuning on test100 or requiring Adaptive to win.",
+  "frozen_literal_definition": {
+    "name": "Adaptive-current / Literal-Paper",
+    "graph_mode": "literal",
+    "gate_scope": "task_message",
+    "gate_activation": "sigmoid",
+    "gate_bias_init": 0.0,
+    "gate_warmup_iterations": 0,
+    "post_gate_renormalization": false,
+    "rrelu_mode": "expected",
+    "definition_must_not_change": true
+  },
+  "variants": [
+    {
+      "name": "Adaptive-current",
+      "graph_mode": "literal",
+      "gate_scope": "task_message",
+      "gate_activation": "sigmoid",
+      "gate_bias_init": 0.0,
+      "gate_warmup_iterations": 0
+    },
+    {
+      "name": "Adaptive-bias2",
+      "graph_mode": "literal",
+      "gate_scope": "task_message",
+      "gate_activation": "sigmoid",
+      "gate_bias_init": 2.0,
+      "gate_warmup_iterations": 0
+    },
+    {
+      "name": "Adaptive-warmup",
+      "graph_mode": "literal",
+      "gate_scope": "task_message",
+      "gate_activation": "sigmoid",
+      "gate_bias_init": 2.0,
+      "gate_warmup_iterations": 50,
+      "warmup_semantics": "Use an exact task gate of 1 and freeze gate-network parameters for iterations 1-50; enable learned sigmoid gate and gradients from iteration 51."
+    },
+    {
+      "name": "Adaptive-score",
+      "graph_mode": "literal",
+      "gate_scope": "score",
+      "gate_activation": "sigmoid",
+      "gate_bias_init": 0.0,
+      "gate_warmup_iterations": 0,
+      "post_gate_renormalization": true,
+      "renormalization_semantics": "Add log(gate) to task scores and apply one joint self/task softmax."
+    },
+    {
+      "name": "Adaptive-softplus",
+      "graph_mode": "literal",
+      "gate_scope": "task_message",
+      "gate_activation": "softplus",
+      "gate_bias_init": 0.0,
+      "gate_warmup_iterations": 0,
+      "positive_amplification_allowed": true
+    },
+    {
+      "name": "NoGate",
+      "graph_mode": "literal_no_gate",
+      "gate_scope": "task_message",
+      "gate_activation": "sigmoid",
+      "gate_bias_init": 0.0,
+      "gate_warmup_iterations": 0
+    },
+    {
+      "name": "SingleHead",
+      "graph_mode": "literal_single_head",
+      "gate_scope": "task_message",
+      "gate_activation": "sigmoid",
+      "gate_bias_init": 0.0,
+      "gate_warmup_iterations": 0
+    }
+  ],
+  "smoke_protocol": {
+    "required_before_full_training": true,
+    "scale": "T5-10-48",
+    "training_seeds": [1, 2, 3],
+    "iterations": 20,
+    "rollout_steps": 512,
+    "batch_size": 512,
+    "update_epochs": 4,
+    "validation_instances": 100,
+    "validation_split": "validation_a",
+    "test_is_forbidden": true
+  },
+  "screening_protocol": {
+    "scale": "T5-10-48",
+    "training_seeds": [1, 2, 3],
+    "iterations": 300,
+    "rollout_steps": 512,
+    "batch_size": 512,
+    "update_epochs": 4,
+    "learning_rate": 0.0002,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "ppo_clip": 0.2,
+    "entropy_coefficient": 0.01,
+    "value_coefficient": 0.5,
+    "validation_interval": 50,
+    "validation_instances": 100,
+    "checkpoint_selection_split": "validation_a",
+    "confirmation_split": "validation_b",
+    "reporting_split": "test",
+    "test_instances": 100,
+    "sync_mode": "event",
+    "rrelu_mode": "expected"
+  },
+  "required_diagnostics": [
+    "gate_mean",
+    "gate_std",
+    "gate_median",
+    "gate_p05",
+    "gate_p95",
+    "gate_fraction_lt_0_1",
+    "gate_fraction_gt_0_9",
+    "removed_attention_mass",
+    "encoded_feature_l2_norm",
+    "gate_gradient_l2",
+    "policy_entropy",
+    "ppo_approx_kl",
+    "ppo_clip_fraction",
+    "value_loss",
+    "realized_makespan",
+    "active_parameter_count",
+    "total_parameter_count",
+    "inference_latency_ms"
+  ],
+  "screening_rule": {
+    "minimum_seeds_better_than_nogate": 2,
+    "minimum_seeds_better_than_singlehead": 2,
+    "three_seed_mean_not_worse_than_both": true,
+    "zero_invalid_actions": true,
+    "gate_must_be_nonconstant": true,
+    "gate_must_have_gradient": true,
+    "no_clear_validation_test_rank_reversal": true
+  },
+  "if_no_adaptive_variant_passes": {
+    "retain_literal_as_negative_result": true,
+    "engineering_baseline_choice": "validation-only selection between NoGate and SingleHead",
+    "required_statement": "未独立复现Adaptive正收益",
+    "hide_ablation_results": false
+  },
+  "anti_leakage_rules": [
+    "No architecture or hyperparameter may be changed after reading screening test100.",
+    "Only validation_a selects checkpoints and variants.",
+    "validation_b and test100 may confirm or contradict but may not trigger reselection.",
+    "All negative and rank-reversal results must remain in reports."
+  ]
+}

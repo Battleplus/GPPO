@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "tests": [
+    "tests/test_paper_faithful.py",
+    "tests/test_paper_faithful_baselines.py",
+    "tests/test_paper_faithful_resume.py",
+    "tests/test_paper_faithful_cuda.py",
+    "tests/test_report_paper_faithful_quick.py"
+  ],
+  "timestamp": 1786278589.6578496
+}

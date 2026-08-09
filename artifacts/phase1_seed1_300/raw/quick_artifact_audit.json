@@ -1,0 +1,45 @@
+{
+  "valid": true,
+  "checkpoint_count": 6,
+  "native_test100_evaluation_count": 6,
+  "checkpoint_rows": [
+    {
+      "directory": "literal_event_seed1",
+      "path": "T5-10-48/literal_event_seed1/checkpoint.pt",
+      "sha256": "b794ab589c53701c03dccfee5d28a7a1188e0790ca7b78748742fe1d1434216b"
+    },
+    {
+      "directory": "literal_no_gate_event_seed1",
+      "path": "T5-10-48/literal_no_gate_event_seed1/checkpoint.pt",
+      "sha256": "aae85b9a10e6f5b532fcc0432ba6ca33f7ee34288cdbd21d9c28da919096665f"
+    },
+    {
+      "directory": "literal_none_seed1",
+      "path": "T5-10-48/literal_none_seed1/checkpoint.pt",
+      "sha256": "0ddf8eb670f2bd75575e1c050f8dce4e7b97d56653dc41e1e89b50850fdb1e0d"
+    },
+    {
+      "directory": "literal_single_head_event_seed1",
+      "path": "T5-10-48/literal_single_head_event_seed1/checkpoint.pt",
+      "sha256": "7cfef47a1347409143d90b69bfdfa94bd3df8951068427ae4baa0d947406acf4"
+    },
+    {
+      "directory": "ppo_mlp_event_seed1",
+      "path": "T5-10-48/ppo_mlp_event_seed1/checkpoint.pt",
+      "sha256": "6772c1a271175c19c69e7fd50ecf205d35595f251c651ea0b1a19f9778fc7303"
+    },
+    {
+      "directory": "ppo_mlp_none_seed1",
+      "path": "T5-10-48/ppo_mlp_none_seed1/checkpoint.pt",
+      "sha256": "fa9b8e176009fa4aae9d729f5d87d757e02d8f1b5e284c8fafb9cf2b5675cfcb"
+    }
+  ],
+  "training_protocol_exact": true,
+  "validation_iterations_exact": true,
+  "unique_test_instances_per_method": 100,
+  "same_fixed_test_bank": true,
+  "same_fixed_event_tape_bank": true,
+  "all_tasks_completed": true,
+  "event_full_same_checkpoint": true,
+  "event_full_same_event_tapes": true
+}

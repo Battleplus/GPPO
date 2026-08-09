@@ -50,6 +50,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--validation-interval", type=int, default=50)
     parser.add_argument("--validation-instances", type=int, default=100)
     parser.add_argument(
+        "--validation-split",
+        choices=("validation", "validation_a", "validation_b"),
+        default="validation",
+    )
+    parser.add_argument(
         "--device",
         choices=("auto", "cpu", "cuda"),
         default="auto",
@@ -57,6 +62,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--rrelu-mode", choices=("expected", "stochastic"), default="expected")
     parser.add_argument("--gate-bias-init", type=float, default=0.0)
+    parser.add_argument("--gate-warmup-iterations", type=int, default=0)
     parser.add_argument("--gate-activation", choices=("sigmoid", "softplus"), default="sigmoid")
     parser.add_argument(
         "--gate-scope",
@@ -99,6 +105,7 @@ def command_for(job: Job, args: argparse.Namespace, output: Path) -> list[str]:
         "--mode", job.mode,
         "--rrelu-mode", args.rrelu_mode,
         "--gate-bias-init", str(args.gate_bias_init),
+        "--gate-warmup-iterations", str(getattr(args, "gate_warmup_iterations", 0)),
         "--gate-activation", getattr(args, "gate_activation", "sigmoid"),
         "--gate-scope", args.gate_scope,
         "--sync-mode", job.sync_mode,
@@ -111,6 +118,7 @@ def command_for(job: Job, args: argparse.Namespace, output: Path) -> list[str]:
         "--device", getattr(args, "device", "auto"),
         "--validation-interval", str(args.validation_interval),
         "--validation-instances", str(args.validation_instances),
+        "--validation-split", getattr(args, "validation_split", "validation"),
         "--output", str(output),
     ]
     resume = output / "resume_latest.pt"
@@ -135,9 +143,11 @@ def main() -> None:
         "update_epochs": args.update_epochs,
         "validation_interval": args.validation_interval,
         "validation_instances": args.validation_instances,
+        "validation_split": args.validation_split,
         "device": args.device,
         "rrelu_mode": args.rrelu_mode,
         "gate_bias_init": args.gate_bias_init,
+        "gate_warmup_iterations": args.gate_warmup_iterations,
         "gate_activation": args.gate_activation,
         "gate_scope": args.gate_scope,
         "jobs": [

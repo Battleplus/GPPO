@@ -1,0 +1,373 @@
+{
+  "version": "paper-faithful-quick-mechanism-v1",
+  "scope": "single-scale, single-training-seed, 100-iteration quick mechanism validation",
+  "not_claimed": "This is not a multi-seed or paper-level statistical reproduction.",
+  "protocol": {
+    "scale": "T5-10-48",
+    "training_seed": 1,
+    "iterations": 100,
+    "rollout_steps": 512,
+    "batch_size": 512,
+    "validation_iterations": [
+      50,
+      100
+    ],
+    "validation_instances": 20,
+    "test_instances": 100
+  },
+  "methods": [
+    {
+      "method": "GPPO-event",
+      "label": "literal_expected_task_message_event",
+      "episode_return": {
+        "mean": -6.808464631247971,
+        "std": 1.2211489373274913,
+        "median": -6.725009986889959
+      },
+      "realized_makespan": {
+        "mean": 16.12761371714412,
+        "std": 1.3823556541732092,
+        "median": 16.00443315313962
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 2792.8,
+        "std": 86.53696588537447,
+        "median": 2780.0
+      }
+    },
+    {
+      "method": "PPO-none",
+      "label": "ppo_mlp_expected_task_message_none",
+      "episode_return": {
+        "mean": -9.21206110972377,
+        "std": 1.687903304000414,
+        "median": -9.139631471809164
+      },
+      "realized_makespan": {
+        "mean": 18.53121019561992,
+        "std": 1.7972852860791977,
+        "median": 18.237434085797226
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 1156.48,
+        "std": 114.4342676655975,
+        "median": 1152.0
+      }
+    },
+    {
+      "method": "PPO-event",
+      "label": "ppo_mlp_expected_task_message_event",
+      "episode_return": {
+        "mean": -8.267888260431093,
+        "std": 1.5116059540039477,
+        "median": -8.316172368009244
+      },
+      "realized_makespan": {
+        "mean": 17.587037346327246,
+        "std": 1.6036852715976548,
+        "median": 17.499827866751357
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 2877.92,
+        "std": 105.47896338688449,
+        "median": 2876.0
+      }
+    },
+    {
+      "method": "GPPO-none",
+      "label": "literal_expected_task_message_none",
+      "episode_return": {
+        "mean": -7.040731231290458,
+        "std": 1.3817258124141867,
+        "median": -6.8951017343443874
+      },
+      "realized_makespan": {
+        "mean": 16.359880317186608,
+        "std": 1.410391512734808,
+        "median": 16.356071392830657
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 1015.68,
+        "std": 92.16529726638991,
+        "median": 1024.0
+      }
+    },
+    {
+      "method": "GPPO-NoGate-event",
+      "label": "literal_no_gate_expected_task_message_event",
+      "episode_return": {
+        "mean": -8.161081115050274,
+        "std": 1.6543869525996697,
+        "median": -7.980112595751425
+      },
+      "realized_makespan": {
+        "mean": 17.480230200946423,
+        "std": 1.6761953246174979,
+        "median": 17.536622970519524
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 2872.8,
+        "std": 109.67868590302375,
+        "median": 2876.0
+      }
+    },
+    {
+      "method": "GPPO-SingleHead-event",
+      "label": "literal_single_head_expected_task_message_event",
+      "episode_return": {
+        "mean": -7.547018560508082,
+        "std": 1.5689884374804925,
+        "median": -7.347467576599032
+      },
+      "realized_makespan": {
+        "mean": 16.866167646404232,
+        "std": 1.5544615700060243,
+        "median": 16.863139189223816
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_bytes": {
+        "mean": 2835.68,
+        "std": 100.3326668658022,
+        "median": 2812.0
+      }
+    }
+  ],
+  "comparisons": {
+    "GPPO-event_vs_PPO-none": {
+      "mean": -2.4035964784758,
+      "median": -2.3105703575036713,
+      "std": 1.437722453263498,
+      "ci95_low": -2.688871804735674,
+      "ci95_high": -2.1183211522159264,
+      "n_instances": 100
+    },
+    "GPPO-event_vs_PPO-event": {
+      "mean": -1.459423629183124,
+      "median": -1.6063420936984736,
+      "std": 1.4728778957048236,
+      "ci95_low": -1.7516745579241961,
+      "ci95_high": -1.1671727004420518,
+      "n_instances": 100
+    },
+    "GPPO-none_vs_PPO-none": {
+      "mean": -2.1713298784333106,
+      "median": -2.0107308362979426,
+      "std": 1.6110798363238412,
+      "ci95_low": -2.4910030704981176,
+      "ci95_high": -1.8516566863685036,
+      "n_instances": 100
+    },
+    "GPPO-event_vs_GPPO-none": {
+      "mean": -0.23226660004248947,
+      "median": -0.09159533413657339,
+      "std": 0.9157480872499426,
+      "ci95_low": -0.41397088779920577,
+      "ci95_high": -0.05056231228577315,
+      "n_instances": 100
+    },
+    "Adaptive_vs_NoGate": {
+      "mean": -1.352616483802305,
+      "median": -1.357465150595229,
+      "std": 1.1722006714054576,
+      "ci95_low": -1.585206528019934,
+      "ci95_high": -1.120026439584676,
+      "n_instances": 100
+    },
+    "Adaptive_vs_SingleHead": {
+      "mean": -0.7385539292601142,
+      "median": -0.7077219282382838,
+      "std": 1.1864122015086267,
+      "ci95_low": -0.9739638493707787,
+      "ci95_high": -0.5031440091494497,
+      "n_instances": 100
+    }
+  },
+  "baselines": {
+    "random": {
+      "episode_return": {
+        "mean": -11.08812170719863,
+        "std": 2.6259948187270648,
+        "median": -10.814772434568528
+      },
+      "realized_makespan": {
+        "mean": 20.40727079309478,
+        "std": 2.742986119089655,
+        "median": 20.21534120264991
+      },
+      "projected_makespan": {
+        "mean": 20.40727079309478,
+        "std": 2.742986119089655,
+        "median": 20.21534120264991
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "all_tasks_completed": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_events": {
+        "mean": 3.0,
+        "std": 0.0,
+        "median": 3.0
+      },
+      "communication_bytes": {
+        "mean": 3062.24,
+        "std": 178.27756817146488,
+        "median": 3068.0
+      },
+      "heartbeat_messages": {
+        "mean": 79.64,
+        "std": 11.142348010716555,
+        "median": 80.0
+      },
+      "decisions": {
+        "mean": 77.74,
+        "std": 4.591648105335635,
+        "median": 78.0
+      }
+    },
+    "greedy": {
+      "episode_return": {
+        "mean": -8.056078393191566,
+        "std": 1.789290726068068,
+        "median": -8.157764451936918
+      },
+      "realized_makespan": {
+        "mean": 17.375227479087712,
+        "std": 1.7953960479568931,
+        "median": 17.311408032045193
+      },
+      "projected_makespan": {
+        "mean": 17.375227479087712,
+        "std": 1.7953960479568931,
+        "median": 17.311408032045193
+      },
+      "completion_rate": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "all_tasks_completed": {
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0
+      },
+      "communication_events": {
+        "mean": 3.0,
+        "std": 0.0,
+        "median": 3.0
+      },
+      "communication_bytes": {
+        "mean": 2868.96,
+        "std": 116.45555965147122,
+        "median": 2876.0
+      },
+      "heartbeat_messages": {
+        "mean": 67.56,
+        "std": 7.278472478216951,
+        "median": 68.0
+      },
+      "decisions": {
+        "mean": 73.0,
+        "std": 3.0084057323614197,
+        "median": 73.0
+      }
+    }
+  },
+  "communication": {
+    "event_makespan": 16.12761371714412,
+    "full_makespan": 16.12761371714412,
+    "quality_gap_percent": 0.0,
+    "event_bytes": 2792.8,
+    "full_bytes": 4290990.16,
+    "communication_reduction_percent": 99.93491478899128
+  },
+  "checks": {
+    "gppo_better_than_paper_ppo_on_test100": true,
+    "gppo_better_than_random": true,
+    "gppo_within_5_percent_of_greedy": true,
+    "adaptive_better_than_nogate": true,
+    "adaptive_better_than_singlehead": true,
+    "event_within_5_percent_of_full": true,
+    "event_uses_fewer_bytes_than_full": true
+  },
+  "decision": "继续完整五种子正式复现；当前快速验证方向通过",
+  "artifact_audit": {
+    "valid": true,
+    "checkpoint_count": 6,
+    "native_test100_evaluation_count": 6,
+    "checkpoint_rows": [
+      {
+        "directory": "literal_event_seed1",
+        "path": "T5-10-48/literal_event_seed1/checkpoint.pt",
+        "sha256": "b794ab589c53701c03dccfee5d28a7a1188e0790ca7b78748742fe1d1434216b"
+      },
+      {
+        "directory": "literal_no_gate_event_seed1",
+        "path": "T5-10-48/literal_no_gate_event_seed1/checkpoint.pt",
+        "sha256": "aae85b9a10e6f5b532fcc0432ba6ca33f7ee34288cdbd21d9c28da919096665f"
+      },
+      {
+        "directory": "literal_none_seed1",
+        "path": "T5-10-48/literal_none_seed1/checkpoint.pt",
+        "sha256": "0ddf8eb670f2bd75575e1c050f8dce4e7b97d56653dc41e1e89b50850fdb1e0d"
+      },
+      {
+        "directory": "literal_single_head_event_seed1",
+        "path": "T5-10-48/literal_single_head_event_seed1/checkpoint.pt",
+        "sha256": "7cfef47a1347409143d90b69bfdfa94bd3df8951068427ae4baa0d947406acf4"
+      },
+      {
+        "directory": "ppo_mlp_event_seed1",
+        "path": "T5-10-48/ppo_mlp_event_seed1/checkpoint.pt",
+        "sha256": "6772c1a271175c19c69e7fd50ecf205d35595f251c651ea0b1a19f9778fc7303"
+      },
+      {
+        "directory": "ppo_mlp_none_seed1",
+        "path": "T5-10-48/ppo_mlp_none_seed1/checkpoint.pt",
+        "sha256": "fa9b8e176009fa4aae9d729f5d87d757e02d8f1b5e284c8fafb9cf2b5675cfcb"
+      }
+    ],
+    "training_protocol_exact": true,
+    "validation_iterations_exact": true,
+    "unique_test_instances_per_method": 100,
+    "same_fixed_test_bank": true,
+    "same_fixed_event_tape_bank": true,
+    "all_tasks_completed": true,
+    "event_full_same_checkpoint": true,
+    "event_full_same_event_tapes": true
+  }
+}

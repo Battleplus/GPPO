@@ -1,0 +1,329 @@
+{
+  "version": "phase1-seed1-300-artifact-audit-v1",
+  "scope": "T5-10-48, training seed=1, 300 iterations, six learned methods",
+  "expected_methods": [
+    "literal_event_seed1",
+    "literal_no_gate_event_seed1",
+    "literal_none_seed1",
+    "literal_single_head_event_seed1",
+    "ppo_mlp_event_seed1",
+    "ppo_mlp_none_seed1"
+  ],
+  "method_rows": [
+    {
+      "method": "literal_event_seed1",
+      "mode": "literal",
+      "sync_mode": "event",
+      "seed": 1,
+      "iterations": 300,
+      "validation_instances": 20,
+      "best_iteration": 250,
+      "checkpoint_sha256": "3bac3faf988e9e4d08aaa9d37bbe148d36547e8a8791ceecf56d8f5371ea3df6",
+      "candidate_checkpoints": [
+        {
+          "iteration": 50,
+          "path": "T5-10-48/literal_event_seed1/candidate_0050.pt",
+          "sha256": "0bcb16e913ac7b7067617ee452d38c0a40d8ae4636f1aaac4a33eeceef2b2621"
+        },
+        {
+          "iteration": 100,
+          "path": "T5-10-48/literal_event_seed1/candidate_0100.pt",
+          "sha256": "c34ee8252dd920b705466eead5d0598fe12edadc2537a661f4e9b13e99b6f5bf"
+        },
+        {
+          "iteration": 150,
+          "path": "T5-10-48/literal_event_seed1/candidate_0150.pt",
+          "sha256": "dc7c577c03ce3653d95e52565c532160a3818592e06de3a3ac31f9e7d05f5046"
+        },
+        {
+          "iteration": 200,
+          "path": "T5-10-48/literal_event_seed1/candidate_0200.pt",
+          "sha256": "2d547a7ac4b2fafce4552f0c05a667e96450819c21a865af670e83ee49053914"
+        },
+        {
+          "iteration": 250,
+          "path": "T5-10-48/literal_event_seed1/candidate_0250.pt",
+          "sha256": "68d9cb6b22ebadb52e8b00e48d3d3d50bf00b530879afc759ce595a294502779"
+        },
+        {
+          "iteration": 300,
+          "path": "T5-10-48/literal_event_seed1/candidate_0300.pt",
+          "sha256": "7c4be005020c98c1a18def821b4be38391da8f621b8f7c9377621f2192c8fc5f"
+        }
+      ],
+      "training_history_rows": 300,
+      "validation_history_rows": 6,
+      "test_rows": 100,
+      "unique_test_seeds": 100,
+      "event_tape_hash_count": 100
+    },
+    {
+      "method": "literal_no_gate_event_seed1",
+      "mode": "literal_no_gate",
+      "sync_mode": "event",
+      "seed": 1,
+      "iterations": 300,
+      "validation_instances": 20,
+      "best_iteration": 250,
+      "checkpoint_sha256": "8bc2d3116424e2b9399d93814efce06dd0a4e0512a0c223b6cd09e2f85ccdf0f",
+      "candidate_checkpoints": [
+        {
+          "iteration": 50,
+          "path": "T5-10-48/literal_no_gate_event_seed1/candidate_0050.pt",
+          "sha256": "3e26f7aa9e0a39f21208f623301e61d8931fa9630c6fe9ca7b551221d4714591"
+        },
+        {
+          "iteration": 100,
+          "path": "T5-10-48/literal_no_gate_event_seed1/candidate_0100.pt",
+          "sha256": "074d27d8352c9ff58aeb6548bfd45893ed7c7be6c7bf408c966c422ce20b7bde"
+        },
+        {
+          "iteration": 150,
+          "path": "T5-10-48/literal_no_gate_event_seed1/candidate_0150.pt",
+          "sha256": "45fa50d928d22d60a436ca67c8dcbf91a1bb7c243ff97386092aa203d7503c55"
+        },
+        {
+          "iteration": 200,
+          "path": "T5-10-48/literal_no_gate_event_seed1/candidate_0200.pt",
+          "sha256": "edd037586b7a5effca452277ad8d3129954a017e5740aab3750a4e44afc4fa1d"
+        },
+        {
+          "iteration": 250,
+          "path": "T5-10-48/literal_no_gate_event_seed1/candidate_0250.pt",
+          "sha256": "31904d008a10404e612d69fee4cf31b1606251c2ae28361f329c69e814c7c5ed"
+        },
+        {
+          "iteration": 300,
+          "path": "T5-10-48/literal_no_gate_event_seed1/candidate_0300.pt",
+          "sha256": "70ed275638025afe7385237e5593f2e2cd79d66be035610e6ff3cfcf7ad92b04"
+        }
+      ],
+      "training_history_rows": 300,
+      "validation_history_rows": 6,
+      "test_rows": 100,
+      "unique_test_seeds": 100,
+      "event_tape_hash_count": 100
+    },
+    {
+      "method": "literal_none_seed1",
+      "mode": "literal",
+      "sync_mode": "none",
+      "seed": 1,
+      "iterations": 300,
+      "validation_instances": 20,
+      "best_iteration": 250,
+      "checkpoint_sha256": "d5427c3352d5d1c62acdb01d1a09024ed9c911de387bef58f05a84421602e598",
+      "candidate_checkpoints": [
+        {
+          "iteration": 50,
+          "path": "T5-10-48/literal_none_seed1/candidate_0050.pt",
+          "sha256": "176d96479fc40fec8e98f40b7769faa683569528dc0d466be1e7dc68c3032aa9"
+        },
+        {
+          "iteration": 100,
+          "path": "T5-10-48/literal_none_seed1/candidate_0100.pt",
+          "sha256": "1a736064d95b65c30b2becced651bd9a86d90a75a3d3d7831bbb79a9a52a2a69"
+        },
+        {
+          "iteration": 150,
+          "path": "T5-10-48/literal_none_seed1/candidate_0150.pt",
+          "sha256": "badbc5fecba3fed2cc16c30290a875cb19d465ade6ca929eca6008d200b1e669"
+        },
+        {
+          "iteration": 200,
+          "path": "T5-10-48/literal_none_seed1/candidate_0200.pt",
+          "sha256": "5636835f4c4250b0c8e0948405ad74393eddedf523ca3527cec5e7e518ec60a9"
+        },
+        {
+          "iteration": 250,
+          "path": "T5-10-48/literal_none_seed1/candidate_0250.pt",
+          "sha256": "be90672e6017139e04a7c3802076d06a87e1cecc33c4c84bafd7cda7996643cc"
+        },
+        {
+          "iteration": 300,
+          "path": "T5-10-48/literal_none_seed1/candidate_0300.pt",
+          "sha256": "a505a481adb8863b9e782811d8f91fa268b60e2cc25522c1283200b255573667"
+        }
+      ],
+      "training_history_rows": 300,
+      "validation_history_rows": 6,
+      "test_rows": 100,
+      "unique_test_seeds": 100,
+      "event_tape_hash_count": 100
+    },
+    {
+      "method": "literal_single_head_event_seed1",
+      "mode": "literal_single_head",
+      "sync_mode": "event",
+      "seed": 1,
+      "iterations": 300,
+      "validation_instances": 20,
+      "best_iteration": 200,
+      "checkpoint_sha256": "04eeca7502c632b977ff6fa7963ed385a5d6c3f6b80a319672ad49c0c30c3d4b",
+      "candidate_checkpoints": [
+        {
+          "iteration": 50,
+          "path": "T5-10-48/literal_single_head_event_seed1/candidate_0050.pt",
+          "sha256": "15e52822012a0fbc62867860a0033286d407a496bc756e5d06d37c8f87b1ca05"
+        },
+        {
+          "iteration": 100,
+          "path": "T5-10-48/literal_single_head_event_seed1/candidate_0100.pt",
+          "sha256": "7a6b4cebc3c6ff70bd21bfbbd4dc725b6f93a435f95e4bdb7060829261577d00"
+        },
+        {
+          "iteration": 150,
+          "path": "T5-10-48/literal_single_head_event_seed1/candidate_0150.pt",
+          "sha256": "b199c0cdd1ba3dad972a783d78693f10e7b7df50180e72509bdfeaf22832b83c"
+        },
+        {
+          "iteration": 200,
+          "path": "T5-10-48/literal_single_head_event_seed1/candidate_0200.pt",
+          "sha256": "a54e315e6d475b74255bb2e476d312fcbc3e6a01389a5a0097bca13898f3e754"
+        },
+        {
+          "iteration": 250,
+          "path": "T5-10-48/literal_single_head_event_seed1/candidate_0250.pt",
+          "sha256": "b64d23c03aa62ed86a818749eb45d9fa46165c5d03b120389eb65d389592a3f4"
+        },
+        {
+          "iteration": 300,
+          "path": "T5-10-48/literal_single_head_event_seed1/candidate_0300.pt",
+          "sha256": "6398871a6c7da99bd134578dbb229e80800df7c429c80730ce7af3dc251fbc48"
+        }
+      ],
+      "training_history_rows": 300,
+      "validation_history_rows": 6,
+      "test_rows": 100,
+      "unique_test_seeds": 100,
+      "event_tape_hash_count": 100
+    },
+    {
+      "method": "ppo_mlp_event_seed1",
+      "mode": "ppo_mlp",
+      "sync_mode": "event",
+      "seed": 1,
+      "iterations": 300,
+      "validation_instances": 20,
+      "best_iteration": 250,
+      "checkpoint_sha256": "465283ae9e0c6e2fb18b501197f2356f6e966352089f0c1cb68050edb866c0fd",
+      "candidate_checkpoints": [
+        {
+          "iteration": 50,
+          "path": "T5-10-48/ppo_mlp_event_seed1/candidate_0050.pt",
+          "sha256": "3056225335c81312dc86cfccd11adec2bc3bd7d9a4d5920f2819205968900fc2"
+        },
+        {
+          "iteration": 100,
+          "path": "T5-10-48/ppo_mlp_event_seed1/candidate_0100.pt",
+          "sha256": "122ae11850c6e4e60c0b5264ea65da0e4257c66edb319f3e53d92ba4cdf56d63"
+        },
+        {
+          "iteration": 150,
+          "path": "T5-10-48/ppo_mlp_event_seed1/candidate_0150.pt",
+          "sha256": "66d5486db6de2ecf503097602a95a52a4de4634e6daf9a03d4fcce1570233fc6"
+        },
+        {
+          "iteration": 200,
+          "path": "T5-10-48/ppo_mlp_event_seed1/candidate_0200.pt",
+          "sha256": "1d08ec7aee33aec126af50528a0fea405cde0f8e71e6cc8e9356bf4b63672866"
+        },
+        {
+          "iteration": 250,
+          "path": "T5-10-48/ppo_mlp_event_seed1/candidate_0250.pt",
+          "sha256": "03569f84f801417f34a1ffa625d3c328da852087f3b7900ce18549388da44223"
+        },
+        {
+          "iteration": 300,
+          "path": "T5-10-48/ppo_mlp_event_seed1/candidate_0300.pt",
+          "sha256": "575113cf7073d1c7097c133032c5b4c75d089adbdf46f44665d1333557bf97a7"
+        }
+      ],
+      "training_history_rows": 300,
+      "validation_history_rows": 6,
+      "test_rows": 100,
+      "unique_test_seeds": 100,
+      "event_tape_hash_count": 100
+    },
+    {
+      "method": "ppo_mlp_none_seed1",
+      "mode": "ppo_mlp",
+      "sync_mode": "none",
+      "seed": 1,
+      "iterations": 300,
+      "validation_instances": 20,
+      "best_iteration": 300,
+      "checkpoint_sha256": "9fce1201654f3d3f6ce9da3fd34523c203281448d59e2e06223601c7c7829aaf",
+      "candidate_checkpoints": [
+        {
+          "iteration": 50,
+          "path": "T5-10-48/ppo_mlp_none_seed1/candidate_0050.pt",
+          "sha256": "f0e565f1ec9df68d5f03f6d0d5abfa8650ff1beef2f7fdd122ed54717926253c"
+        },
+        {
+          "iteration": 100,
+          "path": "T5-10-48/ppo_mlp_none_seed1/candidate_0100.pt",
+          "sha256": "9ee3138a6d5e173b63e5ef312876c842a26aaa571420131b60fdc18f8a8493ad"
+        },
+        {
+          "iteration": 150,
+          "path": "T5-10-48/ppo_mlp_none_seed1/candidate_0150.pt",
+          "sha256": "55c8e6494b1c5f95472c0ad446104a109f244694273d853cb9d9534686a4a145"
+        },
+        {
+          "iteration": 200,
+          "path": "T5-10-48/ppo_mlp_none_seed1/candidate_0200.pt",
+          "sha256": "e3e50f1a9914c6edf343a244cdf235618de7826538731e6e8c3b9a51bf5a1ca3"
+        },
+        {
+          "iteration": 250,
+          "path": "T5-10-48/ppo_mlp_none_seed1/candidate_0250.pt",
+          "sha256": "a606ab4cf7e57f0662197737a92004d8d3b54057867e2d4ae5bc168467b1ca73"
+        },
+        {
+          "iteration": 300,
+          "path": "T5-10-48/ppo_mlp_none_seed1/candidate_0300.pt",
+          "sha256": "98111163c8fac2c01f5ffff7703f49978e8305d4f7195d4b1dc71d33a161fe7a"
+        }
+      ],
+      "training_history_rows": 300,
+      "validation_history_rows": 6,
+      "test_rows": 100,
+      "unique_test_seeds": 100,
+      "event_tape_hash_count": 100
+    }
+  ],
+  "checks": {
+    "six_methods_complete": true,
+    "candidate_iterations_50_to_300": true,
+    "training_histories_1_to_300": true,
+    "validation_histories_50_to_300": true,
+    "test100_unique": true,
+    "same_fixed_test_bank": true,
+    "same_fixed_event_tape_bank": true,
+    "evaluation_checkpoint_hashes_match": true,
+    "adaptive_negative_result_preserved": true,
+    "source_hashes_recorded": true
+  },
+  "known_negative_results": {
+    "adaptive_better_than_nogate": false,
+    "adaptive_better_than_singlehead": false,
+    "decision": "机制验证未通过；暂停 PCRL/世界模型接入，按失败检查项修正 GPPO"
+  },
+  "bundled_audit_checkpoint_hashes": {
+    "literal_event_seed1": "b794ab589c53701c03dccfee5d28a7a1188e0790ca7b78748742fe1d1434216b",
+    "literal_no_gate_event_seed1": "aae85b9a10e6f5b532fcc0432ba6ca33f7ee34288cdbd21d9c28da919096665f",
+    "literal_none_seed1": "0ddf8eb670f2bd75575e1c050f8dce4e7b97d56653dc41e1e89b50850fdb1e0d",
+    "literal_single_head_event_seed1": "7cfef47a1347409143d90b69bfdfa94bd3df8951068427ae4baa0d947406acf4",
+    "ppo_mlp_event_seed1": "6772c1a271175c19c69e7fd50ecf205d35595f251c651ea0b1a19f9778fc7303",
+    "ppo_mlp_none_seed1": "fa9b8e176009fa4aae9d729f5d87d757e02d8f1b5e284c8fafb9cf2b5675cfcb"
+  },
+  "warnings": [
+    "Historical checkpoint selection used validation20; Step 1 must re-evaluate candidates on validation100-A/B.",
+    "This is one training seed and cannot support training-seed confidence intervals.",
+    "Adaptive is significantly worse than NoGate and SingleHead in the frozen test100 result.",
+    "Bundled quick_artifact_audit.json contains stale checkpoint hashes for: literal_event_seed1, literal_no_gate_event_seed1, literal_none_seed1, literal_single_head_event_seed1, ppo_mlp_event_seed1, ppo_mlp_none_seed1"
+  ],
+  "errors": [],
+  "valid": true
+}

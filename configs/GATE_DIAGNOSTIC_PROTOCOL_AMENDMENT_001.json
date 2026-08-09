@@ -1,0 +1,15 @@
+{
+  "version": "phase1-gate-diagnostic-protocol-amendment-001",
+  "base_protocol": "configs/GATE_DIAGNOSTIC_PROTOCOL.json",
+  "base_protocol_sha256": "0b863bf37045fa3287268c6f7695c439c529d4ca075032df3c04ce2d87f68f13",
+  "applies_to": "future 300-iteration screening only",
+  "does_not_apply_to": "20-iteration Smoke; Smoke is mechanics-only and performs no model selection",
+  "change": {
+    "variant": "Adaptive-warmup",
+    "checkpoint_selection_eligibility": "Only validation checkpoints after iteration 50 are eligible in the 300-iteration screening."
+  },
+  "reason": "A validation checkpoint produced while force_gate_one=true must not be selected as a deployed learned-gate checkpoint because reloading model weights does not serialize the transient force_gate_one runtime flag.",
+  "test_or_test100_used_to_make_change": false,
+  "architecture_or_hyperparameter_changed": false,
+  "negative_results_affected": false
+}

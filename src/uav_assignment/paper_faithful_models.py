@@ -69,6 +69,8 @@ class LiteralUAVAttention(nn.Module):
         nn.init.xavier_uniform_(self.attention.view(1, -1))
         self.last_gates: torch.Tensor | None = None
         self.last_attention: torch.Tensor | None = None
+        self.last_uav_features: torch.Tensor | None = None
+        self.force_gate_one = False
 
     def forward(
         self,
@@ -107,7 +109,11 @@ class LiteralUAVAttention(nn.Module):
             if self.gate_activation == "sigmoid"
             else F.softplus(gate_logits)
         )
-        task_gate = learned_gate if use_gate else torch.ones_like(learned_gate)
+        task_gate = (
+            learned_gate
+            if use_gate and not self.force_gate_one
+            else torch.ones_like(learned_gate)
+        )
         if self.gate_scope == "score":
             # Score gating is the normalized interpretation: the gate changes
             # the competition before one joint self/task softmax.
@@ -131,6 +137,7 @@ class LiteralUAVAttention(nn.Module):
         updated = self.output_activation(aggregated)
         self.last_gates = learned_gate
         self.last_attention = alpha
+        self.last_uav_features = updated.detach()
         result = x.clone()
         result[:, :max_uavs] = updated
         return result
@@ -244,6 +251,13 @@ class PaperFaithfulActorCritic(nn.Module):
         self.pair_actor = nn.Sequential(nn.Linear(2 * hidden_dim + edge_feature_dim, hidden_dim), nn.ELU(), nn.Linear(hidden_dim, 1))
         self.noop_actor = nn.Linear(hidden_dim, 1)
         self.critic = nn.Sequential(nn.Linear(hidden_dim, hidden_dim), nn.ELU(), nn.Linear(hidden_dim, 1))
+
+    def set_gate_learning_enabled(self, enabled: bool) -> None:
+        """Freeze/unfreeze Eq.(3), forcing an identity gate during warmup."""
+
+        self.literal_attention.force_gate_one = not enabled
+        for parameter in self.literal_attention.gate.parameters():
+            parameter.requires_grad_(enabled)
 
     def _encode(self, nodes: torch.Tensor, edge_types: torch.Tensor, edge_features: torch.Tensor) -> torch.Tensor:
         encoded = self.node_encoder(nodes)

@@ -1,0 +1,1982 @@
+{
+  "version": "paper-faithful-formal-summary-v1",
+  "evaluation_files": 7,
+  "summary": [
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "label": "literal_expected_task_message_always",
+      "training_seed_count": 1,
+      "metrics": {
+        "episode_return": {
+          "mean": -6.808464631247971,
+          "std": NaN,
+          "median": -6.808464631247971,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "realized_makespan": {
+          "mean": 16.12761371714412,
+          "std": NaN,
+          "median": 16.12761371714412,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": NaN,
+          "median": 1.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": NaN,
+          "median": 1.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "communication_events": {
+          "mean": 70.02,
+          "std": NaN,
+          "median": 70.02,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "communication_bytes": {
+          "mean": 4290990.16,
+          "std": NaN,
+          "median": 4290990.16,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "heartbeat_messages": {
+          "mean": 62.8,
+          "std": NaN,
+          "median": 62.8,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "mean_inference_ms": {
+          "mean": 3.5107418463691884,
+          "std": NaN,
+          "median": 3.5107418463691884,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "inference_p50_ms": {
+          "mean": 3.2095379999645957,
+          "std": NaN,
+          "median": 3.2095379999645957,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "inference_p95_ms": {
+          "mean": 5.280705250152095,
+          "std": NaN,
+          "median": 5.280705250152095,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": NaN,
+          "median": 16702203.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "projection_error_relative_mean": {
+          "mean": 0.1790079217313847,
+          "std": NaN,
+          "median": 0.1790079217313847,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "projection_error_relative_p95": {
+          "mean": 0.3763562800170016,
+          "std": NaN,
+          "median": 0.3763562800170016,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        }
+      },
+      "gate_summaries": [
+        {
+          "training_seed": 1,
+          "gate": {
+            "count": 1016664,
+            "mean": 0.44253921655810413,
+            "std": 0.32905435660047755,
+            "median": 0.35317543148994446,
+            "p05": 0.048828309401869774,
+            "p95": 0.9390391439199448,
+            "fraction_gt_0_9": 0.09947337566787061,
+            "fraction_lt_0_1": 0.20186413603707812,
+            "positive_amplification_fraction": 0.0
+          }
+        }
+      ],
+      "active_parameter_counts": [
+        93636
+      ],
+      "total_parameter_counts": [
+        106564
+      ],
+      "recovery_infos": [],
+      "resume_events": [
+        {
+          "training_seed": 1,
+          "events": [
+            {
+              "version": "exact-resume-event-v1",
+              "source": "/content/drive/MyDrive/GPPO_one_click/quick_seed1_100/T5-10-48/literal_event_seed1/resume_latest.pt",
+              "source_iteration": 50,
+              "optimizer_state_recovered": true,
+              "rng_state_recovered": true,
+              "episode_offset_recovered": true
+            }
+          ]
+        }
+      ],
+      "per_seed": [
+        {
+          "episode_return": -6.808464631247971,
+          "realized_makespan": 16.12761371714412,
+          "completion_rate": 1.0,
+          "all_tasks_completed": 1.0,
+          "communication_events": 70.02,
+          "communication_bytes": 4290990.16,
+          "heartbeat_messages": 62.8,
+          "mean_inference_ms": 3.5107418463691884,
+          "estimated_forward_flops": 16702203.0,
+          "projection_error_relative_mean": 0.1790079217313847,
+          "projection_error_relative_p95": 0.3763562800170016,
+          "training_seed": 1,
+          "inference_p50_ms": 3.2095379999645957,
+          "inference_p95_ms": 5.280705250152095
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "label": "literal_expected_task_message_event",
+      "training_seed_count": 1,
+      "metrics": {
+        "episode_return": {
+          "mean": -6.808464631247971,
+          "std": NaN,
+          "median": -6.808464631247971,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "realized_makespan": {
+          "mean": 16.12761371714412,
+          "std": NaN,
+          "median": 16.12761371714412,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": NaN,
+          "median": 1.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": NaN,
+          "median": 1.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": NaN,
+          "median": 3.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "communication_bytes": {
+          "mean": 2792.8,
+          "std": NaN,
+          "median": 2792.8,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "heartbeat_messages": {
+          "mean": 62.8,
+          "std": NaN,
+          "median": 62.8,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "mean_inference_ms": {
+          "mean": 3.1121068439263855,
+          "std": NaN,
+          "median": 3.1121068439263855,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "inference_p50_ms": {
+          "mean": 2.812835999975505,
+          "std": NaN,
+          "median": 2.812835999975505,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "inference_p95_ms": {
+          "mean": 4.526926850064683,
+          "std": NaN,
+          "median": 4.526926850064683,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": NaN,
+          "median": 16702203.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "projection_error_relative_mean": {
+          "mean": 0.1790079217313847,
+          "std": NaN,
+          "median": 0.1790079217313847,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "projection_error_relative_p95": {
+          "mean": 0.3763562800170016,
+          "std": NaN,
+          "median": 0.3763562800170016,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        }
+      },
+      "gate_summaries": [
+        {
+          "training_seed": 1,
+          "gate": {
+            "count": 1016664,
+            "mean": 0.44253921655810413,
+            "std": 0.32905435660047755,
+            "median": 0.35317543148994446,
+            "p05": 0.048828309401869774,
+            "p95": 0.9390391439199448,
+            "fraction_gt_0_9": 0.09947337566787061,
+            "fraction_lt_0_1": 0.20186413603707812,
+            "positive_amplification_fraction": 0.0
+          }
+        }
+      ],
+      "active_parameter_counts": [
+        93636
+      ],
+      "total_parameter_counts": [
+        106564
+      ],
+      "recovery_infos": [],
+      "resume_events": [
+        {
+          "training_seed": 1,
+          "events": [
+            {
+              "version": "exact-resume-event-v1",
+              "source": "/content/drive/MyDrive/GPPO_one_click/quick_seed1_100/T5-10-48/literal_event_seed1/resume_latest.pt",
+              "source_iteration": 50,
+              "optimizer_state_recovered": true,
+              "rng_state_recovered": true,
+              "episode_offset_recovered": true
+            }
+          ]
+        }
+      ],
+      "per_seed": [
+        {
+          "episode_return": -6.808464631247971,
+          "realized_makespan": 16.12761371714412,
+          "completion_rate": 1.0,
+          "all_tasks_completed": 1.0,
+          "communication_events": 3.0,
+          "communication_bytes": 2792.8,
+          "heartbeat_messages": 62.8,
+          "mean_inference_ms": 3.1121068439263855,
+          "estimated_forward_flops": 16702203.0,
+          "projection_error_relative_mean": 0.1790079217313847,
+          "projection_error_relative_p95": 0.3763562800170016,
+          "training_seed": 1,
+          "inference_p50_ms": 2.812835999975505,
+          "inference_p95_ms": 4.526926850064683
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "label": "literal_expected_task_message_none",
+      "training_seed_count": 1,
+      "metrics": {
+        "episode_return": {
+          "mean": -7.040731231290458,
+          "std": NaN,
+          "median": -7.040731231290458,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "realized_makespan": {
+          "mean": 16.359880317186608,
+          "std": NaN,
+          "median": 16.359880317186608,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": NaN,
+          "median": 1.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": NaN,
+          "median": 1.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "communication_events": {
+          "mean": 0.0,
+          "std": NaN,
+          "median": 0.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "communication_bytes": {
+          "mean": 1015.68,
+          "std": NaN,
+          "median": 1015.68,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "heartbeat_messages": {
+          "mean": 63.48,
+          "std": NaN,
+          "median": 63.48,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "mean_inference_ms": {
+          "mean": 3.1955369050844022,
+          "std": NaN,
+          "median": 3.1955369050844022,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "inference_p50_ms": {
+          "mean": 2.9027960003986664,
+          "std": NaN,
+          "median": 2.9027960003986664,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "inference_p95_ms": {
+          "mean": 4.670720300146056,
+          "std": NaN,
+          "median": 4.670720300146056,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": NaN,
+          "median": 16702203.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "projection_error_relative_mean": {
+          "mean": 0.1882778162457711,
+          "std": NaN,
+          "median": 0.1882778162457711,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "projection_error_relative_p95": {
+          "mean": 0.385060893897549,
+          "std": NaN,
+          "median": 0.385060893897549,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        }
+      },
+      "gate_summaries": [
+        {
+          "training_seed": 1,
+          "gate": {
+            "count": 1039488,
+            "mean": 0.25302352992483795,
+            "std": 0.2728104640581955,
+            "median": 0.1086786724627018,
+            "p05": 0.009407964488491417,
+            "p95": 0.8004199504852294,
+            "fraction_gt_0_9": 0.0007369012436892009,
+            "fraction_lt_0_1": 0.48668094292574804,
+            "positive_amplification_fraction": 0.0
+          }
+        }
+      ],
+      "active_parameter_counts": [
+        93636
+      ],
+      "total_parameter_counts": [
+        106564
+      ],
+      "recovery_infos": [],
+      "resume_events": [],
+      "per_seed": [
+        {
+          "episode_return": -7.040731231290458,
+          "realized_makespan": 16.359880317186608,
+          "completion_rate": 1.0,
+          "all_tasks_completed": 1.0,
+          "communication_events": 0.0,
+          "communication_bytes": 1015.68,
+          "heartbeat_messages": 63.48,
+          "mean_inference_ms": 3.1955369050844022,
+          "estimated_forward_flops": 16702203.0,
+          "projection_error_relative_mean": 0.1882778162457711,
+          "projection_error_relative_p95": 0.385060893897549,
+          "training_seed": 1,
+          "inference_p50_ms": 2.9027960003986664,
+          "inference_p95_ms": 4.670720300146056
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "label": "literal_no_gate_expected_task_message_event",
+      "training_seed_count": 1,
+      "metrics": {
+        "episode_return": {
+          "mean": -8.161081115050274,
+          "std": NaN,
+          "median": -8.161081115050274,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "realized_makespan": {
+          "mean": 17.480230200946423,
+          "std": NaN,
+          "median": 17.480230200946423,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": NaN,
+          "median": 1.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": NaN,
+          "median": 1.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": NaN,
+          "median": 3.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "communication_bytes": {
+          "mean": 2872.8,
+          "std": NaN,
+          "median": 2872.8,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "heartbeat_messages": {
+          "mean": 67.8,
+          "std": NaN,
+          "median": 67.8,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "mean_inference_ms": {
+          "mean": 3.003430121089033,
+          "std": NaN,
+          "median": 3.003430121089033,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "inference_p50_ms": {
+          "mean": 2.7451134999409987,
+          "std": NaN,
+          "median": 2.7451134999409987,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "inference_p95_ms": {
+          "mean": 4.409345549811405,
+          "std": NaN,
+          "median": 4.409345549811405,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": NaN,
+          "median": 16702203.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "projection_error_relative_mean": {
+          "mean": 0.1975989897035225,
+          "std": NaN,
+          "median": 0.1975989897035225,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "projection_error_relative_p95": {
+          "mean": 0.41632545692591316,
+          "std": NaN,
+          "median": 0.41632545692591316,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        }
+      },
+      "gate_summaries": [],
+      "active_parameter_counts": [
+        85315
+      ],
+      "total_parameter_counts": [
+        106564
+      ],
+      "recovery_infos": [],
+      "resume_events": [],
+      "per_seed": [
+        {
+          "episode_return": -8.161081115050274,
+          "realized_makespan": 17.480230200946423,
+          "completion_rate": 1.0,
+          "all_tasks_completed": 1.0,
+          "communication_events": 3.0,
+          "communication_bytes": 2872.8,
+          "heartbeat_messages": 67.8,
+          "mean_inference_ms": 3.003430121089033,
+          "estimated_forward_flops": 16702203.0,
+          "projection_error_relative_mean": 0.1975989897035225,
+          "projection_error_relative_p95": 0.41632545692591316,
+          "training_seed": 1,
+          "inference_p50_ms": 2.7451134999409987,
+          "inference_p95_ms": 4.409345549811405
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "label": "literal_single_head_expected_task_message_event",
+      "training_seed_count": 1,
+      "metrics": {
+        "episode_return": {
+          "mean": -7.547018560508082,
+          "std": NaN,
+          "median": -7.547018560508082,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "realized_makespan": {
+          "mean": 16.866167646404232,
+          "std": NaN,
+          "median": 16.866167646404232,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": NaN,
+          "median": 1.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": NaN,
+          "median": 1.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": NaN,
+          "median": 3.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "communication_bytes": {
+          "mean": 2835.68,
+          "std": NaN,
+          "median": 2835.68,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "heartbeat_messages": {
+          "mean": 65.48,
+          "std": NaN,
+          "median": 65.48,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "mean_inference_ms": {
+          "mean": 2.5944390642051927,
+          "std": NaN,
+          "median": 2.5944390642051927,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "inference_p50_ms": {
+          "mean": 2.3634829999537033,
+          "std": NaN,
+          "median": 2.3634829999537033,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "inference_p95_ms": {
+          "mean": 3.804455999897982,
+          "std": NaN,
+          "median": 3.804455999897982,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "estimated_forward_flops": {
+          "mean": 14608818.0,
+          "std": NaN,
+          "median": 14608818.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "projection_error_relative_mean": {
+          "mean": 0.19118300513055303,
+          "std": NaN,
+          "median": 0.19118300513055303,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "projection_error_relative_p95": {
+          "mean": 0.4034859279730621,
+          "std": NaN,
+          "median": 0.4034859279730621,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        }
+      },
+      "gate_summaries": [],
+      "active_parameter_counts": [
+        85507
+      ],
+      "total_parameter_counts": [
+        106564
+      ],
+      "recovery_infos": [],
+      "resume_events": [],
+      "per_seed": [
+        {
+          "episode_return": -7.547018560508082,
+          "realized_makespan": 16.866167646404232,
+          "completion_rate": 1.0,
+          "all_tasks_completed": 1.0,
+          "communication_events": 3.0,
+          "communication_bytes": 2835.68,
+          "heartbeat_messages": 65.48,
+          "mean_inference_ms": 2.5944390642051927,
+          "estimated_forward_flops": 14608818.0,
+          "projection_error_relative_mean": 0.19118300513055303,
+          "projection_error_relative_p95": 0.4034859279730621,
+          "training_seed": 1,
+          "inference_p50_ms": 2.3634829999537033,
+          "inference_p95_ms": 3.804455999897982
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "label": "ppo_mlp_expected_task_message_event",
+      "training_seed_count": 1,
+      "metrics": {
+        "episode_return": {
+          "mean": -8.267888260431093,
+          "std": NaN,
+          "median": -8.267888260431093,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "realized_makespan": {
+          "mean": 17.587037346327246,
+          "std": NaN,
+          "median": 17.587037346327246,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": NaN,
+          "median": 1.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": NaN,
+          "median": 1.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": NaN,
+          "median": 3.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "communication_bytes": {
+          "mean": 2877.92,
+          "std": NaN,
+          "median": 2877.92,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "heartbeat_messages": {
+          "mean": 68.12,
+          "std": NaN,
+          "median": 68.12,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "mean_inference_ms": {
+          "mean": 1.1751662492605766,
+          "std": NaN,
+          "median": 1.1751662492605766,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "inference_p50_ms": {
+          "mean": 1.0742260001279647,
+          "std": NaN,
+          "median": 1.0742260001279647,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "inference_p95_ms": {
+          "mean": 1.6843686003994662,
+          "std": NaN,
+          "median": 1.6843686003994662,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "estimated_forward_flops": {
+          "mean": 4744370.0,
+          "std": NaN,
+          "median": 4744370.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "projection_error_relative_mean": {
+          "mean": 0.20122202733316236,
+          "std": NaN,
+          "median": 0.20122202733316236,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "projection_error_relative_p95": {
+          "mean": 0.4354515717857933,
+          "std": NaN,
+          "median": 0.4354515717857933,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        }
+      },
+      "gate_summaries": [],
+      "active_parameter_counts": [
+        18691
+      ],
+      "total_parameter_counts": [
+        106564
+      ],
+      "recovery_infos": [],
+      "resume_events": [],
+      "per_seed": [
+        {
+          "episode_return": -8.267888260431093,
+          "realized_makespan": 17.587037346327246,
+          "completion_rate": 1.0,
+          "all_tasks_completed": 1.0,
+          "communication_events": 3.0,
+          "communication_bytes": 2877.92,
+          "heartbeat_messages": 68.12,
+          "mean_inference_ms": 1.1751662492605766,
+          "estimated_forward_flops": 4744370.0,
+          "projection_error_relative_mean": 0.20122202733316236,
+          "projection_error_relative_p95": 0.4354515717857933,
+          "training_seed": 1,
+          "inference_p50_ms": 1.0742260001279647,
+          "inference_p95_ms": 1.6843686003994662
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "label": "ppo_mlp_expected_task_message_none",
+      "training_seed_count": 1,
+      "metrics": {
+        "episode_return": {
+          "mean": -9.21206110972377,
+          "std": NaN,
+          "median": -9.21206110972377,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "realized_makespan": {
+          "mean": 18.53121019561992,
+          "std": NaN,
+          "median": 18.53121019561992,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": NaN,
+          "median": 1.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": NaN,
+          "median": 1.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "communication_events": {
+          "mean": 0.0,
+          "std": NaN,
+          "median": 0.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "communication_bytes": {
+          "mean": 1156.48,
+          "std": NaN,
+          "median": 1156.48,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "heartbeat_messages": {
+          "mean": 72.28,
+          "std": NaN,
+          "median": 72.28,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "mean_inference_ms": {
+          "mean": 1.2216446738324367,
+          "std": NaN,
+          "median": 1.2216446738324367,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "inference_p50_ms": {
+          "mean": 1.107696999952168,
+          "std": NaN,
+          "median": 1.107696999952168,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "inference_p95_ms": {
+          "mean": 1.7953404997115285,
+          "std": NaN,
+          "median": 1.7953404997115285,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "estimated_forward_flops": {
+          "mean": 4744370.0,
+          "std": NaN,
+          "median": 4744370.0,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "projection_error_relative_mean": {
+          "mean": 0.22044816246839577,
+          "std": NaN,
+          "median": 0.22044816246839577,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        },
+        "projection_error_relative_p95": {
+          "mean": 0.4682452658773385,
+          "std": NaN,
+          "median": 0.4682452658773385,
+          "n": 1,
+          "ci_method": "two-sided Student-t, 95%",
+          "ci95_half_width": NaN,
+          "ci95_low": NaN,
+          "ci95_high": NaN,
+          "significant_two_sided_0_05": false
+        }
+      },
+      "gate_summaries": [],
+      "active_parameter_counts": [
+        18691
+      ],
+      "total_parameter_counts": [
+        106564
+      ],
+      "recovery_infos": [],
+      "resume_events": [
+        {
+          "training_seed": 1,
+          "events": [
+            {
+              "version": "exact-resume-event-v1",
+              "source": "/content/drive/MyDrive/GPPO_one_click/quick_seed1_100/T5-10-48/ppo_mlp_none_seed1/resume_latest.pt",
+              "source_iteration": 50,
+              "optimizer_state_recovered": true,
+              "rng_state_recovered": true,
+              "episode_offset_recovered": true
+            }
+          ]
+        }
+      ],
+      "per_seed": [
+        {
+          "episode_return": -9.21206110972377,
+          "realized_makespan": 18.53121019561992,
+          "completion_rate": 1.0,
+          "all_tasks_completed": 1.0,
+          "communication_events": 0.0,
+          "communication_bytes": 1156.48,
+          "heartbeat_messages": 72.28,
+          "mean_inference_ms": 1.2216446738324367,
+          "estimated_forward_flops": 4744370.0,
+          "projection_error_relative_mean": 0.22044816246839577,
+          "projection_error_relative_p95": 0.4682452658773385,
+          "training_seed": 1,
+          "inference_p50_ms": 1.107696999952168,
+          "inference_p95_ms": 1.7953404997115285
+        }
+      ]
+    }
+  ],
+  "generalization_error": [],
+  "inference_complexity": {
+    "points": [
+      {
+        "scale": "T5-10-48",
+        "subtasks": 48,
+        "label": "literal_expected_task_message_always",
+        "mean_inference_ms": 3.5107418463691884
+      },
+      {
+        "scale": "T5-10-48",
+        "subtasks": 48,
+        "label": "literal_expected_task_message_event",
+        "mean_inference_ms": 3.1121068439263855
+      },
+      {
+        "scale": "T5-10-48",
+        "subtasks": 48,
+        "label": "literal_expected_task_message_none",
+        "mean_inference_ms": 3.1955369050844022
+      },
+      {
+        "scale": "T5-10-48",
+        "subtasks": 48,
+        "label": "literal_no_gate_expected_task_message_event",
+        "mean_inference_ms": 3.003430121089033
+      },
+      {
+        "scale": "T5-10-48",
+        "subtasks": 48,
+        "label": "literal_single_head_expected_task_message_event",
+        "mean_inference_ms": 2.5944390642051927
+      },
+      {
+        "scale": "T5-10-48",
+        "subtasks": 48,
+        "label": "ppo_mlp_expected_task_message_event",
+        "mean_inference_ms": 1.1751662492605766
+      },
+      {
+        "scale": "T5-10-48",
+        "subtasks": 48,
+        "label": "ppo_mlp_expected_task_message_none",
+        "mean_inference_ms": 1.2216446738324367
+      }
+    ],
+    "pearson_r_by_label": {}
+  },
+  "paired_method_differences": [
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_expected_task_message_always",
+      "right_label": "literal_expected_task_message_event",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": 0.0,
+        "std": NaN,
+        "median": 0.0,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.0,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": 0.0,
+          "win_rate": 0.0
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_expected_task_message_always",
+      "right_label": "literal_expected_task_message_none",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -0.23226660004248947,
+        "std": NaN,
+        "median": -0.23226660004248947,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.58,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -0.23226660004248947,
+          "win_rate": 0.58
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_expected_task_message_always",
+      "right_label": "literal_no_gate_expected_task_message_event",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -1.3526164838023047,
+        "std": NaN,
+        "median": -1.3526164838023047,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.86,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -1.3526164838023047,
+          "win_rate": 0.86
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_expected_task_message_always",
+      "right_label": "literal_single_head_expected_task_message_event",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -0.7385539292601143,
+        "std": NaN,
+        "median": -0.7385539292601143,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.72,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -0.7385539292601143,
+          "win_rate": 0.72
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_expected_task_message_always",
+      "right_label": "ppo_mlp_expected_task_message_event",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -1.4594236291831242,
+        "std": NaN,
+        "median": -1.4594236291831242,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.84,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -1.4594236291831242,
+          "win_rate": 0.84
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_expected_task_message_always",
+      "right_label": "ppo_mlp_expected_task_message_none",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -2.4035964784757997,
+        "std": NaN,
+        "median": -2.4035964784757997,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.96,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -2.4035964784757997,
+          "win_rate": 0.96
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_expected_task_message_event",
+      "right_label": "literal_expected_task_message_none",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -0.23226660004248947,
+        "std": NaN,
+        "median": -0.23226660004248947,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.58,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -0.23226660004248947,
+          "win_rate": 0.58
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_expected_task_message_event",
+      "right_label": "literal_no_gate_expected_task_message_event",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -1.3526164838023047,
+        "std": NaN,
+        "median": -1.3526164838023047,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.86,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -1.3526164838023047,
+          "win_rate": 0.86
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_expected_task_message_event",
+      "right_label": "literal_single_head_expected_task_message_event",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -0.7385539292601143,
+        "std": NaN,
+        "median": -0.7385539292601143,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.72,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -0.7385539292601143,
+          "win_rate": 0.72
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_expected_task_message_event",
+      "right_label": "ppo_mlp_expected_task_message_event",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -1.4594236291831242,
+        "std": NaN,
+        "median": -1.4594236291831242,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.84,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -1.4594236291831242,
+          "win_rate": 0.84
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_expected_task_message_event",
+      "right_label": "ppo_mlp_expected_task_message_none",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -2.4035964784757997,
+        "std": NaN,
+        "median": -2.4035964784757997,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.96,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -2.4035964784757997,
+          "win_rate": 0.96
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_expected_task_message_none",
+      "right_label": "literal_no_gate_expected_task_message_event",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -1.1203498837598154,
+        "std": NaN,
+        "median": -1.1203498837598154,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.82,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -1.1203498837598154,
+          "win_rate": 0.82
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_expected_task_message_none",
+      "right_label": "literal_single_head_expected_task_message_event",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -0.5062873292176246,
+        "std": NaN,
+        "median": -0.5062873292176246,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.71,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -0.5062873292176246,
+          "win_rate": 0.71
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_expected_task_message_none",
+      "right_label": "ppo_mlp_expected_task_message_event",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -1.2271570291406346,
+        "std": NaN,
+        "median": -1.2271570291406346,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.76,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -1.2271570291406346,
+          "win_rate": 0.76
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_expected_task_message_none",
+      "right_label": "ppo_mlp_expected_task_message_none",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -2.171329878433311,
+        "std": NaN,
+        "median": -2.171329878433311,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.95,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -2.171329878433311,
+          "win_rate": 0.95
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_no_gate_expected_task_message_event",
+      "right_label": "literal_single_head_expected_task_message_event",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": 0.6140625545421908,
+        "std": NaN,
+        "median": 0.6140625545421908,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.31,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": 0.6140625545421908,
+          "win_rate": 0.31
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_no_gate_expected_task_message_event",
+      "right_label": "ppo_mlp_expected_task_message_event",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -0.10680714538081908,
+        "std": NaN,
+        "median": -0.10680714538081908,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.59,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -0.10680714538081908,
+          "win_rate": 0.59
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_no_gate_expected_task_message_event",
+      "right_label": "ppo_mlp_expected_task_message_none",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -1.0509799946734952,
+        "std": NaN,
+        "median": -1.0509799946734952,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.74,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -1.0509799946734952,
+          "win_rate": 0.74
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_single_head_expected_task_message_event",
+      "right_label": "ppo_mlp_expected_task_message_event",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -0.7208696999230101,
+        "std": NaN,
+        "median": -0.7208696999230101,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.65,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -0.7208696999230101,
+          "win_rate": 0.65
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "literal_single_head_expected_task_message_event",
+      "right_label": "ppo_mlp_expected_task_message_none",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -1.6650425492156862,
+        "std": NaN,
+        "median": -1.6650425492156862,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.87,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -1.6650425492156862,
+          "win_rate": 0.87
+        }
+      ]
+    },
+    {
+      "training_scale": "T5-10-48",
+      "evaluation_scale": "T5-10-48",
+      "left_label": "ppo_mlp_expected_task_message_event",
+      "right_label": "ppo_mlp_expected_task_message_none",
+      "definition": "left minus right; negative realized-makespan difference favors left",
+      "training_seed_count": 1,
+      "realized_makespan_difference": {
+        "mean": -0.9441728492926762,
+        "std": NaN,
+        "median": -0.9441728492926762,
+        "n": 1,
+        "ci_method": "two-sided Student-t, 95%",
+        "ci95_half_width": NaN,
+        "ci95_low": NaN,
+        "ci95_high": NaN,
+        "significant_two_sided_0_05": false
+      },
+      "mean_instance_win_rate": 0.71,
+      "per_seed": [
+        {
+          "training_seed": 1.0,
+          "instance_count": 100.0,
+          "mean_difference": -0.9441728492926762,
+          "win_rate": 0.71
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "This file summarizes completed evaluation artifacts only.",
+    "Generalization error requires a native-scale base row and a cross-scale row.",
+    "Communication bytes use the documented graph-state serialization accounting."
+  ]
+}

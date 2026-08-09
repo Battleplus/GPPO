@@ -22,7 +22,11 @@ from uav_assignment.paper_faithful_models import PaperFaithfulActorCritic
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Diagnose Literal-AHGNN gate behavior")
     parser.add_argument("--checkpoint", type=Path, required=True)
-    parser.add_argument("--split", choices=("train", "validation", "test"), default="test")
+    parser.add_argument(
+        "--split",
+        choices=("train", "validation", "validation_a", "validation_b", "test"),
+        default="test",
+    )
     parser.add_argument("--instances", type=int, default=20)
     parser.add_argument("--output", type=Path, required=True)
     return parser.parse_args()
@@ -66,6 +70,7 @@ def main() -> None:
     attention: list[float] = []
     removed_attention_mass: list[float] = []
     task_attention_mass: list[float] = []
+    uav_feature_l2_norms: list[float] = []
     first_observation: dict[str, np.ndarray] | None = None
     sync_mode = str(checkpoint["training"]["sync_mode"])
     for instance_seed in deterministic_instance_seeds(
@@ -93,6 +98,11 @@ def main() -> None:
             )
             task_attention_mass.extend(
                 torch.sum(alpha * task_mask, dim=-1).tolist()
+            )
+            uav_feature_l2_norms.extend(
+                torch.linalg.vector_norm(
+                    model.literal_attention.last_uav_features[0], dim=-1
+                ).tolist()
             )
             observation, _, done, _ = env.step(int(action.item()), sync_mode=sync_mode)
 
@@ -164,6 +174,7 @@ def main() -> None:
         "attention_on_task_edges": stats(attention),
         "task_attention_mass_per_uav": stats(task_attention_mass),
         "removed_attention_mass_per_uav": stats(removed_attention_mass),
+        "uav_attention_output_l2_norm": stats(uav_feature_l2_norms),
         "gate_gradient_l2_policy_sensitivity": gate_gradient_l2,
         "gate_gradient_norms": gradient_norms,
         "gate_gradient_l2_actual_ppo_probe": ppo_gate_gradient_l2,

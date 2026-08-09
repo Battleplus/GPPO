@@ -1,0 +1,2582 @@
+{
+  "version": "phase1-gate-smoke-audit-v1",
+  "protocol": "configs\\GATE_DIAGNOSTIC_PROTOCOL.json",
+  "protocol_sha256": "0b863bf37045fa3287268c6f7695c439c529d4ca075032df3c04ce2d87f68f13",
+  "scope": "7 variants x 3 seeds x 20 iterations; validation-A only; no test",
+  "global_checks": {
+    "all_21_jobs_present": true,
+    "launch_protocol_hash_matches": true,
+    "no_test_artifacts": true
+  },
+  "records": [
+    {
+      "variant": "Adaptive-current",
+      "seed": 1,
+      "checkpoint_sha256": "33efb794f6d9e9d232ce5f30b0d5d28486cb1ac1ae0cafca77ffc00e85a8972c",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true,
+        "gate_nonconstant": true,
+        "gate_ppo_probe_gradient": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -10.565389511642676,
+        "realized_makespan": 19.807269575177248,
+        "loss": 0.5989881157875061,
+        "actor_loss": -0.041260719881393015,
+        "value_loss": 1.2928766757249832,
+        "policy_entropy": 0.6189495921134949,
+        "ppo_approx_kl": 0.00027520857884155703,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.13351192033808382,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -8.841712173902556,
+          "std": 1.043209111835556,
+          "median": -8.672773589114254
+        },
+        "realized_makespan": {
+          "mean": 18.24096741675202,
+          "std": 1.3985417164772584,
+          "median": 17.884480555169
+        },
+        "projected_makespan": {
+          "mean": 18.24096741675202,
+          "std": 1.3985417164772584,
+          "median": 17.884480555169
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2914.4,
+          "std": 97.06080568385984,
+          "median": 2876.0
+        },
+        "heartbeat_messages": {
+          "mean": 70.4,
+          "std": 6.06630035524124,
+          "median": 68.0
+        },
+        "decisions": {
+          "mean": 73.0,
+          "std": 3.082207001484488,
+          "median": 71.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.5294748440161627,
+          "std": 0.33145870486760043,
+          "median": 3.35288168971089
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": {
+        "gate": {
+          "count": 24264,
+          "mean": 0.8967050495411631,
+          "std": 0.05193965805218126,
+          "median": 0.9033184349536896,
+          "p05": 0.8063677996397018,
+          "p95": 0.9592564821243286,
+          "fraction_gt_0_9": 0.5159907682162875,
+          "fraction_lt_0_1": 0.0
+        },
+        "removed_attention_mass_per_uav": {
+          "count": 745,
+          "mean": 0.10048779646722263,
+          "std": 0.04136738623324185,
+          "median": 0.08877728134393692,
+          "p05": 0.049556583166122437,
+          "p95": 0.17613666653633117,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.5852348993288591
+        },
+        "uav_attention_output_l2_norm": {
+          "count": 745,
+          "mean": 1.7469018310508473,
+          "std": 0.13950325829851323,
+          "median": 1.7100244760513306,
+          "p05": 1.5719287395477295,
+          "p95": 2.0194167137145995,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "gate_gradient_l2_actual_ppo_probe": 0.05910661344383429
+      }
+    },
+    {
+      "variant": "Adaptive-current",
+      "seed": 2,
+      "checkpoint_sha256": "de12978e2505c118567fcf058986cc0478f1dc7155ebc3f760d62aa466c0aa8b",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true,
+        "gate_nonconstant": true,
+        "gate_ppo_probe_gradient": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -11.238199627931639,
+        "realized_makespan": 20.480079691466212,
+        "loss": 0.3360191397368908,
+        "actor_loss": -0.045510890282457694,
+        "value_loss": 0.7764296606183052,
+        "policy_entropy": 0.6684802994132042,
+        "ppo_approx_kl": 9.588380271452479e-05,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.10093191560683056,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -10.214585363080586,
+          "std": 1.583820447431306,
+          "median": -10.525298044946139
+        },
+        "realized_makespan": {
+          "mean": 19.613840605930044,
+          "std": 1.9768652781624103,
+          "median": 19.8180721924341
+        },
+        "projected_makespan": {
+          "mean": 19.613840605930044,
+          "std": 1.9768652781624103,
+          "median": 19.8180721924341
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 3004.0,
+          "std": 135.7645019878171,
+          "median": 3004.0
+        },
+        "heartbeat_messages": {
+          "mean": 76.0,
+          "std": 8.48528137423857,
+          "median": 76.0
+        },
+        "decisions": {
+          "mean": 74.2,
+          "std": 3.5637059362410923,
+          "median": 75.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.531427638713646,
+          "std": 0.4361764957898758,
+          "median": 3.4470499997088413
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": {
+        "gate": {
+          "count": 24120,
+          "mean": 0.6411992942120504,
+          "std": 0.1791547927951377,
+          "median": 0.558827668428421,
+          "p05": 0.4115805387496948,
+          "p95": 0.8656278401613235,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "removed_attention_mass_per_uav": {
+          "count": 740,
+          "mean": 0.3305276856027745,
+          "std": 0.12558820251909203,
+          "median": 0.3109757751226425,
+          "p05": 0.15966516956686974,
+          "p95": 0.5345406591892242,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "uav_attention_output_l2_norm": {
+          "count": 740,
+          "mean": 1.2325191448669175,
+          "std": 0.43084534931409,
+          "median": 1.1824431419372559,
+          "p05": 0.6810889422893525,
+          "p95": 1.9015920162200928,
+          "fraction_gt_0_9": 0.6675675675675675,
+          "fraction_lt_0_1": 0.0
+        },
+        "gate_gradient_l2_actual_ppo_probe": 0.26146893685246814
+      }
+    },
+    {
+      "variant": "Adaptive-current",
+      "seed": 3,
+      "checkpoint_sha256": "deeeb59a9baab1d06b04223b0b0fa1036caa04fca9f7b461491428ee09fc2bdf",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true,
+        "gate_nonconstant": true,
+        "gate_ppo_probe_gradient": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -11.238296672333842,
+        "realized_makespan": 20.48017673586841,
+        "loss": 0.40456211660057306,
+        "actor_loss": -0.027481140452437103,
+        "value_loss": 0.8764523565769196,
+        "policy_entropy": 0.6182920038700104,
+        "ppo_approx_kl": -0.00011904695429620915,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.11008254659041775,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -8.609689752325565,
+          "std": 2.6113958580886707,
+          "median": -8.525020562811948
+        },
+        "realized_makespan": {
+          "mean": 18.00894499517503,
+          "std": 3.0662661219701,
+          "median": 17.745672023430583
+        },
+        "projected_makespan": {
+          "mean": 18.00894499517503,
+          "std": 3.0662661219701,
+          "median": 17.745672023430583
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2901.6,
+          "std": 195.1737687293044,
+          "median": 2876.0
+        },
+        "heartbeat_messages": {
+          "mean": 69.6,
+          "std": 12.198360545581526,
+          "median": 68.0
+        },
+        "decisions": {
+          "mean": 72.6,
+          "std": 3.8470768123342687,
+          "median": 74.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.9915251036613233,
+          "std": 0.5363844071793054,
+          "median": 3.9817058824316036
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": {
+        "gate": {
+          "count": 23472,
+          "mean": 0.8682217788111213,
+          "std": 0.07511759947509336,
+          "median": 0.8558617532253265,
+          "p05": 0.7608234196901321,
+          "p95": 0.956588625907898,
+          "fraction_gt_0_9": 0.4637866394001363,
+          "fraction_lt_0_1": 0.0
+        },
+        "removed_attention_mass_per_uav": {
+          "count": 720,
+          "mean": 0.1185034320431037,
+          "std": 0.044487873062434284,
+          "median": 0.1164054162800312,
+          "p05": 0.05569018870592117,
+          "p95": 0.19032481610774993,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.4
+        },
+        "uav_attention_output_l2_norm": {
+          "count": 720,
+          "mean": 1.9949250651730432,
+          "std": 0.3493666382787935,
+          "median": 1.8789086937904358,
+          "p05": 1.6109550893306732,
+          "p95": 2.5802481532096864,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "gate_gradient_l2_actual_ppo_probe": 0.22103695523067585
+      }
+    },
+    {
+      "variant": "Adaptive-bias2",
+      "seed": 1,
+      "checkpoint_sha256": "e3e4d50a3e7615dce98fbbeada8b933878944d81668508cc85fd7bb05dfc5142",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true,
+        "gate_nonconstant": true,
+        "gate_ppo_probe_gradient": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -9.212175365109344,
+        "realized_makespan": 18.45405542864391,
+        "loss": 0.4101538825780153,
+        "actor_loss": 0.03397841757396236,
+        "value_loss": 0.7666878213640302,
+        "policy_entropy": 0.7168445438146591,
+        "ppo_approx_kl": 0.002643537154654041,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.02491959441020375,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -9.934657740582944,
+          "std": 1.4070730776889657,
+          "median": -10.157801662532657
+        },
+        "realized_makespan": {
+          "mean": 19.333912983432405,
+          "std": 1.8778075034431165,
+          "median": 19.45057581002062
+        },
+        "projected_makespan": {
+          "mean": 19.333912983432405,
+          "std": 1.8778075034431165,
+          "median": 19.45057581002062
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2991.2,
+          "std": 123.1064579946966,
+          "median": 3004.0
+        },
+        "heartbeat_messages": {
+          "mean": 75.2,
+          "std": 7.694153624668538,
+          "median": 76.0
+        },
+        "decisions": {
+          "mean": 73.6,
+          "std": 3.8470768123342687,
+          "median": 73.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.6006602477074656,
+          "std": 0.70989550296238,
+          "median": 3.3634605632625965
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": {
+        "gate": {
+          "count": 24552,
+          "mean": 0.961741628335912,
+          "std": 0.02063410346271063,
+          "median": 0.9628318548202515,
+          "p05": 0.9278004556894303,
+          "p95": 0.9862550914287567,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "removed_attention_mass_per_uav": {
+          "count": 755,
+          "mean": 0.03691562041886989,
+          "std": 0.015360593992326735,
+          "median": 0.034175969660282135,
+          "p05": 0.017300803773105146,
+          "p95": 0.06321765333414077,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 1.0
+        },
+        "uav_attention_output_l2_norm": {
+          "count": 755,
+          "mean": 1.7991501055016423,
+          "std": 0.13512839236853189,
+          "median": 1.7589478492736816,
+          "p05": 1.6500362634658814,
+          "p95": 2.0813357830047607,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "gate_gradient_l2_actual_ppo_probe": 0.035140135614192575
+      }
+    },
+    {
+      "variant": "Adaptive-bias2",
+      "seed": 2,
+      "checkpoint_sha256": "181af040b3180a58b07df052b88d3b98aff938d85d062ba1dab879e38826360e",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true,
+        "gate_nonconstant": true,
+        "gate_ppo_probe_gradient": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -10.42658011626786,
+        "realized_makespan": 19.668460179802427,
+        "loss": 0.5033225305378437,
+        "actor_loss": 0.06567555980291218,
+        "value_loss": 0.8875797986984253,
+        "policy_entropy": 0.6142927035689354,
+        "ppo_approx_kl": -3.2305728154824465e-05,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.022797395580581317,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -7.611229392770264,
+          "std": 2.257358649038396,
+          "median": -7.402555102584058
+        },
+        "realized_makespan": {
+          "mean": 17.010484635619726,
+          "std": 2.7291961606711235,
+          "median": 16.69532925007202
+        },
+        "projected_makespan": {
+          "mean": 17.010484635619726,
+          "std": 2.7291961606711235,
+          "median": 16.69532925007202
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2837.6,
+          "std": 166.8915815731878,
+          "median": 2812.0
+        },
+        "heartbeat_messages": {
+          "mean": 65.6,
+          "std": 10.430723848324238,
+          "median": 64.0
+        },
+        "decisions": {
+          "mean": 75.4,
+          "std": 6.9498201415576215,
+          "median": 76.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.6114236214255477,
+          "std": 0.6258617165900271,
+          "median": 3.3084369230961714
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": {
+        "gate": {
+          "count": 24912,
+          "mean": 0.9109101880511643,
+          "std": 0.04455565399680197,
+          "median": 0.9025484621524811,
+          "p05": 0.847065195441246,
+          "p95": 0.9631675869226456,
+          "fraction_gt_0_9": 0.5042148362235067,
+          "fraction_lt_0_1": 0.0
+        },
+        "removed_attention_mass_per_uav": {
+          "count": 765,
+          "mean": 0.08477166987517301,
+          "std": 0.03030364665064141,
+          "median": 0.08100328594446182,
+          "p05": 0.04432061985135079,
+          "p95": 0.14390433430671692,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.6993464052287581
+        },
+        "uav_attention_output_l2_norm": {
+          "count": 765,
+          "mean": 1.6485323482089573,
+          "std": 0.28539767954110384,
+          "median": 1.5760738849639893,
+          "p05": 1.3234007358551025,
+          "p95": 2.1655357837677003,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "gate_gradient_l2_actual_ppo_probe": 0.011535372584812242
+      }
+    },
+    {
+      "variant": "Adaptive-bias2",
+      "seed": 3,
+      "checkpoint_sha256": "fb2b61ab7d94fcb4e430b2b10a8c5cc86ab16d4edfb2e646c7f080033d3dca55",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true,
+        "gate_nonconstant": true,
+        "gate_ppo_probe_gradient": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -10.752966908881152,
+        "realized_makespan": 19.994846972415722,
+        "loss": 0.5990797728300095,
+        "actor_loss": -0.07293108815792948,
+        "value_loss": 1.3565108180046082,
+        "policy_entropy": 0.6244546845555305,
+        "ppo_approx_kl": -0.00012898682143713813,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.02256314598040106,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -8.998832618504853,
+          "std": 2.1002632517346536,
+          "median": -8.876363972248464
+        },
+        "realized_makespan": {
+          "mean": 18.398087861354316,
+          "std": 2.6956682912858634,
+          "median": 18.0970154328671
+        },
+        "projected_makespan": {
+          "mean": 18.398087861354316,
+          "std": 2.6956682912858634,
+          "median": 18.0970154328671
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2940.0,
+          "std": 175.27121840165316,
+          "median": 2940.0
+        },
+        "heartbeat_messages": {
+          "mean": 72.0,
+          "std": 10.954451150103322,
+          "median": 72.0
+        },
+        "decisions": {
+          "mean": 72.8,
+          "std": 3.7013511046643495,
+          "median": 74.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.3920954551843487,
+          "std": 0.3528617991363488,
+          "median": 3.2727961038585525
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": {
+        "gate": {
+          "count": 23652,
+          "mean": 0.9680743043659182,
+          "std": 0.017392695705063292,
+          "median": 0.9660540521144867,
+          "p05": 0.9430017441511154,
+          "p95": 0.988528949022293,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "removed_attention_mass_per_uav": {
+          "count": 725,
+          "mean": 0.029274997481241308,
+          "std": 0.010239488283518502,
+          "median": 0.029468175023794174,
+          "p05": 0.014538324624300002,
+          "p95": 0.0457422986626625,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 1.0
+        },
+        "uav_attention_output_l2_norm": {
+          "count": 725,
+          "mean": 2.1406146384929787,
+          "std": 0.2495280683960463,
+          "median": 2.0268049240112305,
+          "p05": 1.8811016082763672,
+          "p95": 2.5947152614593505,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "gate_gradient_l2_actual_ppo_probe": 0.028311568515347895
+      }
+    },
+    {
+      "variant": "Adaptive-warmup",
+      "seed": 1,
+      "checkpoint_sha256": "3b1d63f1fec7339039033bd7e2d5e7e9884ad32592bd29349047c9d5201b2c91",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true,
+        "gate_nonconstant": true,
+        "gate_ppo_probe_gradient": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -11.492985887681012,
+        "realized_makespan": 20.73486595121558,
+        "loss": 0.8721553236246109,
+        "actor_loss": 0.03876173438038677,
+        "value_loss": 1.6791285574436188,
+        "policy_entropy": 0.6170678660273552,
+        "ppo_approx_kl": 0.00010035460354629322,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.0,
+        "gate_learning_enabled": false
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -8.079030719033224,
+          "std": 1.822132743518514,
+          "median": -7.241543284058082
+        },
+        "realized_makespan": {
+          "mean": 17.478285961882683,
+          "std": 2.3532027538981466,
+          "median": 16.67439685302762
+        },
+        "projected_makespan": {
+          "mean": 17.478285961882683,
+          "std": 2.3532027538981466,
+          "median": 16.67439685302762
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2876.0,
+          "std": 150.09330431434975,
+          "median": 2812.0
+        },
+        "heartbeat_messages": {
+          "mean": 68.0,
+          "std": 9.38083151964686,
+          "median": 64.0
+        },
+        "decisions": {
+          "mean": 76.0,
+          "std": 4.898979485566356,
+          "median": 78.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.436198995613458,
+          "std": 0.6159651842369573,
+          "median": 3.0953541665641953
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": {
+        "gate": {
+          "count": 24840,
+          "mean": 0.8795098445457729,
+          "std": 0.0013603400665871098,
+          "median": 0.8794904947280884,
+          "p05": 0.8773663640022278,
+          "p95": 0.882007759809494,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "removed_attention_mass_per_uav": {
+          "count": 760,
+          "mean": 0.12021655116818453,
+          "std": 0.0004018868141823331,
+          "median": 0.12024769186973572,
+          "p05": 0.11958859339356423,
+          "p95": 0.12098018303513527,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "uav_attention_output_l2_norm": {
+          "count": 760,
+          "mean": 1.6402713154491626,
+          "std": 0.1574446347654854,
+          "median": 1.581011950969696,
+          "p05": 1.4826139211654663,
+          "p95": 1.9762673735618592,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "gate_gradient_l2_actual_ppo_probe": 0.013541610432018363
+      }
+    },
+    {
+      "variant": "Adaptive-warmup",
+      "seed": 2,
+      "checkpoint_sha256": "f356cfdc179a878be8f6bee62e6905c1f74ab7b6fc75c9a84c859ae37f67f719",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true,
+        "gate_nonconstant": true,
+        "gate_ppo_probe_gradient": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -13.110105715397477,
+        "realized_makespan": 22.23746620918439,
+        "loss": 0.5697360970079899,
+        "actor_loss": -0.049498027336085215,
+        "value_loss": 1.253375992178917,
+        "policy_entropy": 0.7453865557909012,
+        "ppo_approx_kl": -3.84518934879452e-05,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.0,
+        "gate_learning_enabled": false
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -10.00096343660687,
+          "std": 1.470934071167762,
+          "median": -9.33175139136299
+        },
+        "realized_makespan": {
+          "mean": 19.400218679456326,
+          "std": 2.000324689247253,
+          "median": 18.624525538850953
+        },
+        "projected_makespan": {
+          "mean": 19.400218679456326,
+          "std": 2.000324689247253,
+          "median": 18.624525538850953
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 3004.0,
+          "std": 128.0,
+          "median": 2940.0
+        },
+        "heartbeat_messages": {
+          "mean": 76.0,
+          "std": 8.0,
+          "median": 72.0
+        },
+        "decisions": {
+          "mean": 74.0,
+          "std": 3.391164991562634,
+          "median": 73.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.4940446567948,
+          "std": 0.5220588374207817,
+          "median": 3.3330424656961526
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": {
+        "gate": {
+          "count": 24120,
+          "mean": 0.8722970887697356,
+          "std": 0.003830612924600606,
+          "median": 0.8726807236671448,
+          "p05": 0.8667059779167176,
+          "p95": 0.8775671124458313,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "removed_attention_mass_per_uav": {
+          "count": 740,
+          "mean": 0.12700249584945472,
+          "std": 0.0028581106111770283,
+          "median": 0.12758690118789673,
+          "p05": 0.12185056880116463,
+          "p95": 0.1309286832809448,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "uav_attention_output_l2_norm": {
+          "count": 740,
+          "mean": 1.6228295553374934,
+          "std": 0.227340441435991,
+          "median": 1.524777889251709,
+          "p05": 1.3879422008991242,
+          "p95": 2.0434366583824155,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "gate_gradient_l2_actual_ppo_probe": 0.06661770275947752
+      }
+    },
+    {
+      "variant": "Adaptive-warmup",
+      "seed": 3,
+      "checkpoint_sha256": "e634cb6a6b3a5ae80489dd646d1615d32966ab665a6b1fa00268abf9647192f7",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true,
+        "gate_nonconstant": true,
+        "gate_ppo_probe_gradient": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -10.497566809485564,
+        "realized_makespan": 19.739446873020135,
+        "loss": 0.5640274696052074,
+        "actor_loss": 0.004988664295524359,
+        "value_loss": 1.1312548890709877,
+        "policy_entropy": 0.6588640064001083,
+        "ppo_approx_kl": -0.000834163181934855,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.0,
+        "gate_learning_enabled": false
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -8.162754384866584,
+          "std": 2.2776003300789265,
+          "median": -8.225696000812482
+        },
+        "realized_makespan": {
+          "mean": 17.562009627716044,
+          "std": 2.741533705402222,
+          "median": 17.446347461431117
+        },
+        "projected_makespan": {
+          "mean": 17.562009627716044,
+          "std": 2.741533705402222,
+          "median": 17.446347461431117
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2888.8,
+          "std": 183.2681096099373,
+          "median": 2876.0
+        },
+        "heartbeat_messages": {
+          "mean": 68.8,
+          "std": 11.454256850621082,
+          "median": 68.0
+        },
+        "decisions": {
+          "mean": 71.6,
+          "std": 4.277849927241487,
+          "median": 74.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.5951484134510436,
+          "std": 0.49891181112068267,
+          "median": 3.459629850601517
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": {
+        "gate": {
+          "count": 23328,
+          "mean": 0.8846527650282912,
+          "std": 0.001697728839335657,
+          "median": 0.8847343921661377,
+          "p05": 0.8818348556756973,
+          "p95": 0.8873680859804154,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "removed_attention_mass_per_uav": {
+          "count": 715,
+          "mean": 0.11439176198694256,
+          "std": 0.0009525729849922551,
+          "median": 0.11431431770324707,
+          "p05": 0.11294284462928772,
+          "p95": 0.11614212021231651,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "uav_attention_output_l2_norm": {
+          "count": 715,
+          "mean": 1.9568133254151243,
+          "std": 0.24935614822643162,
+          "median": 1.845329761505127,
+          "p05": 1.6918850898742677,
+          "p95": 2.4058214902877806,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "gate_gradient_l2_actual_ppo_probe": 0.13907902905674538
+      }
+    },
+    {
+      "variant": "Adaptive-score",
+      "seed": 1,
+      "checkpoint_sha256": "512f6cd7ebf2e8f7a91b6a47d2cbfb075673922c01cecb7f69d6f27448323256",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true,
+        "gate_nonconstant": true,
+        "gate_ppo_probe_gradient": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -10.905462442635528,
+        "realized_makespan": 20.147342506170098,
+        "loss": 0.5667716674506664,
+        "actor_loss": -0.004675402509747073,
+        "value_loss": 1.1550728306174278,
+        "policy_entropy": 0.6089352890849113,
+        "ppo_approx_kl": 0.00023083235646481626,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.06626669472849893,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -9.788955224003345,
+          "std": 2.330722028375909,
+          "median": -9.870141674330837
+        },
+        "realized_makespan": {
+          "mean": 19.18821046685281,
+          "std": 2.87275165087845,
+          "median": 19.1629158218188
+        },
+        "projected_makespan": {
+          "mean": 19.18821046685281,
+          "std": 2.87275165087845,
+          "median": 19.1629158218188
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2991.2,
+          "std": 194.12161136771968,
+          "median": 3004.0
+        },
+        "heartbeat_messages": {
+          "mean": 75.2,
+          "std": 12.13260071048248,
+          "median": 76.0
+        },
+        "decisions": {
+          "mean": 74.2,
+          "std": 4.324349662087931,
+          "median": 73.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.7885590199294157,
+          "std": 0.4507790435338489,
+          "median": 3.501163768384646
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": {
+        "gate": {
+          "count": 24768,
+          "mean": 0.7444676130249596,
+          "std": 0.042153040127452863,
+          "median": 0.7332499325275421,
+          "p05": 0.6877041459083557,
+          "p95": 0.8036055505275727,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "removed_attention_mass_per_uav": {
+          "count": 760,
+          "mean": 0.2495821329519937,
+          "std": 0.028353163960488485,
+          "median": 0.24862831830978394,
+          "p05": 0.20835339277982712,
+          "p95": 0.2932624861598015,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "uav_attention_output_l2_norm": {
+          "count": 760,
+          "mean": 1.8711961151737915,
+          "std": 0.157959725262904,
+          "median": 1.8098435997962952,
+          "p05": 1.7102512061595916,
+          "p95": 2.1918997764587402,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "gate_gradient_l2_actual_ppo_probe": 0.0698482536072124
+      }
+    },
+    {
+      "variant": "Adaptive-score",
+      "seed": 2,
+      "checkpoint_sha256": "fb7b0f1de08779f6186d5c404562f012324dd7087a305bc0c757c73426582c29",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true,
+        "gate_nonconstant": true,
+        "gate_ppo_probe_gradient": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -10.42658011626786,
+        "realized_makespan": 19.668460179802427,
+        "loss": 0.5038281083106995,
+        "actor_loss": 0.06626732449512929,
+        "value_loss": 0.8874068111181259,
+        "policy_entropy": 0.6142622455954552,
+        "ppo_approx_kl": -3.543745754086558e-05,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.03337322589653222,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -8.574623568902561,
+          "std": 2.573750791377188,
+          "median": -8.787152708621583
+        },
+        "realized_makespan": {
+          "mean": 17.973878811752023,
+          "std": 2.8838980022127125,
+          "median": 17.132495965358004
+        },
+        "projected_makespan": {
+          "mean": 17.973878811752023,
+          "std": 2.8838980022127125,
+          "median": 17.132495965358004
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2927.2,
+          "std": 188.77287940803362,
+          "median": 2876.0
+        },
+        "heartbeat_messages": {
+          "mean": 71.2,
+          "std": 11.7983049630021,
+          "median": 68.0
+        },
+        "decisions": {
+          "mean": 76.4,
+          "std": 7.092249290598858,
+          "median": 77.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.7356501848935615,
+          "std": 0.5107731718087903,
+          "median": 3.4561393938268092
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": {
+        "gate": {
+          "count": 25056,
+          "mean": 0.6817089767001407,
+          "std": 0.058840764336134575,
+          "median": 0.6542158424854279,
+          "p05": 0.6067924946546555,
+          "p95": 0.7576440274715424,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "removed_attention_mass_per_uav": {
+          "count": 770,
+          "mean": 0.3071411935927032,
+          "std": 0.03818627730013655,
+          "median": 0.30615268647670746,
+          "p05": 0.252588614821434,
+          "p95": 0.3753079444169998,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "uav_attention_output_l2_norm": {
+          "count": 770,
+          "mean": 1.821328652059877,
+          "std": 0.23422812955850106,
+          "median": 1.7375467419624329,
+          "p05": 1.5721630096435546,
+          "p95": 2.268114686012268,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "gate_gradient_l2_actual_ppo_probe": 0.05199368265304117
+      }
+    },
+    {
+      "variant": "Adaptive-score",
+      "seed": 3,
+      "checkpoint_sha256": "d4670417a0ee7e4f43d75e1cd3fb0fcc3c8c968da96d9ef7b9895763247c0024",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true,
+        "gate_nonconstant": true,
+        "gate_ppo_probe_gradient": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -10.656236824991963,
+        "realized_makespan": 19.898116888526534,
+        "loss": 0.494995292276144,
+        "actor_loss": 0.02065841953299241,
+        "value_loss": 0.9622618779540062,
+        "policy_entropy": 0.6794070675969124,
+        "ppo_approx_kl": 0.0002195726046920754,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.03944107539086199,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -8.679928053568286,
+          "std": 2.0419834068379847,
+          "median": -9.035224616887893
+        },
+        "realized_makespan": {
+          "mean": 18.079183296417746,
+          "std": 2.763344806371268,
+          "median": 18.255876077506528
+        },
+        "projected_makespan": {
+          "mean": 18.079183296417746,
+          "std": 2.763344806371268,
+          "median": 18.255876077506528
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2914.4,
+          "std": 189.85468126964895,
+          "median": 2940.0
+        },
+        "heartbeat_messages": {
+          "mean": 70.4,
+          "std": 11.86591757935306,
+          "median": 72.0
+        },
+        "decisions": {
+          "mean": 72.4,
+          "std": 3.8470768123342687,
+          "median": 72.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.3516161639543953,
+          "std": 0.3256174284535195,
+          "median": 3.260060000126638
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": {
+        "gate": {
+          "count": 23508,
+          "mean": 0.8116458694287175,
+          "std": 0.041565820964585144,
+          "median": 0.8080129027366638,
+          "p05": 0.7524515867233277,
+          "p95": 0.8684418737888336,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "removed_attention_mass_per_uav": {
+          "count": 720,
+          "mean": 0.1801834844259752,
+          "std": 0.02176902478254384,
+          "median": 0.18236426264047623,
+          "p05": 0.1463848628103733,
+          "p95": 0.2123554192483425,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "uav_attention_output_l2_norm": {
+          "count": 720,
+          "mean": 2.2362378517786663,
+          "std": 0.18770331845768423,
+          "median": 2.14983594417572,
+          "p05": 2.0396017909049986,
+          "p95": 2.58587099313736,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "gate_gradient_l2_actual_ppo_probe": 0.07081761067444241
+      }
+    },
+    {
+      "variant": "Adaptive-softplus",
+      "seed": 1,
+      "checkpoint_sha256": "6ab4afb5f330b4373a1a559b600e804a6369fbf59d0e23f9fba0f3c302414728",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true,
+        "gate_nonconstant": true,
+        "gate_ppo_probe_gradient": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -11.400718952932284,
+        "realized_makespan": 20.642599016466853,
+        "loss": 0.3819488510489464,
+        "actor_loss": -0.01012214703951031,
+        "value_loss": 0.7972395941615105,
+        "policy_entropy": 0.654879380017519,
+        "ppo_approx_kl": 0.00010869485777220689,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.36557786027264616,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -9.175893844751172,
+          "std": 0.6619209463540838,
+          "median": -9.400294447213318
+        },
+        "realized_makespan": {
+          "mean": 18.575149087600636,
+          "std": 1.0189956571956107,
+          "median": 18.69306859470128
+        },
+        "projected_makespan": {
+          "mean": 18.575149087600636,
+          "std": 1.0189956571956107,
+          "median": 18.69306859470128
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2940.0,
+          "std": 64.0,
+          "median": 2940.0
+        },
+        "heartbeat_messages": {
+          "mean": 72.0,
+          "std": 4.0,
+          "median": 72.0
+        },
+        "decisions": {
+          "mean": 73.2,
+          "std": 2.4899799195977463,
+          "median": 73.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.388030717863937,
+          "std": 0.44777397080593595,
+          "median": 3.1806220780141867
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": {
+        "gate": {
+          "count": 24084,
+          "mean": 3.026765059616019,
+          "std": 0.5801464707569058,
+          "median": 2.962468147277832,
+          "p05": 2.1778440117835998,
+          "p95": 3.877361273765564,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "removed_attention_mass_per_uav": {
+          "count": 740,
+          "mean": -2.079411798071217,
+          "std": 0.4670099746640806,
+          "median": -2.1714656352996826,
+          "p05": -2.7225739002227782,
+          "p95": -1.287284368276596,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 1.0
+        },
+        "uav_attention_output_l2_norm": {
+          "count": 740,
+          "mean": 5.229795629269368,
+          "std": 1.1593102174402943,
+          "median": 5.148092985153198,
+          "p05": 3.645098853111267,
+          "p95": 7.151997041702271,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "gate_gradient_l2_actual_ppo_probe": 1.6303265401898772
+      }
+    },
+    {
+      "variant": "Adaptive-softplus",
+      "seed": 2,
+      "checkpoint_sha256": "90b5a5660a21fe38fcecf44f2d348301868408e3217945105d08ee20a266339d",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true,
+        "gate_nonconstant": true,
+        "gate_ppo_probe_gradient": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -9.067053986276486,
+        "realized_makespan": 18.333697914418273,
+        "loss": 0.3067782926373184,
+        "actor_loss": -0.04837748920544982,
+        "value_loss": 0.7229499667882919,
+        "policy_entropy": 0.6319210641086102,
+        "ppo_approx_kl": -0.0006084122069296427,
+        "ppo_clip_fraction": 0.00048828125,
+        "gate_gradient_l2": 0.5990957825046078,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -10.065919767648378,
+          "std": 1.7112056923851906,
+          "median": -10.24635744643548
+        },
+        "realized_makespan": {
+          "mean": 19.46517501049784,
+          "std": 2.1333866932129104,
+          "median": 19.539131593923443
+        },
+        "projected_makespan": {
+          "mean": 19.46517501049784,
+          "std": 2.1333866932129104,
+          "median": 19.539131593923443
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2991.2,
+          "std": 123.1064579946966,
+          "median": 3004.0
+        },
+        "heartbeat_messages": {
+          "mean": 75.2,
+          "std": 7.694153624668537,
+          "median": 76.0
+        },
+        "decisions": {
+          "mean": 74.2,
+          "std": 3.3466401061363023,
+          "median": 75.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.5647933159178704,
+          "std": 0.318350362931648,
+          "median": 3.535050666735818
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": {
+        "gate": {
+          "count": 23796,
+          "mean": 1.537925880247654,
+          "std": 0.6095270409022004,
+          "median": 1.2310653924942017,
+          "p05": 0.80193792283535,
+          "p95": 2.4078289270401,
+          "fraction_gt_0_9": 0.7847537401243907,
+          "fraction_lt_0_1": 0.0
+        },
+        "removed_attention_mass_per_uav": {
+          "count": 730,
+          "mean": -0.5894841200219186,
+          "std": 0.4300976769036768,
+          "median": -0.6232202053070068,
+          "p05": -1.2335902392864226,
+          "p95": 0.07191448695957645,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 0.963013698630137
+        },
+        "uav_attention_output_l2_norm": {
+          "count": 730,
+          "mean": 2.9069732636621555,
+          "std": 1.0761641071355146,
+          "median": 2.8274799585342407,
+          "p05": 1.4622539401054382,
+          "p95": 4.595859217643738,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "gate_gradient_l2_actual_ppo_probe": 0.4260367888722399
+      }
+    },
+    {
+      "variant": "Adaptive-softplus",
+      "seed": 3,
+      "checkpoint_sha256": "6075db4b39c547cc71e423ac6c0c47572f91514d27021e44921f685ba89e3079",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true,
+        "gate_nonconstant": true,
+        "gate_ppo_probe_gradient": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -9.24539901157292,
+        "realized_makespan": 18.487279075107487,
+        "loss": 0.4005166860297322,
+        "actor_loss": 0.024353254440939054,
+        "value_loss": 0.7672011088579893,
+        "policy_entropy": 0.7437117025256157,
+        "ppo_approx_kl": 0.0018927218625321984,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.26924227760282965,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -8.358209946318215,
+          "std": 2.0675786734065063,
+          "median": -8.101448276789233
+        },
+        "realized_makespan": {
+          "mean": 17.75746518916768,
+          "std": 2.715123274853909,
+          "median": 17.35898649047097
+        },
+        "projected_makespan": {
+          "mean": 17.75746518916768,
+          "std": 2.715123274853909,
+          "median": 17.35898649047097
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2901.6,
+          "std": 184.38221172336554,
+          "median": 2876.0
+        },
+        "heartbeat_messages": {
+          "mean": 69.6,
+          "std": 11.523888232710346,
+          "median": 68.0
+        },
+        "decisions": {
+          "mean": 72.0,
+          "std": 4.183300132670378,
+          "median": 71.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.433138584975905,
+          "std": 0.5145331112990308,
+          "median": 3.2589014082192773
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": {
+        "gate": {
+          "count": 23688,
+          "mean": 2.6854036365135907,
+          "std": 0.7342488975773969,
+          "median": 2.373337984085083,
+          "p05": 1.7924746751785279,
+          "p95": 3.7190172195434568,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "removed_attention_mass_per_uav": {
+          "count": 725,
+          "mean": -1.771276931680482,
+          "std": 0.46465086787954435,
+          "median": -1.7975598573684692,
+          "p05": -2.453225326538086,
+          "p95": -1.0463800430297852,
+          "fraction_gt_0_9": 0.0,
+          "fraction_lt_0_1": 1.0
+        },
+        "uav_attention_output_l2_norm": {
+          "count": 725,
+          "mean": 6.031135381501296,
+          "std": 1.4081744966802496,
+          "median": 5.91131591796875,
+          "p05": 4.1131034851074215,
+          "p95": 8.184328651428222,
+          "fraction_gt_0_9": 1.0,
+          "fraction_lt_0_1": 0.0
+        },
+        "gate_gradient_l2_actual_ppo_probe": 0.7743993934218777
+      }
+    },
+    {
+      "variant": "NoGate",
+      "seed": 1,
+      "checkpoint_sha256": "178689fdb55db0979c9eb3281ae05234607f3e57f41e21c332bb5a41276886e1",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -11.492985887681012,
+        "realized_makespan": 20.73486595121558,
+        "loss": 0.8721553236246109,
+        "actor_loss": 0.03876173438038677,
+        "value_loss": 1.6791285574436188,
+        "policy_entropy": 0.6170678660273552,
+        "ppo_approx_kl": 0.00010035460354629322,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.0,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -8.416617080026437,
+          "std": 1.6535071504452765,
+          "median": -8.345839131155783
+        },
+        "realized_makespan": {
+          "mean": 17.815872322875897,
+          "std": 2.176130528452285,
+          "median": 17.566490591774418
+        },
+        "projected_makespan": {
+          "mean": 17.815872322875897,
+          "std": 2.176130528452285,
+          "median": 17.566490591774418
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2888.8,
+          "std": 145.94245441268967,
+          "median": 2876.0
+        },
+        "heartbeat_messages": {
+          "mean": 68.8,
+          "std": 9.121403400793103,
+          "median": 68.0
+        },
+        "decisions": {
+          "mean": 76.6,
+          "std": 3.5777087639996634,
+          "median": 76.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.381505333639717,
+          "std": 0.47223311382153604,
+          "median": 3.2105890244476942
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": null
+    },
+    {
+      "variant": "NoGate",
+      "seed": 2,
+      "checkpoint_sha256": "cea4b8af123232af7900e62d2a79e318d977ac34f217c8e6e7e1662e80fde3f1",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -13.110105715397477,
+        "realized_makespan": 22.23746620918439,
+        "loss": 0.5697360970079899,
+        "actor_loss": -0.049498027336085215,
+        "value_loss": 1.253375992178917,
+        "policy_entropy": 0.7453865557909012,
+        "ppo_approx_kl": -3.84518934879452e-05,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.0,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -10.00096343660687,
+          "std": 1.470934071167762,
+          "median": -9.33175139136299
+        },
+        "realized_makespan": {
+          "mean": 19.400218679456326,
+          "std": 2.000324689247253,
+          "median": 18.624525538850953
+        },
+        "projected_makespan": {
+          "mean": 19.400218679456326,
+          "std": 2.000324689247253,
+          "median": 18.624525538850953
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 3004.0,
+          "std": 128.0,
+          "median": 2940.0
+        },
+        "heartbeat_messages": {
+          "mean": 76.0,
+          "std": 8.0,
+          "median": 72.0
+        },
+        "decisions": {
+          "mean": 74.0,
+          "std": 3.391164991562634,
+          "median": 73.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.3301176615548926,
+          "std": 0.33848652092583814,
+          "median": 3.212438961167823
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": null
+    },
+    {
+      "variant": "NoGate",
+      "seed": 3,
+      "checkpoint_sha256": "5c7b70e799396e43289421f49e39f81bd2f2299803034b2bd2399390f4cd68af",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -10.497566809485564,
+        "realized_makespan": 19.739446873020135,
+        "loss": 0.5640274696052074,
+        "actor_loss": 0.004988664295524359,
+        "value_loss": 1.1312548890709877,
+        "policy_entropy": 0.6588640064001083,
+        "ppo_approx_kl": -0.000834163181934855,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.0,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -8.162754384866584,
+          "std": 2.2776003300789265,
+          "median": -8.225696000812482
+        },
+        "realized_makespan": {
+          "mean": 17.562009627716044,
+          "std": 2.741533705402222,
+          "median": 17.446347461431117
+        },
+        "projected_makespan": {
+          "mean": 17.562009627716044,
+          "std": 2.741533705402222,
+          "median": 17.446347461431117
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2888.8,
+          "std": 183.2681096099373,
+          "median": 2876.0
+        },
+        "heartbeat_messages": {
+          "mean": 68.8,
+          "std": 11.454256850621082,
+          "median": 68.0
+        },
+        "decisions": {
+          "mean": 71.6,
+          "std": 4.277849927241487,
+          "median": 74.0
+        },
+        "mean_inference_ms": {
+          "mean": 3.3519785883432385,
+          "std": 0.3555555731352907,
+          "median": 3.1969947367542773
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 16702203.0,
+          "std": 0.0,
+          "median": 16702203.0
+        }
+      },
+      "gate_diagnostic": null
+    },
+    {
+      "variant": "SingleHead",
+      "seed": 1,
+      "checkpoint_sha256": "c44f285d7cdaa8f746a2e6ec1d17be2763b2596855d2531d7e468d3262bc3828",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -10.814659966502578,
+        "realized_makespan": 20.056540030037148,
+        "loss": 0.4636387787759304,
+        "actor_loss": 0.003206233843229711,
+        "value_loss": 0.9344649389386177,
+        "policy_entropy": 0.6799920573830605,
+        "ppo_approx_kl": -0.00029764973442070186,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.0,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -8.646080316375201,
+          "std": 1.9423888805247664,
+          "median": -8.953114002037056
+        },
+        "realized_makespan": {
+          "mean": 18.04533555922466,
+          "std": 2.453349310692223,
+          "median": 18.24588814952502
+        },
+        "projected_makespan": {
+          "mean": 18.04533555922466,
+          "std": 2.453349310692223,
+          "median": 18.24588814952502
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2914.4,
+          "std": 147.33906474523315,
+          "median": 2940.0
+        },
+        "heartbeat_messages": {
+          "mean": 70.4,
+          "std": 9.208691546577072,
+          "median": 72.0
+        },
+        "decisions": {
+          "mean": 77.2,
+          "std": 3.271085446759225,
+          "median": 77.0
+        },
+        "mean_inference_ms": {
+          "mean": 2.5309799776107638,
+          "std": 0.17492863065416414,
+          "median": 2.4864182923920453
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 14608818.0,
+          "std": 0.0,
+          "median": 14608818.0
+        }
+      },
+      "gate_diagnostic": null
+    },
+    {
+      "variant": "SingleHead",
+      "seed": 2,
+      "checkpoint_sha256": "3afdf873ef3d626b6fae4e666b622cd78e31edbb280d3d5b287267a87c9117f1",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -11.669732842716675,
+        "realized_makespan": 20.911612906251243,
+        "loss": 0.5122896619141102,
+        "actor_loss": 0.030345477774972096,
+        "value_loss": 0.9757312089204788,
+        "policy_entropy": 0.5921435914933681,
+        "ppo_approx_kl": 0.00046306241893034894,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.0,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -9.545839904118846,
+          "std": 2.6808593033267765,
+          "median": -10.470072286402042
+        },
+        "realized_makespan": {
+          "mean": 18.945095146968306,
+          "std": 2.835994480275988,
+          "median": 19.762846433890005
+        },
+        "projected_makespan": {
+          "mean": 18.945095146968306,
+          "std": 2.835994480275988,
+          "median": 19.762846433890005
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2965.6,
+          "std": 178.74227256024247,
+          "median": 3004.0
+        },
+        "heartbeat_messages": {
+          "mean": 73.6,
+          "std": 11.171392035015154,
+          "median": 76.0
+        },
+        "decisions": {
+          "mean": 73.4,
+          "std": 4.878524367060187,
+          "median": 74.0
+        },
+        "mean_inference_ms": {
+          "mean": 2.400402692830675,
+          "std": 0.030414125053988498,
+          "median": 2.411324285900004
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 14608818.0,
+          "std": 0.0,
+          "median": 14608818.0
+        }
+      },
+      "gate_diagnostic": null
+    },
+    {
+      "variant": "SingleHead",
+      "seed": 3,
+      "checkpoint_sha256": "f3ed3b4000ce89825b20894afd7e1a09afe22491d6b07abe02f4cc296d3b63f7",
+      "checks": {
+        "history_reaches_20": true,
+        "diagnostic_metrics_finite": true,
+        "validation_a_used": true,
+        "validation100_recorded": true,
+        "one_smoke_validation_at_20": true,
+        "gate_gradient_semantics": true,
+        "warmup_semantics": true,
+        "zero_invalid_actions": true,
+        "all_evaluation_tasks_completed": true
+      },
+      "valid": true,
+      "final_training_metrics": {
+        "iteration": 20.0,
+        "reward": -9.21229658031753,
+        "realized_makespan": 18.454176643852097,
+        "loss": 0.4566873051226139,
+        "actor_loss": 0.014004994241986424,
+        "value_loss": 0.8983260244131088,
+        "policy_entropy": 0.6480699814856052,
+        "ppo_approx_kl": 7.019916779427149e-05,
+        "ppo_clip_fraction": 0.0,
+        "gate_gradient_l2": 0.0,
+        "gate_learning_enabled": true
+      },
+      "validation_a_summary": {
+        "episode_return": {
+          "mean": -8.112137979770504,
+          "std": 2.3848993291353717,
+          "median": -8.30573871817491
+        },
+        "realized_makespan": {
+          "mean": 17.511393222619965,
+          "std": 2.835673759665621,
+          "median": 17.526390178793545
+        },
+        "projected_makespan": {
+          "mean": 17.511393222619965,
+          "std": 2.835673759665621,
+          "median": 17.526390178793545
+        },
+        "completion_rate": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "all_tasks_completed": {
+          "mean": 1.0,
+          "std": 0.0,
+          "median": 1.0
+        },
+        "communication_events": {
+          "mean": 3.0,
+          "std": 0.0,
+          "median": 3.0
+        },
+        "communication_bytes": {
+          "mean": 2888.8,
+          "std": 188.77287940803362,
+          "median": 2876.0
+        },
+        "heartbeat_messages": {
+          "mean": 68.8,
+          "std": 11.7983049630021,
+          "median": 68.0
+        },
+        "decisions": {
+          "mean": 72.2,
+          "std": 3.5637059362410923,
+          "median": 74.0
+        },
+        "mean_inference_ms": {
+          "mean": 2.4375665085313933,
+          "std": 0.04307989735531232,
+          "median": 2.465477026743355
+        },
+        "invalid_actions": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "reallocated_tasks": {
+          "mean": 0.0,
+          "std": 0.0,
+          "median": 0.0
+        },
+        "estimated_forward_flops": {
+          "mean": 14608818.0,
+          "std": 0.0,
+          "median": 14608818.0
+        }
+      },
+      "gate_diagnostic": null
+    }
+  ],
+  "valid": true
+}

@@ -61,6 +61,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--rrelu-mode", choices=("expected", "stochastic"), default="expected")
     parser.add_argument("--gate-bias-init", type=float, default=0.0)
     parser.add_argument(
+        "--gate-warmup-iterations",
+        type=int,
+        default=0,
+        help="Force task gate=1 and freeze gate parameters for the first N iterations.",
+    )
+    parser.add_argument(
         "--gate-activation",
         choices=("sigmoid", "softplus"),
         default="sigmoid",
@@ -74,6 +80,11 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--validation-interval", type=int, default=50)
     parser.add_argument("--validation-instances", type=int, default=20)
+    parser.add_argument(
+        "--validation-split",
+        choices=("validation", "validation_a", "validation_b"),
+        default="validation",
+    )
     parser.add_argument("--resume-from", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     return parser.parse_args()
@@ -203,9 +214,10 @@ def validate(
     sync_mode: str,
     count: int,
     device: torch.device,
+    split: str = "validation",
 ) -> dict[str, float]:
     model.eval()
-    bank = deterministic_instance_seeds(config.scale, split="validation")
+    bank = deterministic_instance_seeds(config.scale, split=split)
     rows: list[dict[str, object]] = []
     for instance_seed in bank[-count:]:
         env = PaperFaithfulUAVEnv(config)
@@ -407,6 +419,8 @@ def main() -> None:
                 json.dumps(validation_history, indent=2), encoding="utf-8"
             )
     for iteration in range(start_iteration, args.iterations + 1):
+        gate_learning_enabled = iteration > args.gate_warmup_iterations
+        model.set_gate_learning_enabled(gate_learning_enabled)
         batch, rows, episodes = collect(
             model, config, args.sync_mode, args.rollout_steps, episode_offset,
             args.gamma, args.gae_lambda, device,
@@ -417,6 +431,12 @@ def main() -> None:
         ) / batch["advantages"].std().clamp_min(1e-6)
         model.train()
         losses: list[float] = []
+        actor_losses: list[float] = []
+        value_losses: list[float] = []
+        policy_entropies: list[float] = []
+        approximate_kls: list[float] = []
+        clip_fractions: list[float] = []
+        gate_gradient_norms: list[float] = []
         for _ in range(args.update_epochs):
             permutation = torch.randperm(len(batch["actions"]), device=device)
             for start in range(0, len(batch["actions"]), args.batch_size):
@@ -431,24 +451,57 @@ def main() -> None:
                 clipped = torch.clamp(ratio, 1.0 - args.clip, 1.0 + args.clip) * batch["advantages"][indices]
                 actor_loss = -torch.minimum(unclipped, clipped).mean()
                 value_loss = nn.functional.mse_loss(value.squeeze(-1), batch["returns"][indices])
-                loss = actor_loss + args.value_coefficient * value_loss - args.entropy_coefficient * distribution.entropy().mean()
+                entropy = distribution.entropy().mean()
+                loss = actor_loss + args.value_coefficient * value_loss - args.entropy_coefficient * entropy
                 optimizer.zero_grad(set_to_none=True)
                 loss.backward()
+                gate_gradient_squared = sum(
+                    float(parameter.grad.detach().pow(2).sum())
+                    for name, parameter in model.named_parameters()
+                    if "literal_attention.gate" in name and parameter.grad is not None
+                )
                 nn.utils.clip_grad_norm_(model.parameters(), 0.5)
                 optimizer.step()
                 losses.append(float(loss.detach()))
+                actor_losses.append(float(actor_loss.detach()))
+                value_losses.append(float(value_loss.detach()))
+                policy_entropies.append(float(entropy.detach()))
+                approximate_kls.append(
+                    float((batch["old_log_probs"][indices] - log_prob).mean().detach())
+                )
+                clip_fractions.append(
+                    float(((ratio.detach() - 1.0).abs() > args.clip).float().mean())
+                )
+                gate_gradient_norms.append(float(gate_gradient_squared**0.5))
         record = {
             "iteration": float(iteration),
             "reward": float(np.mean([float(row["episode_return"]) for row in rows])),
             "realized_makespan": float(np.mean([float(row["realized_makespan"]) for row in rows])),
             "loss": float(np.mean(losses)),
+            "actor_loss": float(np.mean(actor_losses)),
+            "value_loss": float(np.mean(value_losses)),
+            "policy_entropy": float(np.mean(policy_entropies)),
+            "ppo_approx_kl": float(np.mean(approximate_kls)),
+            "ppo_clip_fraction": float(np.mean(clip_fractions)),
+            "gate_gradient_l2": float(np.mean(gate_gradient_norms)),
+            "gate_learning_enabled": bool(gate_learning_enabled),
         }
         history.append(record)
         if iteration % args.validation_interval == 0 or iteration == args.iterations:
             validation = validate(
-                model, config, args.sync_mode, args.validation_instances, device
+                model,
+                config,
+                args.sync_mode,
+                args.validation_instances,
+                device,
+                split=args.validation_split,
             )
             validation["iteration"] = float(iteration)
+            selection_eligible = (
+                iteration > args.gate_warmup_iterations
+                or args.iterations <= args.gate_warmup_iterations
+            )
+            validation["selection_eligible"] = bool(selection_eligible)
             validation_history.append(validation)
             atomic_torch_save(
                 {
@@ -458,7 +511,7 @@ def main() -> None:
                 },
                 args.output / f"candidate_{iteration:04d}.pt",
             )
-            if validation["realized_makespan"] < best_makespan:
+            if selection_eligible and validation["realized_makespan"] < best_makespan:
                 best_makespan = validation["realized_makespan"]
                 best_iteration = iteration
                 best_state = cpu_state_dict(model)

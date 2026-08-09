@@ -1,0 +1,44 @@
+[
+  {
+    "reward": -7.404436275370138,
+    "realized_makespan": 17.189663403611927,
+    "completion_rate": 1.0,
+    "communication_events": 0.0,
+    "iteration": 50.0
+  },
+  {
+    "reward": -6.726805143407996,
+    "realized_makespan": 16.512032271649787,
+    "completion_rate": 1.0,
+    "communication_events": 0.0,
+    "iteration": 100.0
+  },
+  {
+    "reward": -6.278561475241184,
+    "realized_makespan": 16.063788603482976,
+    "completion_rate": 1.0,
+    "communication_events": 0.0,
+    "iteration": 150.0
+  },
+  {
+    "reward": -6.192337117817354,
+    "realized_makespan": 15.977564246059142,
+    "completion_rate": 1.0,
+    "communication_events": 0.0,
+    "iteration": 200.0
+  },
+  {
+    "reward": -6.104225726773061,
+    "realized_makespan": 15.889452855014856,
+    "completion_rate": 1.0,
+    "communication_events": 0.0,
+    "iteration": 250.0
+  },
+  {
+    "reward": -6.188076079519167,
+    "realized_makespan": 15.97330320776096,
+    "completion_rate": 1.0,
+    "communication_events": 0.0,
+    "iteration": 300.0
+  }
+]

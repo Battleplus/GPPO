@@ -58,7 +58,19 @@ def estimate_forward_flops(model: PaperFaithfulActorCritic, observation: dict[st
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Evaluate a paper-faithful checkpoint")
     parser.add_argument("--checkpoint", type=Path, required=True)
-    parser.add_argument("--split", choices=("train", "validation", "test"), default="test")
+    parser.add_argument(
+        "--metadata-checkpoint",
+        type=Path,
+        help=(
+            "Full checkpoint supplying frozen environment/model/training metadata when "
+            "--checkpoint is a lightweight candidate containing only iteration/model_state."
+        ),
+    )
+    parser.add_argument(
+        "--split",
+        choices=("train", "validation", "test", "validation_a", "validation_b"),
+        default="test",
+    )
     parser.add_argument("--eval-scale", type=str)
     parser.add_argument("--instances", type=int, default=100)
     parser.add_argument("--sync-mode", choices=("none", "event", "periodic", "always"))
@@ -151,7 +163,22 @@ def apply_inference_overrides(
 def main() -> None:
     args = parse_args()
     torch.set_num_threads(1)
-    checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=False)
+    weights_checkpoint = torch.load(args.checkpoint, map_location="cpu", weights_only=False)
+    metadata_checkpoint_sha256: str | None = None
+    candidate_iteration: int | None = None
+    if "environment" not in weights_checkpoint or "model_config" not in weights_checkpoint:
+        if args.metadata_checkpoint is None:
+            raise ValueError(
+                "Lightweight candidate checkpoint requires --metadata-checkpoint with full config"
+            )
+        checkpoint = torch.load(args.metadata_checkpoint, map_location="cpu", weights_only=False)
+        checkpoint = dict(checkpoint)
+        checkpoint["model_state"] = weights_checkpoint["model_state"]
+        candidate_iteration = int(weights_checkpoint["iteration"])
+        checkpoint["best_iteration"] = candidate_iteration
+        metadata_checkpoint_sha256 = file_hash(args.metadata_checkpoint)
+    else:
+        checkpoint = weights_checkpoint
     scale_payload = checkpoint["environment"]["scale"]
     checkpoint_scale = PaperScale(
         int(scale_payload["uavs"]),
@@ -251,6 +278,8 @@ def main() -> None:
                 "communication_events": float(metrics["communication_events"]),
                 "communication_bytes": float(metrics["communication_bytes"]),
                 "heartbeat_messages": float(metrics["heartbeat_messages"]),
+                "invalid_actions": float(metrics["invalid_actions"]),
+                "reallocated_tasks": float(metrics["reallocated_tasks"]),
                 "decisions": decisions,
                 "inference_seconds": inference_seconds,
                 "mean_inference_ms": 1_000.0 * inference_seconds / max(1, decisions),
@@ -264,6 +293,7 @@ def main() -> None:
         "episode_return", "realized_makespan", "projected_makespan",
         "completion_rate", "all_tasks_completed", "communication_events",
         "communication_bytes", "heartbeat_messages", "decisions", "mean_inference_ms",
+        "invalid_actions", "reallocated_tasks",
         "projection_error_relative_mean", "projection_error_relative_p95",
         "estimated_forward_flops",
     )
@@ -318,6 +348,10 @@ def main() -> None:
         "version": "paper-faithful-evaluation-v1",
         "checkpoint": str(args.checkpoint),
         "checkpoint_sha256": file_hash(args.checkpoint),
+        "checkpoint_kind": "candidate_overlay" if candidate_iteration is not None else "full",
+        "candidate_iteration": candidate_iteration,
+        "metadata_checkpoint": str(args.metadata_checkpoint) if args.metadata_checkpoint else None,
+        "metadata_checkpoint_sha256": metadata_checkpoint_sha256,
         "model_config": model_config,
         "inference_overrides": requested_overrides,
         "retrained": not bool(requested_overrides),
