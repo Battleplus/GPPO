@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import zipfile
 from pathlib import Path
 from typing import Any
 
@@ -36,6 +37,32 @@ def file_evidence(path: Path, *, nonempty: bool = True) -> dict[str, Any]:
         result["sha256"] = sha256(path)
     else:
         result["reason"] = "missing or empty"
+    return result
+
+
+def zip_evidence(path: Path, required_basenames: set[str]) -> dict[str, Any]:
+    result = file_evidence(path)
+    result.update({"zip_readable": False, "no_duplicate_members": False, "required_members_present": False})
+    if not result["valid"]:
+        return result
+    try:
+        with zipfile.ZipFile(path) as archive:
+            bad_member = archive.testzip()
+            names = archive.namelist()
+            basenames = {Path(name).name for name in names if not name.endswith("/")}
+        result["zip_readable"] = bad_member is None
+        result["no_duplicate_members"] = len(names) == len(set(names))
+        result["required_members_present"] = required_basenames <= basenames
+        result["missing_required_members"] = sorted(required_basenames - basenames)
+        result["member_count"] = len(names)
+        result["valid"] = bool(
+            result["zip_readable"]
+            and result["no_duplicate_members"]
+            and result["required_members_present"]
+        )
+    except (OSError, zipfile.BadZipFile) as error:
+        result["valid"] = False
+        result["reason"] = f"invalid ZIP: {error}"
     return result
 
 
@@ -99,9 +126,22 @@ def main() -> None:
         for name in (
             "PHASE1_FINAL_REPORT_ZH.md",
             "PHASE1_REPRODUCTION_GUIDE.md",
-            "PHASE1_RESULTS.zip",
         )
     }
+    deliverables["PHASE1_RESULTS.zip"] = zip_evidence(
+        repo / "PHASE1_RESULTS.zip",
+        {
+            "PHASE1_FINAL_REPORT_ZH.md",
+            "PHASE1_REPRODUCTION_GUIDE.md",
+            "PHASE1_ARTIFACT_MANIFEST.json",
+            "PHASE1_CONFIG_AUDIT.json",
+            "PHASE1_FORMAL_MATRIX_RUN.json",
+            "PHASE1_COMMUNICATION_CAUSAL_AUDIT.json",
+            "DISTURBANCE_IMPLEMENTATION_AUDIT.json",
+            "DISTURBANCE_CALIBRATION_AUDIT.json",
+            "PHASE1_FINAL_EXPERIMENT_AUDIT.json",
+        },
+    )
     deliverables["PHASE1_ARTIFACT_MANIFEST.json"] = json_evidence(
         repo / "PHASE1_ARTIFACT_MANIFEST.json",
         lambda p: p.get("valid") is True and p.get("all_hashes_verified") is True,
