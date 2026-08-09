@@ -77,6 +77,11 @@ def main() -> None:
     parser.add_argument("--screening-root", type=Path, default=Path("outputs/gate_screening/screening"))
     parser.add_argument("--output-root", type=Path, default=Path("outputs/gate_screening"))
     parser.add_argument("--protocol", type=Path, default=Path("configs/GATE_DIAGNOSTIC_PROTOCOL.json"))
+    parser.add_argument(
+        "--runtime-cohorts",
+        type=Path,
+        default=Path("configs/GATE_SCREENING_RUNTIME_COHORTS.json"),
+    )
     parser.add_argument("--jobs", type=int, default=4)
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="cpu")
     args = parser.parse_args()
@@ -86,6 +91,7 @@ def main() -> None:
     manifest_path = screening_root / "run_manifest.json"
     manifest = read_json(manifest_path)
     protocol = read_json(args.protocol)
+    runtime_cohorts = read_json(args.runtime_cohorts)
     if not manifest.get("valid") or any(
         record.get("status") not in {"completed", "reused"} for record in manifest["records"]
     ):
@@ -99,6 +105,19 @@ def main() -> None:
     expected = {(variant, seed) for variant in variants for seed in seeds}
     if set(records) != expected:
         raise RuntimeError("Training records do not match frozen 7 x 3 matrix")
+    declared_runs = {
+        run
+        for cohort in runtime_cohorts["cohorts"]
+        for run in cohort["runs"]
+    }
+    expected_run_labels = {f"{variant}:{seed}" for variant, seed in expected}
+    if declared_runs != expected_run_labels:
+        raise RuntimeError("Runtime cohorts do not cover the exact 7 x 3 screening matrix")
+    if runtime_cohorts["protocol_sha256"] != manifest["protocol_sha256"]:
+        raise RuntimeError("Runtime cohort protocol hash differs from launch manifest")
+    current_cohort = runtime_cohorts["cohorts"][-1]
+    if any(sha256(Path(path)) != digest for path, digest in current_cohort["files_sha256"].items()):
+        raise RuntimeError("Frozen training source changed after runtime cohort registration")
 
     evaluations: dict[tuple[str, int, str], Path] = {}
     commands: list[tuple[list[str], Path]] = []
@@ -310,6 +329,7 @@ def main() -> None:
         "protocol_sha256": manifest["protocol_sha256"],
         "amendment_sha256": manifest["amendment_sha256"],
         "training_code_commit": manifest["code_commit"],
+        "runtime_cohorts": runtime_cohorts,
         "test_used_for_selection": False,
         "variants": variants,
         "seeds": seeds,

@@ -1,0 +1,63 @@
+{
+  "version": "phase1-gate-screening-runtime-cohorts-v1",
+  "reason": "The long-running orchestrator launches jobs lazily. A communication-only diagnostic field was added after cohort 1 started and before any cohort 2 job started.",
+  "protocol_sha256": "0b863bf37045fa3287268c6f7695c439c529d4ca075032df3c04ce2d87f68f13",
+  "policy_affecting_difference_between_cohorts": false,
+  "difference": "Cohort 2 records last_belief_sync_time and cache_age_before/cache_age_after in info only. These fields are absent from nodes, edges, action mask, reward, termination, RNG use, optimizer and model forward pass.",
+  "frozen_training_files": [
+    "train_paper_faithful.py",
+    "src/uav_assignment/paper_faithful_env.py",
+    "src/uav_assignment/paper_faithful_models.py",
+    "src/uav_assignment/paper_env.py",
+    "configs/GATE_DIAGNOSTIC_PROTOCOL.json"
+  ],
+  "cohorts": [
+    {
+      "name": "launch_commit_3249958",
+      "runs": [
+        "Adaptive-current:1",
+        "Adaptive-current:2",
+        "Adaptive-current:3",
+        "Adaptive-bias2:1"
+      ],
+      "git_commit": "324995843dbc7f41d49d207006dbe5a0accbb32d",
+      "files_sha256": {
+        "train_paper_faithful.py": "d9743ecb01522b5e52699b3df41b529dda455b7c6e9039c8f84c9711b5b5148a",
+        "src/uav_assignment/paper_faithful_env.py": "7c3435f4d19dc42fbcc46a2753355b9c36bc4db176fccc91786a6d56af49574b",
+        "src/uav_assignment/paper_faithful_models.py": "d1787d2be3c497fce8cdbc26f2a7f23a3f03e9a351bc1ed52379381879eee919",
+        "src/uav_assignment/paper_env.py": "aafee1eb17b6413bc1525d1d3609722b51095773aa3d4b7cd1a204815d875fb4",
+        "configs/GATE_DIAGNOSTIC_PROTOCOL.json": "0b863bf37045fa3287268c6f7695c439c529d4ca075032df3c04ce2d87f68f13"
+      }
+    },
+    {
+      "name": "diagnostic_cache_fields_frozen",
+      "runs": [
+        "Adaptive-bias2:2",
+        "Adaptive-bias2:3",
+        "Adaptive-warmup:1",
+        "Adaptive-warmup:2",
+        "Adaptive-warmup:3",
+        "Adaptive-score:1",
+        "Adaptive-score:2",
+        "Adaptive-score:3",
+        "Adaptive-softplus:1",
+        "Adaptive-softplus:2",
+        "Adaptive-softplus:3",
+        "NoGate:1",
+        "NoGate:2",
+        "NoGate:3",
+        "SingleHead:1",
+        "SingleHead:2",
+        "SingleHead:3"
+      ],
+      "files_sha256": {
+        "train_paper_faithful.py": "d9743ecb01522b5e52699b3df41b529dda455b7c6e9039c8f84c9711b5b5148a",
+        "src/uav_assignment/paper_faithful_env.py": "8d851631ccf781b98a8efbff7264c9f0a233dcea9a7d60723c27bd303051127a",
+        "src/uav_assignment/paper_faithful_models.py": "d1787d2be3c497fce8cdbc26f2a7f23a3f03e9a351bc1ed52379381879eee919",
+        "src/uav_assignment/paper_env.py": "aafee1eb17b6413bc1525d1d3609722b51095773aa3d4b7cd1a204815d875fb4",
+        "configs/GATE_DIAGNOSTIC_PROTOCOL.json": "0b863bf37045fa3287268c6f7695c439c529d4ca075032df3c04ce2d87f68f13"
+      }
+    }
+  ],
+  "test_or_test100_used": false
+}
