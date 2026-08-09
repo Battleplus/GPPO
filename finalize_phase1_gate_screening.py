@@ -209,11 +209,13 @@ def main() -> None:
         "required_negative_statement": None if eligible else "未独立复现 Adaptive 正收益",
     }
     seed_results: dict[str, Any] = {}
+    histories: dict[tuple[str, int], list[dict[str, Any]]] = {}
     for variant in variants:
         seed_results[variant] = {}
         for seed in seeds:
             run_root = Path(records[(variant, seed)]["output"])
             history = read_json(run_root / "training_history.json")
+            histories[(variant, seed)] = history
             per_split = {split: payloads[(variant, seed, split)] for split in SPLITS}
             item: dict[str, Any] = {
                 "checkpoint_sha256": records[(variant, seed)]["checkpoint_sha256"],
@@ -245,6 +247,64 @@ def main() -> None:
                     )
                 }
             seed_results[variant][str(seed)] = item
+
+    event_tape_checks: dict[str, bool] = {}
+    instance_bank_checks: dict[str, bool] = {}
+    for split in SPLITS:
+        split_payloads = [payloads[(variant, seed, split)] for variant in variants for seed in seeds]
+        reference_tapes = split_payloads[0]["event_tape_hashes"]
+        reference_seeds = [row["instance_seed"] for row in split_payloads[0]["rows"]]
+        event_tape_checks[split] = all(item["event_tape_hashes"] == reference_tapes for item in split_payloads)
+        instance_bank_checks[split] = (
+            len(reference_seeds) == 100
+            and len(set(reference_seeds)) == 100
+            and all([row["instance_seed"] for row in item["rows"]] == reference_seeds for item in split_payloads)
+        )
+    validation_banks_disjoint = not (
+        {row["instance_seed"] for row in payloads[(variants[0], seeds[0], "validation_a")]["rows"]}
+        & {row["instance_seed"] for row in payloads[(variants[0], seeds[0], "validation_b")]["rows"]}
+    )
+    test_disjoint = not (
+        {row["instance_seed"] for row in payloads[(variants[0], seeds[0], "test")]["rows"]}
+        & {
+            row["instance_seed"]
+            for split in ("validation_a", "validation_b")
+            for row in payloads[(variants[0], seeds[0], split)]["rows"]
+        }
+    )
+    warmup_histories_valid = True
+    for seed in seeds:
+        run_root = Path(records[("Adaptive-warmup", seed)]["output"])
+        validation_history = read_json(run_root / "validation_history.json")
+        warmup_histories_valid &= all(
+            bool(entry["selection_eligible"]) == (float(entry["iteration"]) > 50)
+            for entry in validation_history
+        )
+        warmup_histories_valid &= int(
+            payloads[("Adaptive-warmup", seed, "validation_a")]["best_iteration"]
+        ) > 50
+    finite_training_diagnostics = all(
+        all(
+            isinstance(row.get(key), (int, float)) and math.isfinite(float(row[key]))
+            for key in (
+                "policy_entropy", "ppo_approx_kl", "ppo_clip_fraction", "value_loss",
+                "realized_makespan",
+            )
+        )
+        for history in histories.values()
+        for row in history
+    )
+    global_checks = {
+        "all_splits_use_identical_event_tapes_across_models": all(event_tape_checks.values()),
+        "all_splits_use_identical_100_instance_banks_across_models": all(instance_bank_checks.values()),
+        "validation_a_and_b_are_disjoint": validation_banks_disjoint,
+        "test_is_disjoint_from_both_validation_banks": test_disjoint,
+        "warmup_iteration_50_is_never_selection_eligible": warmup_histories_valid,
+        "required_training_diagnostics_are_finite": finite_training_diagnostics,
+        "zero_invalid_actions_all_models_all_splits": all(
+            metric(payload, "invalid_actions") == 0 for payload in payloads.values()
+        ),
+    }
     summary = {
         "version": "phase1-gate-three-seed-screening-v1",
         "protocol_sha256": manifest["protocol_sha256"],
@@ -255,9 +315,10 @@ def main() -> None:
         "seeds": seeds,
         "validation_a_mean_makespan": validation_means,
         "seed_results": seed_results,
+        "global_checks": global_checks,
         "decisions": decisions,
         "outcome": outcome,
-        "valid": True,
+        "valid": all(global_checks.values()),
     }
     write_json(args.output_root / "summary.json", summary)
     write_json(args.output_root / "seed_level_comparisons.json", comparisons)
