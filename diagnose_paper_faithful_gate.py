@@ -128,6 +128,7 @@ def main() -> None:
         episode_offset=0,
         gamma=float(training.get("gamma", 0.99)),
         gae_lambda=float(training.get("gae_lambda", 0.95)),
+        device=torch.device("cpu"),
     )
     batch["advantages"] = (
         batch["advantages"] - batch["advantages"].mean()
