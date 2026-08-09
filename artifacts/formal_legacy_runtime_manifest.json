@@ -1,0 +1,34 @@
+{
+  "version": "phase1-formal-legacy-runtime-v1",
+  "captured_before_resume": true,
+  "workspace": "E:/Z博士",
+  "python": "D:/anaconda/python.exe",
+  "torch": "2.7.1+cpu",
+  "legacy_validation_split": "validation",
+  "legacy_validation_seed_offset": 10000000,
+  "required_frozen_selection_split": "validation_a",
+  "required_frozen_selection_seed_offset": 30000000,
+  "files_sha256": {
+    "train_paper_faithful.py": "8bc522f974a7cebeebe5c052be85c0d625e301e7e0ea900d8f1c33118a4596da",
+    "run_paper_faithful_formal.py": "6b362a65c3ddcf1eed068b1443a16271ba044e1971fba5252c2c69b9ace98fef",
+    "evaluate_paper_faithful.py": "be3a759cbb9ecfdcf247104393baafd6ad9e3c44eca7078816e3340564f50185",
+    "diagnose_paper_faithful_gate.py": "b2234b2a01b9f9423a45378c77bbbb2d5fb5e6cae9fa0540f23a5fb1c2b83f23",
+    "src/uav_assignment/paper_faithful_env.py": "39a1e7bd759e5e7c6b4ba2a0a0c913b190ef7463cbb76fbe8d680b0f9280f461",
+    "src/uav_assignment/paper_faithful_models.py": "904c7b39b0956cf800cc09f8edc413966836897e05409136def9eca7ddaf46b1"
+  },
+  "preserved_runs": {
+    "literal_event_seed1": {"last_iteration": 1975, "final_checkpoint_present": false},
+    "literal_event_seed2": {"last_iteration": 1975, "final_checkpoint_present": false},
+    "literal_event_seed3": {"last_iteration": 2000, "final_checkpoint_present": true},
+    "literal_event_seed4": {"last_iteration": 1975, "final_checkpoint_present": false},
+    "literal_event_seed5": {"last_iteration": 1976, "final_checkpoint_present": false}
+  },
+  "termination_evidence": "runner logs end with Intel Fortran runtime error 200: program aborting due to window-CLOSE event",
+  "resume_policy": {
+    "retrain_from_zero": false,
+    "preserve_original_checkpoints": true,
+    "resume_from_resume_latest": true,
+    "published_runtime_for_remaining_iterations": "GitHub clean branch code",
+    "checkpoint_reselection": "Evaluate every 50-iteration candidate on validation_a; preserve legacy checkpoint.pt and write a separately named frozen selection."
+  }
+}
