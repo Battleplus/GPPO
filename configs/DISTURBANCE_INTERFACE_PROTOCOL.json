@@ -1,0 +1,49 @@
+{
+  "version": "phase1-disturbance-interface-preregistration-v1",
+  "implementation_gate": "configs/PHASE1_FROZEN_PROTOCOL.json must exist and verify before disturbance training or model selection",
+  "baseline_semantics_must_remain_unchanged": true,
+  "required_types": {
+    "DisturbanceConfig": "Frozen independent enable flags, parameters, severity and master seed",
+    "DisturbanceTape": "Serializable, hashable, complete per-episode ordered event sequence",
+    "DisturbanceEvent": "Immutable event time, type, target, intensity, payload and provenance",
+    "DisturbanceLogger": "Observed application record with before/after state and effect"
+  },
+  "event_ordering": {
+    "primary": "physical_time",
+    "tie_break": [
+      "source_priority",
+      "event_type",
+      "target_id",
+      "generation_index"
+    ],
+    "time_reversal_forbidden": true
+  },
+  "independent_sources": [
+    "gilbert_elliott_packet_loss",
+    "message_delay",
+    "network_partition",
+    "uav_failure",
+    "energy_depletion",
+    "task_arrival",
+    "task_cancellation",
+    "task_priority_change",
+    "wind_field"
+  ],
+  "invariants": [
+    "Every source has an independent enable flag and deterministic seed derivation",
+    "Identical config, instance seed and disturbance seed produce byte-identical tapes",
+    "Packet loss and delay affect message delivery only, never true state",
+    "Events never bypass action masks, capability constraints or predecessor constraints",
+    "All applied events record physical time, target, intensity, before, after and effect",
+    "Disabling all sources is behaviorally identical to the frozen no-disturbance baseline",
+    "Negative, saturated and impossible scenarios remain in calibration artifacts"
+  ],
+  "implementation_order": [
+    "gilbert_elliott_packet_loss",
+    "message_delay_and_partition",
+    "uav_failure_and_energy",
+    "task_lifecycle_changes",
+    "wind_field"
+  ],
+  "test_or_formal_test_used": false
+}
