@@ -8,6 +8,7 @@ from .communication import (
     generate_communication_events,
 )
 from .events import DisturbanceEvent
+from .engine import DisturbanceEngine, DisturbanceStep
 from .logger import DisturbanceLogger
 from .tape import DisturbanceTape, DisturbanceTapeCursor
 from .task import (
@@ -25,9 +26,11 @@ __all__ = [
     "CommunicationDisturbanceLayer",
     "DisturbanceConfig",
     "DisturbanceEvent",
+    "DisturbanceEngine",
     "DisturbanceLogger",
     "DisturbanceTape",
     "DisturbanceTapeCursor",
+    "DisturbanceStep",
     "MessageEnvelope",
     "ReleasedTask",
     "SourceConfig",
