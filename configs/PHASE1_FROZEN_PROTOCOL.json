@@ -1,0 +1,133 @@
+{
+  "version": "phase1-frozen-protocol-v1",
+  "frozen_after_gate_screening": true,
+  "selection_data": "validation_a only",
+  "confirmation_only_data": [
+    "validation_b",
+    "test100"
+  ],
+  "test_used_for_selection": false,
+  "source": {
+    "gate_protocol_sha256": "0b863bf37045fa3287268c6f7695c439c529d4ca075032df3c04ce2d87f68f13",
+    "gate_amendment_sha256": "286f701205c4f16befac21cf6f83c1078e9335c7947e078829a79f376f193a17",
+    "gate_training_code_commit": "324995843dbc7f41d49d207006dbe5a0accbb32d",
+    "screening_outcome": {
+      "adaptive_candidates_passing": [
+        "Adaptive-current",
+        "Adaptive-bias2",
+        "Adaptive-score",
+        "Adaptive-softplus"
+      ],
+      "selected_adaptive": "Adaptive-score",
+      "selection_basis": "validation_a only among preregistered candidates; confirmation can veto but never reselect",
+      "engineering_baseline_if_no_adaptive_passes": "SingleHead",
+      "required_negative_statement": null
+    }
+  },
+  "models": {
+    "GPPO-Literal": {
+      "graph_mode": "literal",
+      "gate_scope": "task_message",
+      "gate_activation": "sigmoid",
+      "gate_bias_init": 0.0,
+      "gate_warmup_iterations": 0,
+      "rrelu_mode": "expected",
+      "post_gate_renormalization": false,
+      "role": "paper-compatible interpretation; retained even if negative"
+    },
+    "GPPO-Best": {
+      "graph_mode": "literal",
+      "gate_scope": "score",
+      "gate_activation": "sigmoid",
+      "gate_bias_init": 0.0,
+      "gate_warmup_iterations": 0,
+      "selected_variant": "Adaptive-score",
+      "role": "validation-selected engineering baseline"
+    },
+    "PPO-MLP": {
+      "graph_mode": "ppo_mlp",
+      "role": "ordinary PPO without graph encoder"
+    },
+    "NoGate": {
+      "graph_mode": "literal_no_gate",
+      "gate_scope": "task_message",
+      "gate_activation": "sigmoid",
+      "gate_bias_init": 0.0,
+      "gate_warmup_iterations": 0,
+      "role": "adaptive-gate ablation"
+    },
+    "SingleHead": {
+      "graph_mode": "literal_single_head",
+      "gate_scope": "task_message",
+      "gate_activation": "sigmoid",
+      "gate_bias_init": 0.0,
+      "gate_warmup_iterations": 0,
+      "role": "simple-attention structural control"
+    }
+  },
+  "formal_training": {
+    "scales": [
+      "T5-10-48",
+      "T10-10-53",
+      "T15-8-66",
+      "T20-10-92"
+    ],
+    "training_seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "iterations": 2000,
+    "rollout_steps": 512,
+    "batch_size": 512,
+    "update_epochs": 4,
+    "learning_rate": 0.0002,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "ppo_clip": 0.2,
+    "entropy_coefficient": 0.01,
+    "value_coefficient": 0.5,
+    "validation_interval": 50,
+    "validation_instances": 100,
+    "checkpoint_selection_split": "validation_a",
+    "confirmation_split": "validation_b",
+    "test_instances": 100,
+    "rrelu_mode": "expected"
+  },
+  "comparisons": [
+    "Random",
+    "Greedy",
+    "PPO-none",
+    "PPO-event",
+    "GPPO-Literal-none",
+    "GPPO-Literal-event",
+    "GPPO-Best-event",
+    "NoGate-event",
+    "SingleHead-event"
+  ],
+  "communication_replay": {
+    "checkpoint_policy": "same event-trained GPPO checkpoint",
+    "modes": [
+      "none",
+      "event",
+      "periodic",
+      "always"
+    ],
+    "retraining_for_replay": false
+  },
+  "statistics": {
+    "unit": "training seed after aggregating fixed test100 within seed",
+    "reported": [
+      "mean",
+      "std",
+      "Student-t 95% CI",
+      "paired seed difference",
+      "improved seed count",
+      "effect size"
+    ],
+    "cross_scale": "per-scale statistics plus macro average; never pool episodes across scales into one CI"
+  },
+  "immutability": "No architecture or hyperparameter changes after formal test results are read."
+}
