@@ -17,6 +17,7 @@ from .task import (
     generate_task_events,
 )
 from .uav import ReleasedTask, UAVDisturbanceLayer, UAVRuntimeState, generate_uav_events
+from .wind import WindAdjustment, WindFieldLayer, WindObservation, generate_wind_events
 
 __all__ = [
     "SOURCE_NAMES",
@@ -35,7 +36,11 @@ __all__ = [
     "TaskRuntimeState",
     "UAVDisturbanceLayer",
     "UAVRuntimeState",
+    "WindAdjustment",
+    "WindFieldLayer",
+    "WindObservation",
     "generate_communication_events",
     "generate_task_events",
     "generate_uav_events",
+    "generate_wind_events",
 ]
