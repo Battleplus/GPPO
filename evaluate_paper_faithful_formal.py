@@ -11,7 +11,8 @@ def discover_checkpoints(root: Path) -> list[Path]:
     """Prefer a validation-A-reselected Phase-1 checkpoint without deleting history."""
     frozen = {path.parent: path for path in root.glob("**/checkpoint_phase1_frozen.pt")}
     ordinary = {path.parent: path for path in root.glob("**/checkpoint.pt")}
-    return [frozen.get(parent, checkpoint) for parent, checkpoint in sorted(ordinary.items())]
+    parents = sorted(set(frozen) | set(ordinary))
+    return [frozen[parent] if parent in frozen else ordinary[parent] for parent in parents]
 
 
 def evaluation_directory(checkpoint: Path) -> Path:
