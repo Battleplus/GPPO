@@ -17,6 +17,12 @@ from .task import (
     TaskRuntimeState,
     generate_task_events,
 )
+from .trajectory import (
+    OBJECTIVE_COMPONENTS,
+    Phase1BTrajectoryRecorder,
+    TrajectoryMetadata,
+    decode_arrays,
+)
 from .uav import ReleasedTask, UAVDisturbanceLayer, UAVRuntimeState, generate_uav_events
 from .wind import WindAdjustment, WindFieldLayer, WindObservation, generate_wind_events
 
@@ -32,11 +38,14 @@ __all__ = [
     "DisturbanceTapeCursor",
     "DisturbanceStep",
     "MessageEnvelope",
+    "OBJECTIVE_COMPONENTS",
+    "Phase1BTrajectoryRecorder",
     "ReleasedTask",
     "SourceConfig",
     "TaskDisturbanceLayer",
     "TaskRelease",
     "TaskRuntimeState",
+    "TrajectoryMetadata",
     "UAVDisturbanceLayer",
     "UAVRuntimeState",
     "WindAdjustment",
@@ -46,4 +55,5 @@ __all__ = [
     "generate_task_events",
     "generate_uav_events",
     "generate_wind_events",
+    "decode_arrays",
 ]
