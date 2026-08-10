@@ -10,6 +10,12 @@ from .communication import (
 from .events import DisturbanceEvent
 from .logger import DisturbanceLogger
 from .tape import DisturbanceTape, DisturbanceTapeCursor
+from .task import (
+    TaskDisturbanceLayer,
+    TaskRelease,
+    TaskRuntimeState,
+    generate_task_events,
+)
 from .uav import ReleasedTask, UAVDisturbanceLayer, UAVRuntimeState, generate_uav_events
 
 __all__ = [
@@ -24,8 +30,12 @@ __all__ = [
     "MessageEnvelope",
     "ReleasedTask",
     "SourceConfig",
+    "TaskDisturbanceLayer",
+    "TaskRelease",
+    "TaskRuntimeState",
     "UAVDisturbanceLayer",
     "UAVRuntimeState",
     "generate_communication_events",
+    "generate_task_events",
     "generate_uav_events",
 ]
