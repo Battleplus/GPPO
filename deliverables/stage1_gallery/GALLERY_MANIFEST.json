@@ -1,0 +1,24 @@
+{
+  "schema_version": "stage1-gallery-v1",
+  "source_files": [
+    "artifacts/phase1_seed1_300/raw/MECHANISM_ACCEPTANCE.json",
+    "artifacts/phase1_seed1_300/raw/T5-10-48/*/training_history.json",
+    "reports/GATE_THREE_SEED_SCREENING.md",
+    "deliverables/phase1b/calibration.json",
+    "deliverables/phase1b/DISTURBANCE_IMPLEMENTATION_AUDIT.json",
+    "deliverables/phase1b/ALL_OFF_EQUIVALENCE_TEST100.json"
+  ],
+  "figures": [
+    "phase1_overview_dashboard.png",
+    "phase1a_communication_tradeoff.png",
+    "phase1a_gate_screening.png",
+    "phase1a_method_comparison.png",
+    "phase1a_pairwise_effects.png",
+    "phase1a_training_curves.png",
+    "phase1b_severity_calibration.png"
+  ],
+  "notes": [
+    "Phase 1A learned-method results are single-training-seed fixed-test100 mechanism evidence.",
+    "Phase 1B calibration uses three independent calibration seeds and is not an algorithm benchmark."
+  ]
+}

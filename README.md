@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.1%2B-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
-![Status](https://img.shields.io/badge/Phase%201A-GPPO%20baseline%20frozen-2E8B57)
+![Status](https://img.shields.io/badge/Phase%201-1A%20%2B%201B%20complete-2E8B57)
 ![Scope](https://img.shields.io/badge/reproduction-mechanism--level-orange)
 
 本项目研究**弱通信和多源扰动条件下，异构无人机集群的动态任务分配**。当前分支首先复现论文 *Multi-UAV Dynamic Task Assignment Based on Event-Triggered Graph Reinforcement Learning Under Weak Communication* 中的异构任务图、AHGNN、动作掩码、事件触发通信和 GPPO，再逐步扩展到多源扰动、偏好奖励和图世界模型。
@@ -24,21 +24,63 @@ flowchart LR
     classDef done fill:#d9f2e6,stroke:#218c5a,color:#123b29,stroke-width:2px;
     classDef next fill:#fff0c7,stroke:#d89000,color:#5a3a00,stroke-width:2px;
     classDef future fill:#eef2f7,stroke:#7b8794,color:#27313a;
-    class A done;
-    class B next;
-    class C,D,E,F,G future;
+    class A,B done;
+    class C,D next;
+    class E,F,G future;
 ```
 
 | 阶段 | 状态 | 当前结论 |
 |---|---|---|
 | Phase 1A：GPPO 基线 | **已冻结，带局限完成** | 六模型 300 轮机制验证、候选重评估、Gate 诊断和三种子筛选均已完成 |
-| Phase 1B：多源扰动 | **下一优先级** | 已完成能力审计和接口预注册；正式 disturbance tape 尚未实现 |
+| Phase 1B：多源扰动 | **已完成并通过机器审计** | 通信、UAV/能量、动态任务和风场扰动均可配置、重放和审计；最终审计 `valid=true` |
 | Phase 2：偏好强化学习 | 设计阶段 | 不在当前“无偏好”分支中；不能把标量奖励简单乘偏好权重 |
 | Phase 3：图世界模型 | 设计阶段 | 固定 event tape 只用于公平比较，不能冒充 learned world model |
 | Phase 4：预测触发 | 未开始 | 依赖扰动标签、模型校准与不确定度 |
-| Phase 5：正式实验 | 暂缓全量执行 | 应在算法冻结后分片运行，避免反复消耗计算资源 |
+| Phase 5：正式实验 | 暂缓全量执行 | 后续长时训练放到 Colab，并在算法冻结后分片运行 |
 
 完整的阶段判断见 [`docs/STAGE1_TRANSITION_ARCHIVE_2026-08-10.md`](docs/STAGE1_TRANSITION_ARCHIVE_2026-08-10.md)，机器可读决策见 [`configs/STAGE1_TRANSITION_DECISION_2026-08-10.json`](configs/STAGE1_TRANSITION_DECISION_2026-08-10.json)。
+
+## 第一阶段成果总览与图片
+
+第一阶段由两部分组成：Phase 1A 完成 GPPO 机制基线、六模型对比和 Gate 筛选；Phase 1B 完成可配置、可重放、可审计的多源扰动环境与标准轨迹。下面所有图片及其原始 JSON/训练历史均已同步到本分支。
+
+![第一阶段总览](deliverables/stage1_gallery/phase1_overview_dashboard.png)
+
+### Phase 1A：计算结果与训练过程
+
+| 图表 | 展示内容 | 原始证据 |
+|---|---|---|
+| [六模型 test100 对比](deliverables/stage1_gallery/phase1a_method_comparison.png) | 六种学习机制的 realized makespan 均值与实例标准差 | [机制验收 JSON](artifacts/phase1_seed1_300/raw/MECHANISM_ACCEPTANCE.json) |
+| [配对差值与 95% CI](deliverables/stage1_gallery/phase1a_pairwise_effects.png) | GPPO/PPO、通信模式和 Adaptive 消融的实例级配对差值 | [机制验收 JSON](artifacts/phase1_seed1_300/raw/MECHANISM_ACCEPTANCE.json) |
+| [300 轮训练曲线](deliverables/stage1_gallery/phase1a_training_curves.png) | 六模型 makespan 与 reward 的 15 轮移动平均 | [六模型训练目录](artifacts/phase1_seed1_300/raw/T5-10-48) |
+| [通信成本—任务质量](deliverables/stage1_gallery/phase1a_communication_tradeoff.png) | Event/None/Full 的通信字节与 makespan 权衡 | [机制验收 JSON](artifacts/phase1_seed1_300/raw/MECHANISM_ACCEPTANCE.json) |
+| [三种子 Gate 筛选](deliverables/stage1_gallery/phase1a_gate_screening.png) | 七个候选结构在 validation-A 上的预注册排序 | [Gate 筛选报告](reports/GATE_THREE_SEED_SCREENING.md) |
+| [原始六模型箱线图](artifacts/phase1_seed1_300/raw/mechanism_makespan.png) | fixed test100 的 makespan 分布 | [第一阶段产物目录](artifacts/phase1_seed1_300) |
+| [Leader 故障探针](artifacts/phase1_seed1_300/raw/leader_failure_makespan.png) | Leader 故障、任务释放和恢复后的 makespan | [故障探针 JSON](artifacts/phase1_seed1_300/raw/leader_failure_probe.json) |
+
+![Phase 1A 六模型对比](deliverables/stage1_gallery/phase1a_method_comparison.png)
+
+![Phase 1A 训练曲线](deliverables/stage1_gallery/phase1a_training_curves.png)
+
+### Phase 1B：多源扰动与数据可视化
+
+| 图表 | 展示内容 | 原始证据 |
+|---|---|---|
+| [扰动强度校准](deliverables/stage1_gallery/phase1b_severity_calibration.png) | Off/Weak/Medium/Strong 的 makespan、丢包、时延和最低能量 | [校准 JSON](deliverables/phase1b/calibration.json) |
+| [事件时间线](deliverables/phase1b/event_timeline.png) | 通信、故障、恢复、任务与风场事件的物理时间 | [Disturbance tape](deliverables/phase1b/sample_tape.json) |
+| [链路状态](deliverables/phase1b/link_state.png) | Gilbert–Elliott 链路丢包概率随时间变化 | [Disturbance tape](deliverables/phase1b/sample_tape.json) |
+| [UAV 能量曲线](deliverables/phase1b/uav_energy.png) | 多 UAV 在执行、待机与通信过程中的能量衰减 | [标准轨迹（gzip）](deliverables/phase1b/sample_trajectory.json.gz) |
+| [任务变化甘特图](deliverables/phase1b/task_gantt.png) | 动态新增、取消、优先级和 deadline 变化 | [标准轨迹（gzip）](deliverables/phase1b/sample_trajectory.json.gz) |
+
+![Phase 1B 扰动强度校准](deliverables/stage1_gallery/phase1b_severity_calibration.png)
+
+![Phase 1B 事件时间线](deliverables/phase1b/event_timeline.png)
+
+完整索引见 [`deliverables/stage1_gallery/GALLERY_MANIFEST.json`](deliverables/stage1_gallery/GALLERY_MANIFEST.json)。Phase 1B 的中文校准报告、机器审计和 test100 全关闭等价证据分别见：
+
+- [`DISTURBANCE_CALIBRATION.md`](deliverables/phase1b/DISTURBANCE_CALIBRATION.md)
+- [`DISTURBANCE_IMPLEMENTATION_AUDIT.json`](deliverables/phase1b/DISTURBANCE_IMPLEMENTATION_AUDIT.json)
+- [`ALL_OFF_EQUIVALENCE_TEST100.json`](deliverables/phase1b/ALL_OFF_EQUIVALENCE_TEST100.json)
 
 ## 当前 GPPO 基线在做什么
 
@@ -126,13 +168,13 @@ flowchart LR
 
 - GPPO 已在五训练种子上稳定优于 PPO 或 Greedy；
 - Adaptive 已在四种规模上稳定优于 NoGate/SingleHead；
-- 多源扰动环境、Preference-GPPO 或图世界模型已经完成；
+- Preference-GPPO 或图世界模型已经完成；
 - 实现复现了原论文公开数值；
 - 实例级置信区间可以替代训练种子级置信区间。
 
-## 下一步：先补齐多源扰动环境
+## Phase 1B：多源扰动环境已完成
 
-现有 `paper_env.py` 中的随机 hazard 只是早期工程原型。Phase 1B 必须以**独立、可关闭、可序列化、可哈希、可重放**的 disturbance tape 接入，并保证关闭全部扰动时与冻结基线行为一致。
+Phase 1B 已以独立、可关闭、可序列化、可哈希、可重放的 disturbance tape 接入冻结基线。全扰动关闭时，在固定 T5 test100 的 2,000 个配对决策上，观测、动作掩码、奖励、基础事件带、真实状态和指标完全一致。
 
 ```mermaid
 flowchart TD
@@ -152,12 +194,12 @@ flowchart TD
     classDef done fill:#d9f2e6,stroke:#218c5a,color:#123b29,stroke-width:2px;
     classDef next fill:#fff0c7,stroke:#d89000,color:#5a3a00,stroke-width:2px;
     classDef future fill:#eef2f7,stroke:#7b8794,color:#27313a;
-    class P done;
-    class I,L,U,K,W,Q,R next;
-    class PR,WM,RG,EX future;
+    class P,I,L,U,K,W,Q,R done;
+    class PR,WM next;
+    class RG,EX future;
 ```
 
-建议实现顺序：
+已完成内容：
 
 1. **统一接口**：实现 `DisturbanceConfig`、`DisturbanceTape`、不可变 `DisturbanceEvent` 和 `DisturbanceLogger`；
 2. **通信扰动**：Gilbert-Elliott Good/Bad 链、逐包丢失、消息到达队列、网络分区和恢复同步；
@@ -167,11 +209,11 @@ flowchart TD
 6. **可审计测试**：固定 seed 生成字节一致的 tape，检查事件覆盖、缓存语义、动作合法性、能量边界和任务恢复；
 7. **轨迹标准化**：输出 partial graph、action、mask、communication history、未来五步事件标签、objective vector 和 terminal metrics。
 
-接口预注册见 [`configs/DISTURBANCE_INTERFACE_PROTOCOL.json`](configs/DISTURBANCE_INTERFACE_PROTOCOL.json)，现有能力与缺口见 [`docs/DISTURBANCE_EXISTING_CAPABILITY_AUDIT.md`](docs/DISTURBANCE_EXISTING_CAPABILITY_AUDIT.md)。
+接口协议见 [`configs/DISTURBANCE_INTERFACE_PROTOCOL.json`](configs/DISTURBANCE_INTERFACE_PROTOCOL.json)，最终校准与审计见 [`deliverables/phase1b`](deliverables/phase1b)。这些结果证明环境和数据基础设施完成，不代表 Preference-GPPO 或 learned world model 已经有效。
 
 ## 后续“预测—偏好—决策”闭环
 
-多源扰动环境稳定后，项目将形成以下闭环：
+在已稳定的多源扰动环境上，后续将形成以下闭环：
 
 ```mermaid
 flowchart LR
@@ -271,4 +313,4 @@ python evaluate_paper_faithful.py \
 
 ---
 
-当前最优先任务：**补齐 Phase 1B 多源扰动环境及可审计测试，然后构建 Preference-GPPO 与图世界模型的数据接口；不重复已有六模型 100/300 轮机制实验。**
+当前最优先任务：**基于 Phase 1B 标准轨迹推进 Preference-GPPO 与图世界模型；长时间训练放到 Colab，不重复已有六模型 100/300 轮机制实验。**
