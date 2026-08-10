@@ -106,6 +106,25 @@ def generate_uav_events(
                 )
             )
             generation_index += 1
+            if duration is not None:
+                recovery_time = physical_time + duration
+                if recovery_time <= horizon:
+                    events.append(
+                        DisturbanceEvent(
+                            event_id=f"uav-recovery:{index}:{uav_id}",
+                            event_type="uav_recovery",
+                            physical_time=recovery_time,
+                            source="uav_failure",
+                            target=uav_id,
+                            severity=0.0,
+                            payload={"failure_event_id": f"uav-failure:{index}:{uav_id}"},
+                            ground_truth={"available_after": True},
+                            observed_time=None,
+                            generation_index=generation_index,
+                            source_priority=41,
+                        )
+                    )
+                    generation_index += 1
     energy = config.energy_depletion
     if energy.enabled:
         params = {
@@ -241,6 +260,10 @@ class UAVDisturbanceLayer:
                 if event.target not in self.states:
                     raise ValueError(f"failure targets unknown UAV: {event.target}")
                 self._apply_failure(event)
+            elif event.event_type == "uav_recovery":
+                state = self.states[event.target]
+                if state.alive and state.energy > 0:
+                    state.unavailable_until = 0.0
             self.applied_event_ids.append(event.event_id)
             applied.append(event)
             self._event_index += 1

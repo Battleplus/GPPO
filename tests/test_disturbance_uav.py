@@ -98,7 +98,14 @@ def test_failure_tape_is_deterministic_for_same_seed() -> None:
     left = generate_uav_events(cfg, horizon=10.0, uav_ids=("u0", "u1", "u2"))
     right = generate_uav_events(cfg, horizon=10.0, uav_ids=("u0", "u1", "u2"))
     assert left == right
-    assert len(left) == 4
+    failures = [event for event in left if event.event_type == "uav_failure"]
+    recoveries = [event for event in left if event.event_type == "uav_recovery"]
+    assert len(failures) == 4
+    assert len(recoveries) == sum(
+        not event.payload["permanent"]
+        and event.ground_truth["recovery_time"] <= 10.0
+        for event in failures
+    )
 
 
 def test_time_cannot_reverse_and_activity_cannot_be_negative() -> None:

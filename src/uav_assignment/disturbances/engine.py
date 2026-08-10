@@ -64,7 +64,7 @@ class DisturbanceEngine:
         )
         uav_events = tuple(
             event for event in self.tape.events
-            if event.event_type in {"energy_profile", "uav_failure"}
+            if event.event_type in {"energy_profile", "uav_failure", "uav_recovery"}
         )
         task_events = tuple(
             event for event in self.tape.events if event.event_type.startswith("task_")

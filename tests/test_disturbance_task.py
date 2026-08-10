@@ -107,3 +107,15 @@ def test_cancelled_task_is_never_selectable_and_time_cannot_reverse() -> None:
     assert not layer.action_mask()["a"]
     with pytest.raises(ValueError, match="backwards"):
         layer.advance(0.5)
+
+
+def test_pre_generated_cancellation_after_completion_is_a_stable_noop() -> None:
+    cfg = DisturbanceConfig(
+        task_cancellation=SourceConfig(True, {"events": [{"time": 5.0, "task_id": "a"}]})
+    )
+    layer = TaskDisturbanceLayer(base_tasks(), generate_task_events(cfg, horizon=10.0))
+    layer.start("a", "u0")
+    layer.complete("a")
+    layer.advance(5.0)
+    assert layer.tasks["a"].status == "completed"
+    assert layer.releases == []

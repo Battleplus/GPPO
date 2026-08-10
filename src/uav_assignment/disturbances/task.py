@@ -191,7 +191,10 @@ class TaskDisturbanceLayer:
         if task.status == "cancelled":
             return
         if task.status == "completed":
-            raise ValueError("completed task cannot be cancelled")
+            # A pre-generated cancellation may arrive after a fast policy has
+            # already completed the task.  It is a valid no-op, not a reason to
+            # resample the tape or fail the episode.
+            return
         self._release(task, "task_cancelled")
         task.status = "cancelled"
         for successor in self.tasks.values():
