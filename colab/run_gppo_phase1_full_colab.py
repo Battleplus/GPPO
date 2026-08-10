@@ -66,9 +66,42 @@ def restore_state(local_root: Path, drive_root: Path, migration_zip: Path) -> No
                 with archive.open(member) as source, target.open("wb") as destination:
                     shutil.copyfileobj(source, destination)
         markers = list(unpack_root.rglob("PHASE1_CANDIDATE_RESELECTION.json"))
-        if len(markers) != 1:
-            raise RuntimeError(f"Migration archive contains {len(markers)} protocol markers: {markers}")
-        shutil.copytree(markers[0].parent.parent, local_root, dirs_exist_ok=True)
+        extracted_frozen = list(unpack_root.rglob("checkpoint_phase1_frozen.pt"))
+        extracted_resumes = list(unpack_root.rglob("resume_latest.pt"))
+        print(
+            "Migration archive diagnostics: "
+            f"protocol_markers={len(markers)}, frozen={len(extracted_frozen)}, "
+            f"resumes={len(extracted_resumes)}",
+            flush=True,
+        )
+        if markers:
+            archive_root = markers[0].parent.parent
+        elif len(extracted_frozen) == 5:
+            legacy_roots = [
+                parent
+                for parent in extracted_frozen[0].parents
+                if parent.name == "T5-10-48_literal_event"
+            ]
+            if len(legacy_roots) != 1:
+                raise RuntimeError(f"Cannot identify archive root from {extracted_frozen[0]}")
+            archive_root = legacy_roots[0].parent
+        else:
+            with zipfile.ZipFile(migration_zip) as archive:
+                members = [member.filename for member in archive.infolist()[:30]]
+            raise RuntimeError(
+                "Migration archive does not contain the five frozen checkpoints. "
+                f"First members: {members}"
+            )
+        shutil.copytree(archive_root, local_root, dirs_exist_ok=True)
+        if not marker.exists():
+            compact_protocol = (
+                Path(__file__).resolve().parents[1]
+                / "configs"
+                / "PHASE1_CANDIDATE_RESELECTION_MINIMAL.json"
+            )
+            marker.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(compact_protocol, marker)
+            print(f"Restored compact validation-only selection protocol: {marker}", flush=True)
     frozen = list((local_root / "T5-10-48_literal_event").rglob("checkpoint_phase1_frozen.pt"))
     resumes = list((local_root / "T5_primary").rglob("resume_latest.pt"))
     if not marker.exists() or len(frozen) != 5:

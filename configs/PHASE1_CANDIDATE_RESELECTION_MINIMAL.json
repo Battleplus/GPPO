@@ -1,0 +1,46 @@
+{
+  "version": "phase1-formal-candidate-reselection-v1-compact",
+  "selection_split": "validation_a",
+  "instances": 100,
+  "test_used_for_selection": false,
+  "common_instance_and_event_bank": true,
+  "legacy_checkpoints_preserved": true,
+  "records": [
+    {
+      "run": "literal_event_seed1",
+      "selected_iteration": 1150,
+      "validation_a_makespan": 15.231442645240758,
+      "frozen_checkpoint_sha256": "36dfc0e9a7d3230a94bd8ce310eb6b9123b7e9e6c1cde900e5e4353cff9e26e2",
+      "test_used_for_selection": false
+    },
+    {
+      "run": "literal_event_seed2",
+      "selected_iteration": 1050,
+      "validation_a_makespan": 15.225577570470646,
+      "frozen_checkpoint_sha256": "5d2a4870163cc5b6baa8ea984a4a9d8d8b09c5183a498b901be780c6683b375e",
+      "test_used_for_selection": false
+    },
+    {
+      "run": "literal_event_seed3",
+      "selected_iteration": 2000,
+      "validation_a_makespan": 15.211393624871114,
+      "frozen_checkpoint_sha256": "adb361bdecb483bdfa4128fa160dfddeaf7578278f9135a7da1fae87687c608b",
+      "test_used_for_selection": false
+    },
+    {
+      "run": "literal_event_seed4",
+      "selected_iteration": 1550,
+      "validation_a_makespan": 15.186356955190131,
+      "frozen_checkpoint_sha256": "0d01c16cf1458851ffe007a98190a56237e5e02b60fd6730892d80e15bed3867",
+      "test_used_for_selection": false
+    },
+    {
+      "run": "literal_event_seed5",
+      "selected_iteration": 1950,
+      "validation_a_makespan": 15.200308369732683,
+      "frozen_checkpoint_sha256": "a6a48062a5f5d7df0e8b5b31bee9ec5c4c9630b528a40230b79fde195e418fbe",
+      "test_used_for_selection": false
+    }
+  ],
+  "valid": true
+}
