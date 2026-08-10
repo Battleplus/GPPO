@@ -42,7 +42,7 @@ def run(command: list[str], log: Path, env: dict[str, str]) -> None:
 
 def runner_command(
     python: str, repo: Path, output: Path, scales: tuple[str, ...], methods: tuple[str, ...],
-    jobs: int, gate: dict[str, Any] | None = None,
+    jobs: int, gate: dict[str, Any] | None = None, device: str = "cpu",
 ) -> list[str]:
     gate = gate or {}
     command = [python, str(repo / "run_paper_faithful_formal.py")]
@@ -55,7 +55,7 @@ def runner_command(
         "--iterations", "2000", "--rollout-steps", "512", "--batch-size", "512",
         "--update-epochs", "4", "--validation-interval", "50",
         "--validation-instances", "100", "--validation-split", "validation_a",
-        "--device", "cpu", "--rrelu-mode", "expected",
+        "--device", device, "--rrelu-mode", "expected",
         "--gate-bias-init", str(gate.get("gate_bias_init", 0.0)),
         "--gate-warmup-iterations", str(gate.get("gate_warmup_iterations", 0)),
         "--gate-activation", str(gate.get("gate_activation", "sigmoid")),
@@ -72,6 +72,7 @@ def main() -> None:
     parser.add_argument("--legacy-literal-root", type=Path, required=True)
     parser.add_argument("--python", default=sys.executable)
     parser.add_argument("--jobs", type=int, default=4)
+    parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="cpu")
     args = parser.parse_args()
 
     repo = Path(__file__).resolve().parent
@@ -127,7 +128,7 @@ def main() -> None:
 
     for name, scales, methods, gate in batches:
         output = formal_root / name
-        command = runner_command(args.python, repo, output, scales, methods, args.jobs, gate)
+        command = runner_command(args.python, repo, output, scales, methods, args.jobs, gate, args.device)
         record = {"name": name, "scales": scales, "methods": methods, "output": str(output), "command": command, "status": "running"}
         manifest["batches"].append(record)
         write_manifest(manifest_path, manifest)
