@@ -47,6 +47,9 @@ def main() -> None:
     )
     summaries = {item["severity"]: item for item in calibration["summary"]}
     decoded_records = [decode_arrays(record) for record in trajectory.records]
+    communication_records = [
+        item for record in decoded_records for item in record["communication_history"]
+    ]
     order = ("off", "weak", "medium", "strong")
 
     configs = {
@@ -108,6 +111,20 @@ def main() -> None:
         "trajectory_segment_actions_are_mask_legal": all(
             bool(np.asarray(record["legal_action_mask"])[record["selected_action"]])
             for record in decoded_records
+        ),
+        "trajectory_contains_message_level_communication_history": (
+            bool(communication_records)
+            and {"sent", "delivered"} <= {
+                item["status"] for item in communication_records
+            }
+            and all(
+                {
+                    "message_id", "status", "source", "target", "link_id",
+                    "sent_time", "arrival_time", "observed_time", "delay",
+                    "byte_count", "payload", "drop_reason",
+                } <= item.keys()
+                for item in communication_records
+            )
         ),
         "tape_nonempty_and_ordered": bool(tape["events"]) and all(
             (left["physical_time"], left["source_priority"], left["generation_index"], left["event_id"])

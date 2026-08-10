@@ -202,6 +202,31 @@ class CommunicationDisturbanceLayer:
         self._queue_index = 0
         self._message_ids: set[str] = set()
         self.audit = CommunicationAudit()
+        self._history: list[dict[str, Any]] = []
+
+    @staticmethod
+    def _envelope_record(
+        envelope: MessageEnvelope, *, status: str, observed_time: float
+    ) -> dict[str, Any]:
+        return {
+            "message_id": envelope.message_id,
+            "status": status,
+            "source": envelope.source,
+            "target": envelope.target,
+            "link_id": envelope.link_id,
+            "sent_time": envelope.sent_time,
+            "arrival_time": envelope.arrival_time,
+            "observed_time": float(observed_time),
+            "expiry_time": envelope.expiry_time,
+            "delay": envelope.arrival_time - envelope.sent_time,
+            "byte_count": envelope.byte_count,
+            "payload": dict(envelope.payload),
+            "drop_reason": envelope.drop_reason,
+        }
+
+    @property
+    def history(self) -> tuple[Mapping[str, Any], ...]:
+        return tuple(dict(record) for record in self._history)
 
     def advance(self, physical_time: float) -> None:
         physical_time = float(physical_time)
@@ -280,9 +305,15 @@ class CommunicationDisturbanceLayer:
             dropped=dropped,
             drop_reason="packet_loss" if dropped else None,
         )
+        self._history.append(
+            self._envelope_record(envelope, status="sent", observed_time=sent_time)
+        )
         if dropped:
             self.audit.messages_dropped += 1
             self.audit.drop_reasons["packet_loss"] = self.audit.drop_reasons.get("packet_loss", 0) + 1
+            self._history.append(
+                self._envelope_record(envelope, status="dropped", observed_time=sent_time)
+            )
         else:
             heapq.heappush(self._queue, (arrival_time, self._queue_index, envelope))
             self._queue_index += 1
@@ -296,11 +327,17 @@ class CommunicationDisturbanceLayer:
             if envelope.arrival_time > envelope.expiry_time:
                 self.audit.messages_expired += 1
                 self.audit.drop_reasons["expired"] = self.audit.drop_reasons.get("expired", 0) + 1
+                self._history.append(
+                    self._envelope_record(envelope, status="expired", observed_time=physical_time)
+                )
                 continue
             delivered.append(envelope)
             self.audit.messages_delivered += 1
             self.audit.bytes_delivered += envelope.byte_count
             self.audit.total_delay += envelope.arrival_time - envelope.sent_time
+            self._history.append(
+                self._envelope_record(envelope, status="delivered", observed_time=physical_time)
+            )
         return tuple(delivered)
 
     @property

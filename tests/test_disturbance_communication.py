@@ -47,6 +47,9 @@ def test_delay_queue_never_delivers_a_message_early() -> None:
     assert layer.deliver_until(2.999) == ()
     assert [item.message_id for item in layer.deliver_until(3.0)] == ["m1"]
     assert layer.audit.to_dict()["bytes_delivered"] == 32
+    assert [item["status"] for item in layer.history] == ["sent", "delivered"]
+    assert layer.history[-1]["delay"] == 2.0
+    assert layer.history[-1]["payload"] == {"belief": 1}
 
 
 def test_packet_loss_changes_delivery_only_and_is_audited() -> None:
@@ -63,6 +66,8 @@ def test_packet_loss_changes_delivery_only_and_is_audited() -> None:
     assert true_state == {"uav_position": [0.1, 0.2]}
     assert layer.audit.messages_dropped == 1
     assert layer.audit.drop_reasons == {"packet_loss": 1}
+    assert [item["status"] for item in layer.history] == ["sent", "dropped"]
+    assert layer.history[-1]["drop_reason"] == "packet_loss"
 
 
 def test_partition_blocks_cross_component_visibility_until_recovery() -> None:
@@ -104,3 +109,4 @@ def test_partition_delayed_message_expires_without_becoming_visible() -> None:
     assert layer.deliver_until(5.0) == ()
     assert layer.audit.messages_expired == 1
     assert layer.pending_messages == 0
+    assert [item["status"] for item in layer.history] == ["sent", "expired"]

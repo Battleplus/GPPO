@@ -148,10 +148,12 @@ def episode(
         decision_observation = env.observe()
         true_state = env.true_observation()
         before_audit = env.disturbance_engine.communication.audit.to_dict()
+        history_start = len(env.disturbance_engine.communication.history)
         observation, reward, done, info = env.step(action, sync_mode="event")
         episode_return += float(reward)
         completed = sum(task.active and task.completed for task in env.tasks)
         audit = env.disturbance_engine.communication.audit.to_dict()
+        step_history = list(env.disturbance_engine.communication.history[history_start:])
         energy_trace.append({"time": env.current_time, **env.uav_energy})
         for event in env._last_disturbance_events:
             if event.event_type.startswith("task_"):
@@ -168,11 +170,11 @@ def episode(
                 belief_cache={"nodes": decision_observation["nodes"]},
                 legal_action_mask=decision_observation["action_mask"],
                 selected_action=action,
-                communication_history=[audit],
-                messages_sent=[{"count": audit["messages_sent"] - before_audit["messages_sent"]}],
-                messages_delivered=[{"count": audit["messages_delivered"] - before_audit["messages_delivered"]}],
-                messages_dropped=[{"count": audit["messages_dropped"] - before_audit["messages_dropped"]}],
-                message_delays=[float(audit["mean_delivered_delay"])],
+                communication_history=step_history,
+                messages_sent=[item for item in step_history if item["status"] == "sent"],
+                messages_delivered=[item for item in step_history if item["status"] == "delivered"],
+                messages_dropped=[item for item in step_history if item["status"] in {"dropped", "expired"}],
+                message_delays=[float(item["delay"]) for item in step_history if item["status"] == "delivered"],
                 network_components=network_components(env),
                 uav_energy=env.uav_energy,
                 uav_alive={f"u{i}": bool(u.alive) for i, u in enumerate(env.uavs[:5])},

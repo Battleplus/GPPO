@@ -19,6 +19,7 @@
     "trajectory_has_seven_objectives": true,
     "trajectory_contains_genuine_partial_observation": true,
     "trajectory_segment_actions_are_mask_legal": true,
+    "trajectory_contains_message_level_communication_history": true,
     "tape_nonempty_and_ordered": true,
     "required_event_types_covered": true,
     "separate_instance_disturbance_training_seeds": true,
@@ -27,9 +28,9 @@
   },
   "artifacts": {
     "sample_trajectory.json.gz": {
-      "sha256": "02dd57e63f3d5d998a9f93a6bda11b87d8440c01dbf0169e9c5215fad1893062",
-      "bytes": 649691,
-      "uncompressed_bytes": 45057562
+      "sha256": "b09be50767b613e4b902632a7e3a4c66c7484333dff83e44dfde676557d6ea1e",
+      "bytes": 650063,
+      "uncompressed_bytes": 45077040
     },
     "calibration.json": {
       "sha256": "3fa1f392673b9a3c06b129a19dabfcc1a1f4b58b2dac6dfe828dba4ed1277c88",
