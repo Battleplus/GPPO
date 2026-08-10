@@ -6,8 +6,9 @@ import shutil
 import subprocess
 import sys
 import time
+import zipfile
 from datetime import timedelta
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 
 EXPECTED_RUNS = 135
@@ -49,7 +50,21 @@ def restore_state(local_root: Path, drive_root: Path, migration_zip: Path) -> No
         if unpack_root.exists():
             shutil.rmtree(unpack_root)
         unpack_root.mkdir(parents=True)
-        shutil.unpack_archive(str(migration_zip), str(unpack_root))
+        # PowerShell's Compress-Archive records Windows backslashes in entry
+        # names.  Python on Linux treats those as literal filename characters,
+        # so normalize every member before extracting on Colab.
+        with zipfile.ZipFile(migration_zip) as archive:
+            for member in archive.infolist():
+                relative = PurePosixPath(member.filename.replace("\\", "/"))
+                if relative.is_absolute() or ".." in relative.parts:
+                    raise RuntimeError(f"Unsafe migration archive member: {member.filename}")
+                target = unpack_root.joinpath(*relative.parts)
+                if member.is_dir() or member.filename.endswith(("/", "\\")):
+                    target.mkdir(parents=True, exist_ok=True)
+                    continue
+                target.parent.mkdir(parents=True, exist_ok=True)
+                with archive.open(member) as source, target.open("wb") as destination:
+                    shutil.copyfileobj(source, destination)
         markers = list(unpack_root.rglob("PHASE1_CANDIDATE_RESELECTION.json"))
         if len(markers) != 1:
             raise RuntimeError(f"Migration archive contains {len(markers)} protocol markers: {markers}")
