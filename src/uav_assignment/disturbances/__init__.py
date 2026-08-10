@@ -10,6 +10,7 @@ from .communication import (
 from .events import DisturbanceEvent
 from .logger import DisturbanceLogger
 from .tape import DisturbanceTape, DisturbanceTapeCursor
+from .uav import ReleasedTask, UAVDisturbanceLayer, UAVRuntimeState, generate_uav_events
 
 __all__ = [
     "SOURCE_NAMES",
@@ -21,6 +22,10 @@ __all__ = [
     "DisturbanceTape",
     "DisturbanceTapeCursor",
     "MessageEnvelope",
+    "ReleasedTask",
     "SourceConfig",
+    "UAVDisturbanceLayer",
+    "UAVRuntimeState",
     "generate_communication_events",
+    "generate_uav_events",
 ]
