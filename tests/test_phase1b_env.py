@@ -105,3 +105,60 @@ def test_wind_changes_flight_time_but_keeps_values_finite() -> None:
     assert all(np.isfinite(value) and value >= 0 for value in disturbed)
     # Random geometry may make this wind cross-track, but the adapter must apply a physical change.
     assert disturbed[0] != pytest.approx(plain[0])
+
+
+def test_delayed_belief_report_is_invisible_until_arrival() -> None:
+    disturbance = DisturbanceConfig(
+        message_delay=SourceConfig(True, {"minimum": 2.0, "maximum": 2.0, "ttl": 5.0})
+    )
+    env = Phase1BPaperFaithfulUAVEnv(disturbance_config=disturbance)
+    env.reset(seed=11)
+    reporter = 1
+    old_health = float(env.belief_uavs[reporter].health)
+    env.uavs[reporter].health = old_health - 0.3
+    updated = env._synchronize_belief(records=[])
+    assert reporter not in updated
+    assert env.belief_uavs[reporter].health == old_health
+    assert env._deliver_pending_beliefs(1.999) == []
+    assert env.belief_uavs[reporter].health == old_health
+    assert reporter in env._deliver_pending_beliefs(2.0)
+    assert env.belief_uavs[reporter].health == pytest.approx(old_health - 0.3)
+
+
+def test_dropped_belief_report_never_mutates_true_state_or_cache() -> None:
+    disturbance = DisturbanceConfig(
+        gilbert_elliott_packet_loss=SourceConfig(
+            True,
+            {"tick": 1.0, "p_gb": 0.0, "p_bg": 0.0, "loss_good": 1.0, "loss_bad": 1.0},
+        )
+    )
+    env = Phase1BPaperFaithfulUAVEnv(disturbance_config=disturbance)
+    env.reset(seed=12)
+    reporter = 1
+    old_belief = float(env.belief_uavs[reporter].communication)
+    env.uavs[reporter].communication = old_belief - 0.2
+    true_value = float(env.uavs[reporter].communication)
+    env._synchronize_belief(records=[])
+    assert env.belief_uavs[reporter].communication == old_belief
+    assert env.uavs[reporter].communication == true_value
+    assert env.disturbance_engine.communication.audit.messages_dropped > 0
+
+
+def test_partitioned_report_arrives_at_recovery_boundary() -> None:
+    disturbance = DisturbanceConfig(
+        message_delay=SourceConfig(True, {"minimum": 0.0, "maximum": 0.0, "ttl": 10.0}),
+        network_partition=SourceConfig(
+            True,
+            {"intervals": [{"start": 0.0, "end": 3.0, "groups": [["u0"], ["u1", "u2", "u3", "u4"]]}]},
+        ),
+    )
+    env = Phase1BPaperFaithfulUAVEnv(disturbance_config=disturbance)
+    env.reset(seed=13)
+    reporter = 1
+    old_health = float(env.belief_uavs[reporter].health)
+    env.uavs[reporter].health -= 0.25
+    env._synchronize_belief(records=[])
+    assert env._deliver_pending_beliefs(2.999) == []
+    assert env.belief_uavs[reporter].health == old_health
+    assert reporter in env._deliver_pending_beliefs(3.0)
+    assert env.belief_uavs[reporter].health == pytest.approx(old_health - 0.25)

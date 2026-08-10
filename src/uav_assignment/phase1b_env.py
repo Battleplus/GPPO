@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import replace
+from dataclasses import dataclass
 from typing import Any
 
 import numpy as np
@@ -17,6 +18,15 @@ from .paper_faithful_env import (
     PaperFaithfulConfig,
     PaperFaithfulUAVEnv,
 )
+
+
+@dataclass(slots=True)
+class _PendingBeliefReport:
+    reporter: int
+    sent_time: float
+    envelope: Any
+    uav_snapshot: PaperUAVState
+    task_snapshots: dict[int, PaperTaskState]
 
 
 class Phase1BPaperFaithfulUAVEnv(PaperFaithfulUAVEnv):
@@ -45,6 +55,9 @@ class Phase1BPaperFaithfulUAVEnv(PaperFaithfulUAVEnv):
         self._nominal_speed: list[float] = []
         self._nominal_capabilities: list[np.ndarray] = []
         self._last_disturbance_events: tuple[DisturbanceEvent, ...] = ()
+        self._pending_belief_reports: dict[str, _PendingBeliefReport] = {}
+        self._last_belief_report_time: dict[int, float] = {}
+        self._disturbance_message_index = 0
         super().__init__(config)
 
     @property
@@ -89,6 +102,9 @@ class Phase1BPaperFaithfulUAVEnv(PaperFaithfulUAVEnv):
             key: state.energy for key, state in self.disturbance_engine.uav.states.items()
         }
         self._last_disturbance_events = ()
+        self._pending_belief_reports = {}
+        self._last_belief_report_time = {}
+        self._disturbance_message_index = 0
         if self.disturbances_disabled:
             return observation
         initial_events = self.advance_disturbances(0.0)
@@ -101,6 +117,118 @@ class Phase1BPaperFaithfulUAVEnv(PaperFaithfulUAVEnv):
         if initial_events and not communication_active:
             self._synchronize_belief(count_communication=False, full=True)
         return self.observe()
+
+    def _communication_disturbances_active(self) -> bool:
+        engine = self.disturbance_engine
+        return bool(
+            engine is not None
+            and any(
+                getattr(engine.config, name).enabled
+                for name in (
+                    "gilbert_elliott_packet_loss", "message_delay", "network_partition"
+                )
+            )
+        )
+
+    def _apply_belief_report(self, report: _PendingBeliefReport) -> bool:
+        previous = self._last_belief_report_time.get(report.reporter, -1.0)
+        if report.sent_time < previous:
+            return False
+        self.belief_uavs[report.reporter] = self._clone_uavs([report.uav_snapshot])[0]
+        for task_index, snapshot in report.task_snapshots.items():
+            self.belief_tasks[task_index] = self._clone_tasks([snapshot])[0]
+        self._last_belief_report_time[report.reporter] = report.sent_time
+        return True
+
+    def _deliver_pending_beliefs(self, physical_time: float) -> list[int]:
+        engine = self.disturbance_engine
+        if engine is None or not self._communication_disturbances_active():
+            return []
+        delivered = engine.communication.deliver_until(physical_time)
+        updated: list[int] = []
+        for envelope in delivered:
+            report = self._pending_belief_reports.pop(envelope.message_id, None)
+            if report is not None and self._apply_belief_report(report):
+                updated.append(report.reporter)
+        expired = [
+            message_id
+            for message_id, report in self._pending_belief_reports.items()
+            if report.envelope.arrival_time <= physical_time
+            and report.envelope.arrival_time > report.envelope.expiry_time
+        ]
+        for message_id in expired:
+            del self._pending_belief_reports[message_id]
+        return sorted(set(updated))
+
+    def _synchronize_belief(
+        self,
+        count_communication: bool = True,
+        full: bool = False,
+        records: list[EventRecord] | None = None,
+    ) -> list[int]:
+        engine = self.disturbance_engine
+        if (
+            engine is None
+            or not self._communication_disturbances_active()
+            or not count_communication
+        ):
+            return super()._synchronize_belief(
+                count_communication=count_communication, full=full, records=records
+            )
+        self._deliver_pending_beliefs(self.current_time)
+        old_uavs = self._clone_uavs(self.belief_uavs)
+        old_tasks = self._clone_tasks(self.belief_tasks)
+        intended = super()._synchronize_belief(
+            count_communication=count_communication, full=full, records=records
+        )
+        leader = self.leader_id
+        immediate: set[int] = set()
+        if leader >= 0 and leader in intended:
+            immediate.add(leader)
+            self._last_belief_report_time[leader] = self.current_time
+        for reporter in intended:
+            if reporter == leader or reporter >= self.faithful_config.scale.uavs:
+                continue
+            task_indices = {
+                index
+                for index, task in enumerate(self.tasks)
+                if task.active and task.assigned_uav == reporter
+            }
+            message_id = (
+                f"belief:{self.decision_count}:{self._disturbance_message_index}:u{reporter}"
+            )
+            self._disturbance_message_index += 1
+            envelope = engine.communication.send(
+                message_id=message_id,
+                source=f"u{reporter}",
+                target=f"u{leader}",
+                link_id=f"u{reporter}->u{leader}",
+                sent_time=self.current_time,
+                byte_count=(1 + len(task_indices)) * self.node_feature_dim * 4,
+                payload={
+                    "reporter": reporter,
+                    "task_indices": sorted(task_indices),
+                    "belief_time": self.current_time,
+                },
+            )
+            report = _PendingBeliefReport(
+                reporter=reporter,
+                sent_time=self.current_time,
+                envelope=envelope,
+                uav_snapshot=self._clone_uavs([self.uavs[reporter]])[0],
+                task_snapshots={
+                    index: self._clone_tasks([self.tasks[index]])[0]
+                    for index in task_indices
+                },
+            )
+            self.belief_uavs[reporter] = old_uavs[reporter]
+            for index in task_indices:
+                self.belief_tasks[index] = old_tasks[index]
+            if envelope.dropped:
+                continue
+            self._pending_belief_reports[message_id] = report
+        immediate.update(self._deliver_pending_beliefs(self.current_time))
+        return sorted(immediate)
 
     def _next_time_boundary_delta(self, sync_mode: FaithfulSyncMode) -> float:
         baseline = super()._next_time_boundary_delta(sync_mode)
@@ -249,6 +377,7 @@ class Phase1BPaperFaithfulUAVEnv(PaperFaithfulUAVEnv):
             raise RuntimeError("reset must be called before advancing disturbances")
         self._sync_runtime_assignments()
         step = self.disturbance_engine.advance(physical_time)
+        self._deliver_pending_beliefs(physical_time)
         records: list[EventRecord] = []
         for event in step.current_events:
             if event.event_type in {"uav_failure", "uav_recovery"}:
