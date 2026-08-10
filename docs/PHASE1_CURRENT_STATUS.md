@@ -1,6 +1,6 @@
 # 第一阶段当前状态与冻结记录
 
-更新时间：2026-08-09（Asia/Shanghai）
+更新时间：2026-08-10（Asia/Shanghai）
 
 ## 1. 阶段边界
 
@@ -161,3 +161,72 @@ checkpoint均显示非恒定gate和有效PPO probe梯度。全过程未读取tes
 
 Smoke只通过机制准入，不产生变体排名。完整结果见
 `reports/GATE_SMOKE_REPORT.md`。下一步为预注册三种子300轮筛选。
+
+## 9. Step 3 三训练种子 Gate 筛选结果
+
+七个预注册变体均已完成 `T5-10-48`、训练种子1/2/3、300轮训练，随后使用
+validation100-A 选择 checkpoint。validation100-B 与固定 test100 只用于独立
+确认或否证，没有参与 checkpoint 或变体选择。筛选汇总审计为 `valid=true`，并且：
+
+- 七个变体均使用相同的三套100实例库与相同 event tape；
+- validation-A、validation-B、test100 两两互斥；
+- 所有模型、所有分割的非法动作数均为0；
+- 所有必需训练诊断均为有限值；
+- warmup 第50轮按预注册修正不具备选模资格；
+- `test_used_for_selection=false`。
+
+validation-A 三种子平均 realized makespan 为：
+
+| 变体 | makespan | 完整预注册规则 |
+|---|---:|---:|
+| Adaptive-current | 15.9069 | 通过 |
+| Adaptive-bias2 | 15.9310 | 通过 |
+| Adaptive-warmup | 15.9872 | 未通过 |
+| Adaptive-score | 15.9025 | 通过 |
+| Adaptive-softplus | 15.9087 | 通过 |
+| NoGate | 15.9805 | 对照 |
+| SingleHead | 15.9613 | 对照 |
+
+四个 Adaptive 候选通过完整预注册规则；只按 validation-A 的预注册排序，选择
+`Adaptive-score` 进入正式实验。该结果说明 Adaptive 在三种子筛选中获得了继续验证
+资格，但**尚不能代替四规模、五训练种子的正式统计结论**。
+
+权威证据：
+
+- `outputs/gate_screening/summary.json`
+- `outputs/gate_screening/seed_level_comparisons.json`
+- `reports/GATE_THREE_SEED_SCREENING.md`
+
+## 10. Step 4 正式协议冻结
+
+正式协议已冻结为 `configs/PHASE1_FROZEN_PROTOCOL.json`，模型定义记录在
+`docs/PHASE1_MODEL_DEFINITIONS.md`：
+
+- `GPPO-Literal`：task-message sigmoid gate、bias=0、不二次归一化的论文兼容解释；
+- `GPPO-Best`：validation-A 选择的 `Adaptive-score`；
+- `PPO-MLP`：不使用图编码器的普通PPO；
+- `NoGate`：自适应 gate 消融；
+- `SingleHead`：简单注意力结构对照。
+
+冻结后禁止依据正式 test100 修改结构或超参数。冻结协议明确使用四个论文规模、五个
+独立训练种子、2000轮、rollout/batch均为512，并按训练种子计算 Student-t 95% CI。
+Gate筛选及冻结产物已在提交 `d9e5643` 同步到远端分支 `8.8-GPPO无偏好`。
+
+## 11. Step 5–7 正式矩阵执行状态
+
+四规模五种子正式矩阵已启动。原有 `GPPO-Literal-event` 五个2000轮 checkpoint
+通过 validation-A 候选重选冻结为 `checkpoint_phase1_frozen.pt`，原始
+`checkpoint.pt` 保持不变；重选清单 `PHASE1_CANDIDATE_RESELECTION.json` 为
+`valid=true`。
+
+当前首批 `T5-10-48 / PPO-none` 四个并行训练进程正常运行，随后调度器会依次完成：
+
+1. T5 的 PPO-event、Literal-none、NoGate-event、SingleHead-event 五种子；
+2. 其余三个规模的完整主矩阵；
+3. 四规模 `GPPO-Best (Adaptive-score)-event` 五种子；
+4. 固定 Literal-event checkpoint 的 None/Event/Periodic/Full 同实例同事件带重放；
+5. `PHASE1_COMMUNICATION_CAUSAL_AUDIT.json` 通信因果审计。
+
+截至本次更新，正式训练未发现 traceback、NaN、Inf、非法动作或 checkpoint 覆盖。
+最新完整回归测试为 `60 passed`。Phase 1A 尚未完成，Phase 1B 多源扰动实现不得提前
+作为已完成内容申报。
