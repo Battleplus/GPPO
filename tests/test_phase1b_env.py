@@ -125,6 +125,23 @@ def test_delayed_belief_report_is_invisible_until_arrival() -> None:
     assert env.belief_uavs[reporter].health == pytest.approx(old_health - 0.3)
 
 
+def test_completed_unassigned_task_transition_is_carried_by_report() -> None:
+    disturbance = DisturbanceConfig(
+        message_delay=SourceConfig(True, {"minimum": 2.0, "maximum": 2.0, "ttl": 5.0})
+    )
+    env = Phase1BPaperFaithfulUAVEnv(disturbance_config=disturbance)
+    env.reset(seed=16)
+    task_index = 0
+    env.tasks[task_index].completed = True
+    env.tasks[task_index].assigned_uav = -1
+
+    env._synchronize_belief(records=[])
+
+    assert not env.belief_tasks[task_index].completed
+    env._deliver_pending_beliefs(2.0)
+    assert env.belief_tasks[task_index].completed
+
+
 def test_dropped_belief_report_never_mutates_true_state_or_cache() -> None:
     disturbance = DisturbanceConfig(
         gilbert_elliott_packet_loss=SourceConfig(
@@ -162,3 +179,40 @@ def test_partitioned_report_arrives_at_recovery_boundary() -> None:
     assert env.belief_uavs[reporter].health == old_health
     assert reporter in env._deliver_pending_beliefs(3.0)
     assert env.belief_uavs[reporter].health == pytest.approx(old_health - 0.25)
+
+
+def test_late_cancellation_of_completed_task_is_adapter_noop() -> None:
+    disturbance = DisturbanceConfig(
+        task_cancellation=SourceConfig(
+            True, {"events": [{"time": 1.0, "task_id": "t0"}]}
+        )
+    )
+    env = Phase1BPaperFaithfulUAVEnv(disturbance_config=disturbance)
+    env.reset(seed=14)
+    env.tasks[0].completed = True
+    env.tasks[0].completion_time = 0.5
+    env.current_time = 1.0
+
+    env.advance_disturbances(1.0)
+
+    assert env.tasks[0].active
+    assert env.tasks[0].completed
+    assert env.disturbance_engine.task.tasks["t0"].status == "completed"
+
+
+def test_dynamic_arrival_capacity_is_validated_at_reset() -> None:
+    disturbance = DisturbanceConfig(
+        task_arrival=SourceConfig(
+            True,
+            {
+                "events": [
+                    {"time": 1.0, "task_id": "dynamic-0", "predecessors": []}
+                ]
+            },
+        )
+    )
+    config = PaperFaithfulConfig(max_subtasks=48)
+    env = Phase1BPaperFaithfulUAVEnv(config, disturbance)
+
+    with pytest.raises(ValueError, match="increase max_subtasks"):
+        env.reset(seed=15)

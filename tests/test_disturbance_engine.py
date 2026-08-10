@@ -109,6 +109,10 @@ def test_engine_advances_all_layers_and_emits_future_one_to_five_labels() -> Non
     step = engine.advance(2.0)
     assert [event.event_type for event in step.current_events] == ["uav_failure"]
     assert not engine.uav.states["u0"].alive
+    assert len(engine.logger.records) == 1
+    assert engine.logger.records[0].observed_time == 2.0
+    assert engine.logger.records[0].ground_truth == step.current_events[0].ground_truth
+    assert engine.logger.records[0].effect["applied"] is True
     labels = engine.future_event_targets(
         (0.0, 1.0, 2.0, 3.0, 4.0, 5.0), current_decision_index=0
     )

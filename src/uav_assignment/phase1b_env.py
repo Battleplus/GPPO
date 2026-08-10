@@ -57,6 +57,7 @@ class Phase1BPaperFaithfulUAVEnv(PaperFaithfulUAVEnv):
         self._last_disturbance_events: tuple[DisturbanceEvent, ...] = ()
         self._pending_belief_reports: dict[str, _PendingBeliefReport] = {}
         self._last_belief_report_time: dict[int, float] = {}
+        self._last_task_belief_report_time: dict[int, float] = {}
         self._disturbance_message_index = 0
         super().__init__(config)
 
@@ -104,9 +105,21 @@ class Phase1BPaperFaithfulUAVEnv(PaperFaithfulUAVEnv):
         self._last_disturbance_events = ()
         self._pending_belief_reports = {}
         self._last_belief_report_time = {}
+        self._last_task_belief_report_time = {}
         self._disturbance_message_index = 0
         if self.disturbances_disabled:
             return observation
+        required_dynamic_slots = sum(
+            event.event_type == "task_arrival"
+            for event in self.disturbance_engine.tape.events
+        )
+        available_dynamic_slots = sum(not task.active for task in self.tasks)
+        if required_dynamic_slots > available_dynamic_slots:
+            raise ValueError(
+                "disturbance tape requires "
+                f"{required_dynamic_slots} dynamic task slots but only "
+                f"{available_dynamic_slots} are available; increase max_subtasks"
+            )
         initial_events = self.advance_disturbances(0.0)
         communication_active = any(
             getattr(runtime_config, name).enabled
@@ -136,7 +149,9 @@ class Phase1BPaperFaithfulUAVEnv(PaperFaithfulUAVEnv):
             return False
         self.belief_uavs[report.reporter] = self._clone_uavs([report.uav_snapshot])[0]
         for task_index, snapshot in report.task_snapshots.items():
-            self.belief_tasks[task_index] = self._clone_tasks([snapshot])[0]
+            if report.sent_time >= self._last_task_belief_report_time.get(task_index, -1.0):
+                self.belief_tasks[task_index] = self._clone_tasks([snapshot])[0]
+                self._last_task_belief_report_time[task_index] = report.sent_time
         self._last_belief_report_time[report.reporter] = report.sent_time
         return True
 
@@ -186,13 +201,18 @@ class Phase1BPaperFaithfulUAVEnv(PaperFaithfulUAVEnv):
         if leader >= 0 and leader in intended:
             immediate.add(leader)
             self._last_belief_report_time[leader] = self.current_time
+            for task_index, task in enumerate(self.tasks):
+                if task.active:
+                    self._last_task_belief_report_time[task_index] = self.current_time
         for reporter in intended:
             if reporter == leader or reporter >= self.faithful_config.scale.uavs:
                 continue
+            # A status report carries the reporter's task-board digest, including
+            # completed predecessors.  Restricting it to currently assigned tasks
+            # loses the final completion transition because assignment is cleared
+            # at completion; downstream tasks then remain masked forever.
             task_indices = {
-                index
-                for index, task in enumerate(self.tasks)
-                if task.active and task.assigned_uav == reporter
+                index for index, task in enumerate(self.tasks) if task.active
             }
             message_id = (
                 f"belief:{self.decision_count}:{self._disturbance_message_index}:u{reporter}"
@@ -290,6 +310,12 @@ class Phase1BPaperFaithfulUAVEnv(PaperFaithfulUAVEnv):
             if state.alive and state.energy > 0:
                 uav.alive = True
                 uav.health = max(uav.health, 0.5)
+        # Failure/recovery tape events are externally observed events (as opposed
+        # to ordinary status packets), so publish the affected UAV state to the
+        # cache at their observation boundary.  Otherwise a permanently failed
+        # UAV can never report its own death and remains selectable forever.
+        self.belief_uavs[index] = self._clone_uavs([uav])[0]
+        self._last_belief_report_time[index] = self.current_time
         leader = self.disturbance_engine.uav.leader_id  # type: ignore[union-attr]
         self.leader_id = -1 if leader is None else int(leader.removeprefix("u"))
         return self._event_record(
@@ -339,16 +365,23 @@ class Phase1BPaperFaithfulUAVEnv(PaperFaithfulUAVEnv):
             task = self.tasks[slot]
             before = {
                 "active": bool(task.active),
+                "completed": bool(task.completed),
                 "priority": float(task.priority),
                 "deadline": self.task_deadlines.get(event.target),
             }
             if event.event_type == "task_cancellation":
-                if task.assigned_uav >= 0:
-                    uav = self.uavs[task.assigned_uav]
-                    uav.busy_task = -1
-                    uav.remaining_time = 0.0
-                    task.assigned_uav = -1
-                task.active = False
+                # The task disturbance layer defines a cancellation that arrives
+                # after completion as a stable no-op.  Preserve that semantic in
+                # the frozen environment adapter as well; otherwise a completed
+                # task disappears from the denominator and changes episode
+                # completion/makespan accounting retroactively.
+                if not task.completed:
+                    if task.assigned_uav >= 0:
+                        uav = self.uavs[task.assigned_uav]
+                        uav.busy_task = -1
+                        uav.remaining_time = 0.0
+                        task.assigned_uav = -1
+                    task.active = False
             elif event.event_type == "task_priority_change":
                 task.priority = float(event.payload["priority"])
             elif event.event_type == "task_deadline_change":
@@ -358,6 +391,7 @@ class Phase1BPaperFaithfulUAVEnv(PaperFaithfulUAVEnv):
                 )
             after = {
                 "active": bool(task.active),
+                "completed": bool(task.completed),
                 "priority": float(task.priority),
                 "deadline": self.task_deadlines.get(event.target),
             }
@@ -434,6 +468,7 @@ class Phase1BPaperFaithfulUAVEnv(PaperFaithfulUAVEnv):
             return super().step(action, sync_mode=sync_mode)
         self.advance_disturbances(self.current_time)
         before_time = float(self.current_time)
+        heartbeats_before = int(self.heartbeat_messages)
         busy_before = tuple(
             uav.busy_task >= 0
             for uav in self.uavs[: self.faithful_config.scale.uavs]
@@ -460,6 +495,14 @@ class Phase1BPaperFaithfulUAVEnv(PaperFaithfulUAVEnv):
             ]
             if records:
                 self._synchronize_belief(records=records)
+        # Heartbeats are the recovery path for stale caches after a burst loss or
+        # partition.  The frozen environment counts them but does not carry state;
+        # in Phase 1B each observed heartbeat initiates a weak-link belief report.
+        # Without this path, a report dropped near the final task transition can
+        # leave a legal task permanently invisible in event mode.
+        heartbeat_delta = int(self.heartbeat_messages) - heartbeats_before
+        if heartbeat_delta > 0 and not bool(info.get("synchronized")):
+            self._synchronize_belief(records=[])
         active = [task for task in self.tasks if task.active]
         all_completed = bool(active) and all(task.completed for task in active)
         future_recovery = any(

@@ -14,11 +14,11 @@
   },
   "network_partition": {
     "enabled": true,
-    "parameters": {"intervals": [{"start": 28.0, "end": 43.0, "groups": [["u0", "u1"], ["u2", "u3", "u4"]], "severity": 0.85}]}
+    "parameters": {"intervals": [{"start": 4.0, "end": 16.0, "groups": [["u0", "u1"], ["u2", "u3", "u4"]], "severity": 0.85}]}
   },
   "uav_failure": {
     "enabled": true,
-    "parameters": {"events": [{"time": 42.0, "uav_id": "u1", "permanent": false, "duration": 14.0}, {"time": 60.0, "uav_id": "u3", "permanent": true}, {"time": 78.0, "uav_id": "u4", "permanent": false, "duration": 10.0}]}
+    "parameters": {"events": [{"time": 5.0, "uav_id": "u1", "permanent": false, "duration": 9.0}, {"time": 12.0, "uav_id": "u3", "permanent": true}, {"time": 18.0, "uav_id": "u4", "permanent": false, "duration": 7.0}]}
   },
   "energy_depletion": {
     "enabled": true,
@@ -26,19 +26,19 @@
   },
   "task_arrival": {
     "enabled": true,
-    "parameters": {"events": [{"time": 15.0, "task_id": "dynamic-0", "predecessors": ["t0"], "priority": 2.0, "deadline": 75.0}, {"time": 35.0, "task_id": "dynamic-1", "predecessors": ["dynamic-0"], "priority": 2.4, "deadline": 88.0}, {"time": 55.0, "task_id": "dynamic-2", "predecessors": ["t1"], "priority": 2.6, "deadline": 96.0}]}
+    "parameters": {"events": [{"time": 2.0, "task_id": "dynamic-0", "predecessors": ["t0"], "priority": 2.0, "deadline": 25.0}, {"time": 8.0, "task_id": "dynamic-1", "predecessors": ["dynamic-0"], "priority": 2.4, "deadline": 29.0}, {"time": 14.0, "task_id": "dynamic-2", "predecessors": ["t1"], "priority": 2.6, "deadline": 32.0}]}
   },
   "task_cancellation": {
     "enabled": true,
-    "parameters": {"events": [{"time": 68.0, "task_id": "dynamic-1"}, {"time": 82.0, "task_id": "dynamic-2"}]}
+    "parameters": {"events": [{"time": 17.0, "task_id": "dynamic-1"}, {"time": 24.0, "task_id": "dynamic-2"}]}
   },
   "task_priority_change": {
     "enabled": true,
-    "parameters": {"events": [{"time": 25.0, "task_id": "t0", "priority": 2.4}, {"time": 50.0, "task_id": "dynamic-0", "priority": 3.0}]}
+    "parameters": {"events": [{"time": 3.0, "task_id": "t0", "priority": 2.4}, {"time": 10.0, "task_id": "dynamic-0", "priority": 3.0}]}
   },
   "task_deadline_change": {
     "enabled": true,
-    "parameters": {"events": [{"time": 30.0, "task_id": "t0", "deadline": 70.0}, {"time": 58.0, "task_id": "dynamic-0", "deadline": 78.0}]}
+    "parameters": {"events": [{"time": 3.5, "task_id": "t0", "deadline": 21.0}, {"time": 11.0, "task_id": "dynamic-0", "deadline": 24.0}]}
   },
   "wind_field": {
     "enabled": true,

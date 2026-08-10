@@ -94,6 +94,14 @@ class DisturbanceEngine:
         self.uav.advance(physical_time)
         self.task.advance(physical_time)
         self.wind.advance(physical_time)
+        for event in current:
+            self.logger.record(
+                event,
+                observed_time=float(physical_time),
+                before_state={},
+                after_state=dict(event.ground_truth),
+                effect={"applied": True, "layer": event.source},
+            )
         return DisturbanceStep(
             physical_time=float(physical_time),
             current_events=current,
