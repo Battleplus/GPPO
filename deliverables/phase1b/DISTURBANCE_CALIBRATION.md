@@ -15,6 +15,22 @@ This report validates the configurable, replayable and auditable multi-source di
 
 All 12 episodes terminated, all actions accepted, and no NaN/Inf was serialized. Makespan, packet loss, delay and energy depletion show an ordered degradation from off through strong, while strong retains successful episodes rather than collapsing the environment.
 
+## Event coverage in the replayable sample tape
+
+| Event type | Count |
+|---|---:|
+| delay_profile | 1 |
+| energy_profile | 1 |
+| link_state | 4020 |
+| network_partition | 1 |
+| task_arrival | 1 |
+| task_cancellation | 1 |
+| task_deadline_change | 1 |
+| task_priority_change | 1 |
+| uav_failure | 1 |
+| uav_recovery | 1 |
+| wind_field | 1 |
+
 ## Reproducibility and data interface
 
 - Configuration, tape, event log and trajectory carry SHA-256 identifiers.

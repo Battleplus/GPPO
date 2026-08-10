@@ -20,6 +20,7 @@
     "trajectory_contains_genuine_partial_observation": true,
     "trajectory_segment_actions_are_mask_legal": true,
     "tape_nonempty_and_ordered": true,
+    "required_event_types_covered": true,
     "separate_instance_disturbance_training_seeds": true,
     "single_and_combined_frozen_configs_present": true,
     "all_required_artifacts_present": true
@@ -120,5 +121,18 @@
       "done_rate": 1.0
     }
   ],
+  "event_type_coverage": {
+    "delay_profile": 1,
+    "energy_profile": 1,
+    "link_state": 4020,
+    "network_partition": 1,
+    "task_arrival": 1,
+    "task_cancellation": 1,
+    "task_deadline_change": 1,
+    "task_priority_change": 1,
+    "uav_failure": 1,
+    "uav_recovery": 1,
+    "wind_field": 1
+  },
   "valid": true
 }

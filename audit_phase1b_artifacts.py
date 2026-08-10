@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import gzip
 import hashlib
 import json
@@ -41,6 +42,9 @@ def main() -> None:
     equivalence = json.loads(equivalence_path.read_text(encoding="utf-8"))
     trajectory = Phase1BTrajectoryRecorder.from_json(trajectory_path.read_text(encoding="utf-8"))
     tape = json.loads(tape_path.read_text(encoding="utf-8"))
+    event_type_coverage = dict(
+        sorted(Counter(event["event_type"] for event in tape["events"]).items())
+    )
     summaries = {item["severity"]: item for item in calibration["summary"]}
     decoded_records = [decode_arrays(record) for record in trajectory.records]
     order = ("off", "weak", "medium", "strong")
@@ -110,6 +114,11 @@ def main() -> None:
             <= (right["physical_time"], right["source_priority"], right["generation_index"], right["event_id"])
             for left, right in zip(tape["events"], tape["events"][1:])
         ),
+        "required_event_types_covered": {
+            "link_state", "delay_profile", "network_partition", "uav_failure",
+            "uav_recovery", "energy_profile", "task_arrival", "task_cancellation",
+            "task_priority_change", "task_deadline_change", "wind_field",
+        } <= event_type_coverage.keys(),
         "separate_instance_disturbance_training_seeds": all(
             {"instance_seed", "disturbance_seed", "training_seed"} <= cfg.to_dict().keys()
             for cfg in configs.values()
@@ -161,6 +170,7 @@ def main() -> None:
             category: cfg.sha256 for category, cfg in single_category_configs.items()
         },
         "calibration_summary": calibration["summary"],
+        "event_type_coverage": event_type_coverage,
         "valid": all(checks.values()),
     }
     audit_path = args.output / "DISTURBANCE_IMPLEMENTATION_AUDIT.json"
@@ -171,6 +181,9 @@ def main() -> None:
         f"{summaries[severity]['drop_rate']:.3%} | {summaries[severity]['mean_delay']:.3f} | "
         f"{summaries[severity]['min_energy']:.3f} | {summaries[severity]['completion_rate_mean']:.3f} |"
         for severity in order
+    )
+    coverage_rows = "\n".join(
+        f"| {event_type} | {count} |" for event_type, count in event_type_coverage.items()
     )
     report = f"""# Phase 1B Disturbance Calibration Report
 
@@ -185,6 +198,12 @@ This report validates the configurable, replayable and auditable multi-source di
 {rows}
 
 All 12 episodes terminated, all actions accepted, and no NaN/Inf was serialized. Makespan, packet loss, delay and energy depletion show an ordered degradation from off through strong, while strong retains successful episodes rather than collapsing the environment.
+
+## Event coverage in the replayable sample tape
+
+| Event type | Count |
+|---|---:|
+{coverage_rows}
 
 ## Reproducibility and data interface
 
