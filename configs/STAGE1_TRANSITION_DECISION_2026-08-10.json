@@ -1,0 +1,46 @@
+{
+  "version": "stage1-transition-decision-v1",
+  "date": "2026-08-10",
+  "baseline_mechanism": {
+    "status": "completed_with_documented_limitations",
+    "repeat_six_model_100_or_300_iteration_screen": false,
+    "seed1_300_artifact": "artifacts/phase1_seed1_300/raw/MECHANISM_ACCEPTANCE.json",
+    "seed1_300_artifact_sha256": "a703b92bebf4b7bb01d37ceb61ee13264df0d6b359323c8046423be285d408a0",
+    "artifact_audit": "artifacts/phase1_seed1_300/ARTIFACT_AUDIT.json",
+    "artifact_audit_sha256": "d70c36df950507a18af50785999715d103f96b9cd32c97aaa6c196e53c52bd7a",
+    "selected_engineering_variant": "Adaptive-score",
+    "selection_data": "validation_a_only",
+    "test_used_for_selection": false
+  },
+  "multi_source_disturbance_environment": {
+    "status": "incomplete",
+    "required_before_integrated_training": [
+      "gilbert_elliott_packet_loss",
+      "random_latency",
+      "network_partition",
+      "uav_failure_and_energy_decay",
+      "task_arrival_cancellation_priority_change",
+      "wind_travel_time_and_energy_perturbation",
+      "deterministic_event_and_reproducibility_tests",
+      "world_model_trajectory_schema"
+    ]
+  },
+  "formal_matrix": {
+    "required_for_final_paper_statistics": true,
+    "blocks_downstream_implementation": false,
+    "recommended_execution": "resume_from_preserved_checkpoints_after_algorithm_freeze_and_run_as_colab_shards",
+    "do_not_claim_before_completion": [
+      "five_seed_stability",
+      "four_scale_generalization",
+      "paper_numeric_reproduction",
+      "pcrl_superiority",
+      "predictive_trigger_superiority"
+    ]
+  },
+  "transition": {
+    "downstream_interface_and_environment_development_allowed": true,
+    "integrated_training_allowed_after_disturbance_smoke": true,
+    "formal_effect_claims_allowed": false
+  },
+  "human_readable_record": "docs/STAGE1_TRANSITION_ARCHIVE_2026-08-10.md"
+}
