@@ -17,6 +17,8 @@
     "trajectory_round_trip": true,
     "trajectory_has_future_1_to_5": true,
     "trajectory_has_seven_objectives": true,
+    "trajectory_contains_genuine_partial_observation": true,
+    "trajectory_segment_actions_are_mask_legal": true,
     "tape_nonempty_and_ordered": true,
     "separate_instance_disturbance_training_seeds": true,
     "single_and_combined_frozen_configs_present": true,
@@ -24,9 +26,9 @@
   },
   "artifacts": {
     "sample_trajectory.json.gz": {
-      "sha256": "a769c57994e3affbf5afe73d881ec51b5f51efcb38a795a3b517d78dcfaa8929",
-      "bytes": 5738906,
-      "uncompressed_bytes": 401810823
+      "sha256": "02dd57e63f3d5d998a9f93a6bda11b87d8440c01dbf0169e9c5215fad1893062",
+      "bytes": 649691,
+      "uncompressed_bytes": 45057562
     },
     "calibration.json": {
       "sha256": "3fa1f392673b9a3c06b129a19dabfcc1a1f4b58b2dac6dfe828dba4ed1277c88",
@@ -37,24 +39,24 @@
       "bytes": 197069
     },
     "sample_tape.json": {
-      "sha256": "6e6f404835752691428831a5bf78b48c16403122b33b5c163543fc0b011a7fbe",
-      "bytes": 2398231
+      "sha256": "5331a2482f5bf803aaa9c58dcb19e17222dd86bf1f874a3cdcc9c05adaabb526",
+      "bytes": 2408226
     },
     "event_timeline.png": {
-      "sha256": "98425902f1f1cf7f1c80d1b9d96d3376d3d26d46ccf7a659f6d263d55f5d205c",
-      "bytes": 48028
+      "sha256": "2e52df83605f35d76f97f40017f6468071ab3e56dcb3c261f531b790c0114dde",
+      "bytes": 47883
     },
     "link_state.png": {
-      "sha256": "f019dd449984910e0ef6a85ce365447d7df44ad0c39c44db85bd579d708dfbf0",
-      "bytes": 26687
+      "sha256": "2f29cb5de3ccd0c90c645466202818d5ac7d07435082a7f0112e268d5503c467",
+      "bytes": 29827
     },
     "uav_energy.png": {
-      "sha256": "f25bea3e1f2148b6aa39c309ebba2d9dafde686913176741541576d4ce8223ee",
-      "bytes": 67599
+      "sha256": "e8ba0ed5e13007cfd09cdb0b3982b512d5aa7d0b483fef8894d94c72213e1ad6",
+      "bytes": 62675
     },
     "task_gantt.png": {
-      "sha256": "913f5deb20fb69b666cddb8730f42cf8082448a47c04b03f1683558be64574ef",
-      "bytes": 55831
+      "sha256": "8f59b3b308d46a23ffca3969fc91e29f3daadd64ef7289e44394ca43d4ef5a7c",
+      "bytes": 24391
     }
   },
   "config_sha256": {

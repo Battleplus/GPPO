@@ -56,17 +56,28 @@ def safe_actions(env: Phase1BPaperFaithfulUAVEnv) -> np.ndarray:
     physical = env.true_observation()["action_mask"].astype(bool)
     legal = np.flatnonzero(belief & physical)
     non_noop = legal[legal != env.noop_action]
-    return non_noop if len(non_noop) else np.asarray([env.noop_action], dtype=np.int64)
+    if len(non_noop):
+        return non_noop
+    if env.noop_action in legal:
+        return np.asarray([env.noop_action], dtype=np.int64)
+    return np.asarray([], dtype=np.int64)
 
 
 def choose_safe_action(
-    env: Phase1BPaperFaithfulUAVEnv, policy: str, rng: np.random.Generator
+    env: Phase1BPaperFaithfulUAVEnv,
+    policy: str,
+    rng: np.random.Generator,
+    *,
+    oracle_reconcile: bool,
 ) -> int:
     # Calibration isolates physical severity from policy/cache quality.  Reconcile
     # the controller view without charging communication; ordinary trajectories
     # and learned policies must not use this oracle-only calibration operation.
-    env._synchronize_belief(count_communication=False, full=True)
+    if oracle_reconcile:
+        env._synchronize_belief(count_communication=False, full=True)
     legal = safe_actions(env)
+    if not len(legal):
+        raise RuntimeError("belief and physical legal-action sets do not intersect")
     if policy == "safe_random":
         return int(rng.choice(legal))
     candidates: list[tuple[float, int]] = []
@@ -96,6 +107,8 @@ def episode(
     max_decisions: int,
     *,
     record_trajectory: bool,
+    oracle_reconcile: bool = True,
+    stop_before_conflict: bool = False,
 ) -> tuple[dict[str, Any], dict[str, Any] | None, dict[str, Any]]:
     instance_seed = CALIBRATION_INSTANCE_BASE + index
     disturbance_seed = CALIBRATION_DISTURBANCE_BASE + index
@@ -124,8 +137,15 @@ def episode(
     previous_time = 0.0
     previous_completed = 0
     for decision in range(max_decisions):
-        action = choose_safe_action(env, policy, rng)
-        observation = env.observe()
+        try:
+            action = choose_safe_action(
+                env, policy, rng, oracle_reconcile=oracle_reconcile
+            )
+        except RuntimeError:
+            if stop_before_conflict:
+                break
+            raise
+        decision_observation = env.observe()
         true_state = env.true_observation()
         before_audit = env.disturbance_engine.communication.audit.to_dict()
         observation, reward, done, info = env.step(action, sync_mode="event")
@@ -143,10 +163,10 @@ def episode(
             recorder.record_decision(
                 decision_index=decision,
                 physical_time=env.current_time,
-                partial_graph_observation=observation,
+                partial_graph_observation=decision_observation,
                 true_graph_state=true_state,
-                belief_cache={"nodes": observation["nodes"]},
-                legal_action_mask=observation["action_mask"],
+                belief_cache={"nodes": decision_observation["nodes"]},
+                legal_action_mask=decision_observation["action_mask"],
                 selected_action=action,
                 communication_history=[audit],
                 messages_sent=[{"count": audit["messages_sent"] - before_audit["messages_sent"]}],
@@ -260,7 +280,10 @@ def main() -> None:
     for severity in ("off", "weak", "medium", "strong"):
         for policy in policies:
             for index in range(args.instances):
-                row, trajectory, traces = episode(severity, policy, index, args.max_decisions, record_trajectory=(severity == "strong" and policy == "safe_greedy" and index == 0))
+                row, trajectory, traces = episode(
+                    severity, policy, index, args.max_decisions,
+                    record_trajectory=False,
+                )
                 rows.append(row)
                 (args.output / "rows.partial.json").write_text(
                     json.dumps(rows, indent=2, ensure_ascii=False), encoding="utf-8"
@@ -271,11 +294,15 @@ def main() -> None:
                     f"invalid={row['invalid_actions']}",
                     flush=True,
                 )
-                if trajectory is not None:
-                    sample_trajectory, sample_traces = trajectory, traces
-                    cfg = replace(load_severity("strong"), instance_seed=CALIBRATION_INSTANCE_BASE, disturbance_seed=CALIBRATION_DISTURBANCE_BASE)
-                    env = Phase1BPaperFaithfulUAVEnv(PaperFaithfulConfig(scale=PAPER_SCALES[0], instance_seed=CALIBRATION_INSTANCE_BASE), cfg); env.reset(seed=CALIBRATION_INSTANCE_BASE)
-                    sample_tape = env.disturbance_engine.tape.to_dict()
+    _, sample_trajectory, sample_traces = episode(
+        "weak", "safe_greedy", 0, min(args.max_decisions, 40),
+        record_trajectory=True,
+        oracle_reconcile=False,
+        stop_before_conflict=True,
+    )
+    cfg = replace(load_severity("weak"), instance_seed=CALIBRATION_INSTANCE_BASE, disturbance_seed=CALIBRATION_DISTURBANCE_BASE)
+    env = Phase1BPaperFaithfulUAVEnv(PaperFaithfulConfig(scale=PAPER_SCALES[0], instance_seed=CALIBRATION_INSTANCE_BASE), cfg); env.reset(seed=CALIBRATION_INSTANCE_BASE)
+    sample_tape = env.disturbance_engine.tape.to_dict()
     summary = summarize(rows)
     payload = {
         "schema_version": "phase1b-calibration-v1",

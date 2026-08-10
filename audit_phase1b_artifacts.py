@@ -11,9 +11,15 @@ import sys
 from pathlib import Path
 from typing import Any
 
+import numpy as np
+
 sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 
-from uav_assignment.disturbances import DisturbanceConfig, Phase1BTrajectoryRecorder  # noqa: E402
+from uav_assignment.disturbances import (  # noqa: E402
+    DisturbanceConfig,
+    Phase1BTrajectoryRecorder,
+    decode_arrays,
+)
 
 
 def sha256(path: Path) -> str:
@@ -36,6 +42,7 @@ def main() -> None:
     trajectory = Phase1BTrajectoryRecorder.from_json(trajectory_path.read_text(encoding="utf-8"))
     tape = json.loads(tape_path.read_text(encoding="utf-8"))
     summaries = {item["severity"]: item for item in calibration["summary"]}
+    decoded_records = [decode_arrays(record) for record in trajectory.records]
     order = ("off", "weak", "medium", "strong")
 
     configs = {
@@ -86,6 +93,17 @@ def main() -> None:
                 "energy_component", "communication_component", "reallocation_component",
                 "stability_component",
             )) for record in trajectory.records
+        ),
+        "trajectory_contains_genuine_partial_observation": any(
+            not np.array_equal(
+                record["partial_graph_observation"]["nodes"],
+                record["true_graph_state"]["nodes"],
+            )
+            for record in decoded_records
+        ),
+        "trajectory_segment_actions_are_mask_legal": all(
+            bool(np.asarray(record["legal_action_mask"])[record["selected_action"]])
+            for record in decoded_records
         ),
         "tape_nonempty_and_ordered": bool(tape["events"]) and all(
             (left["physical_time"], left["source_priority"], left["generation_index"], left["event_id"])
