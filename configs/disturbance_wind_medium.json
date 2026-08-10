@@ -1,0 +1,11 @@
+{
+  "version": "phase1b-disturbance-config-v1",
+  "severity": "medium",
+  "instance_seed": 0,
+  "disturbance_seed": 0,
+  "training_seed": null,
+  "wind_field": {
+    "enabled": true,
+    "parameters": {"speed": 0.15, "direction_radians": 0.0}
+  }
+}

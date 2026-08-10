@@ -1,0 +1,19 @@
+{
+  "version": "phase1b-disturbance-config-v1",
+  "severity": "medium",
+  "instance_seed": 0,
+  "disturbance_seed": 0,
+  "training_seed": null,
+  "gilbert_elliott_packet_loss": {
+    "enabled": true,
+    "parameters": {"tick": 1.0, "p_gb": 0.06, "p_bg": 0.35, "loss_good": 0.01, "loss_bad": 0.70, "initial_state": "good"}
+  },
+  "message_delay": {
+    "enabled": true,
+    "parameters": {"minimum": 0.05, "maximum": 0.50, "ttl": 3.0}
+  },
+  "network_partition": {
+    "enabled": true,
+    "parameters": {"intervals": [{"start": 5.0, "end": 11.0, "groups": [["u0", "u1", "u2"], ["u3", "u4"]], "severity": 0.55}]}
+  }
+}

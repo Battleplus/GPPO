@@ -62,6 +62,10 @@ def safe_actions(env: Phase1BPaperFaithfulUAVEnv) -> np.ndarray:
 def choose_safe_action(
     env: Phase1BPaperFaithfulUAVEnv, policy: str, rng: np.random.Generator
 ) -> int:
+    # Calibration isolates physical severity from policy/cache quality.  Reconcile
+    # the controller view without charging communication; ordinary trajectories
+    # and learned policies must not use this oracle-only calibration operation.
+    env._synchronize_belief(count_communication=False, full=True)
     legal = safe_actions(env)
     if policy == "safe_random":
         return int(rng.choice(legal))
@@ -121,6 +125,7 @@ def episode(
     previous_completed = 0
     for decision in range(max_decisions):
         action = choose_safe_action(env, policy, rng)
+        observation = env.observe()
         true_state = env.true_observation()
         before_audit = env.disturbance_engine.communication.audit.to_dict()
         observation, reward, done, info = env.step(action, sync_mode="event")
@@ -226,9 +231,10 @@ def summarize(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
 def plot_artifacts(output: Path, rows: list[dict[str, Any]], traces: dict[str, Any], tape: dict[str, Any]) -> None:
     figures = output / "figures"; figures.mkdir(parents=True, exist_ok=True)
     events = tape["events"]
+    timeline_events = [event for event in events if event["event_type"] != "link_state"]
     fig, ax = plt.subplots(figsize=(10, 5))
-    kinds = sorted({event["event_type"] for event in events}); y = {kind: i for i, kind in enumerate(kinds)}
-    ax.scatter([e["physical_time"] for e in events], [y[e["event_type"]] for e in events], s=8)
+    kinds = sorted({event["event_type"] for event in timeline_events}); y = {kind: i for i, kind in enumerate(kinds)}
+    ax.scatter([e["physical_time"] for e in timeline_events], [y[e["event_type"]] for e in timeline_events], s=28)
     ax.set_yticks(list(y.values()), list(y)); ax.set_xlabel("Physical time"); ax.set_title("Disturbance event timeline")
     fig.tight_layout(); fig.savefig(figures / "event_timeline.png", dpi=160); plt.close(fig)
 
@@ -241,8 +247,9 @@ def plot_artifacts(output: Path, rows: list[dict[str, Any]], traces: dict[str, A
         ax.plot([x["time"] for x in traces["energy"]], [x[uav] for x in traces["energy"]], label=uav)
     ax.set(xlabel="Physical time", ylabel="Energy", title="UAV energy"); ax.legend(); fig.tight_layout(); fig.savefig(figures / "uav_energy.png", dpi=160); plt.close(fig)
 
-    fig, ax = plt.subplots(figsize=(9, 4)); task_events = traces["tasks"]
+    fig, ax = plt.subplots(figsize=(12, 4)); task_events = traces["tasks"]
     for i, event in enumerate(task_events): ax.barh(i, 0.4, left=event["time"]); ax.text(event["time"], i, f"{event['task']} {event['event']}", va="center")
+    if task_events: ax.set_xlim(min(event["time"] for event in task_events) - 0.5, max(event["time"] for event in task_events) + 8.0)
     ax.set(xlabel="Physical time", title="Dynamic task event Gantt"); fig.tight_layout(); fig.savefig(figures / "task_gantt.png", dpi=160); plt.close(fig)
 
 
@@ -275,7 +282,10 @@ def main() -> None:
         "seed_bank": "calibration-only; disjoint from train/validation/test100",
         "instance_seed_base": CALIBRATION_INSTANCE_BASE,
         "disturbance_seed_base": CALIBRATION_DISTURBANCE_BASE,
-        "policies": "safe calibration controls; not algorithm benchmarks",
+        "policies": (
+            "oracle-reconciled safe calibration controls; communication is still "
+            "audited, but policy quality is not benchmarked"
+        ),
         "rows": rows,
         "summary": summary,
     }

@@ -1,0 +1,15 @@
+{
+  "version": "phase1b-disturbance-config-v1",
+  "severity": "medium",
+  "instance_seed": 0,
+  "disturbance_seed": 0,
+  "training_seed": null,
+  "uav_failure": {
+    "enabled": true,
+    "parameters": {"events": [{"time": 7.0, "uav_id": "u1", "permanent": false, "duration": 5.0}, {"time": 16.0, "uav_id": "u3", "permanent": true}]}
+  },
+  "energy_depletion": {
+    "enabled": true,
+    "parameters": {"travel_rate": 0.009, "execution_rate": 0.014, "standby_rate": 0.0006, "communication_rate": 0.000003, "low_threshold": 0.25, "minimum_speed_factor": 0.55, "minimum_capability_factor": 0.65}
+  }
+}

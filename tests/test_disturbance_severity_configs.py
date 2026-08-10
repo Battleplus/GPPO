@@ -3,7 +3,12 @@ from __future__ import annotations
 import math
 from pathlib import Path
 
-from uav_assignment.disturbances import DisturbanceConfig, DisturbanceEngine, TaskRuntimeState
+from uav_assignment.disturbances import (
+    SOURCE_NAMES,
+    DisturbanceConfig,
+    DisturbanceEngine,
+    TaskRuntimeState,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -64,3 +69,28 @@ def test_each_frozen_config_generates_a_deterministic_finite_combined_tape() -> 
         assert len(left.tape.events) > 0
         assert all(math.isfinite(event.physical_time) for event in left.tape.events)
         assert all(event.physical_time <= 100.0 for event in left.tape.events)
+
+
+def test_medium_single_category_configs_match_combined_physics() -> None:
+    combined = configs()[1]
+    expected = {
+        "communication": {
+            "gilbert_elliott_packet_loss", "message_delay", "network_partition"
+        },
+        "uav": {"uav_failure", "energy_depletion"},
+        "task": {
+            "task_arrival", "task_cancellation", "task_priority_change",
+            "task_deadline_change",
+        },
+        "wind": {"wind_field"},
+    }
+    for category, enabled in expected.items():
+        config = DisturbanceConfig.from_json(
+            (ROOT / f"configs/disturbance_{category}_medium.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        actual = {name for name in SOURCE_NAMES if getattr(config, name).enabled}
+        assert actual == enabled
+        for name in enabled:
+            assert getattr(config, name).parameters == getattr(combined, name).parameters

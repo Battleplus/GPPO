@@ -1,0 +1,122 @@
+{
+  "schema_version": "phase1b-artifact-audit-v1",
+  "scope": "multi-source disturbance environment; not PCRL/world-model efficacy",
+  "calibration_controller": "oracle-reconciled physical controller; not an algorithm benchmark",
+  "checks": {
+    "calibration_seed_bank_not_test100": true,
+    "all_off_equivalent_on_frozen_test100": true,
+    "three_independent_calibration_seeds": true,
+    "all_episodes_terminate": true,
+    "zero_invalid_actions": true,
+    "finite_complete_results": true,
+    "makespan_degrades_monotonically": true,
+    "drop_rate_degrades_monotonically": true,
+    "delay_degrades_monotonically": true,
+    "energy_degrades_monotonically": true,
+    "strong_not_collapsed": true,
+    "trajectory_round_trip": true,
+    "trajectory_has_future_1_to_5": true,
+    "trajectory_has_seven_objectives": true,
+    "tape_nonempty_and_ordered": true,
+    "separate_instance_disturbance_training_seeds": true,
+    "single_and_combined_frozen_configs_present": true,
+    "all_required_artifacts_present": true
+  },
+  "artifacts": {
+    "sample_trajectory.json.gz": {
+      "sha256": "a769c57994e3affbf5afe73d881ec51b5f51efcb38a795a3b517d78dcfaa8929",
+      "bytes": 5738906,
+      "uncompressed_bytes": 401810823
+    },
+    "calibration.json": {
+      "sha256": "3fa1f392673b9a3c06b129a19dabfcc1a1f4b58b2dac6dfe828dba4ed1277c88",
+      "bytes": 13913
+    },
+    "ALL_OFF_EQUIVALENCE_TEST100.json": {
+      "sha256": "1027b493ae119db1318913f50b10d882c8e93c7c18afd02947e2ac9666671455",
+      "bytes": 197069
+    },
+    "sample_tape.json": {
+      "sha256": "6e6f404835752691428831a5bf78b48c16403122b33b5c163543fc0b011a7fbe",
+      "bytes": 2398231
+    },
+    "event_timeline.png": {
+      "sha256": "98425902f1f1cf7f1c80d1b9d96d3376d3d26d46ccf7a659f6d263d55f5d205c",
+      "bytes": 48028
+    },
+    "link_state.png": {
+      "sha256": "f019dd449984910e0ef6a85ce365447d7df44ad0c39c44db85bd579d708dfbf0",
+      "bytes": 26687
+    },
+    "uav_energy.png": {
+      "sha256": "f25bea3e1f2148b6aa39c309ebba2d9dafde686913176741541576d4ce8223ee",
+      "bytes": 67599
+    },
+    "task_gantt.png": {
+      "sha256": "913f5deb20fb69b666cddb8730f42cf8082448a47c04b03f1683558be64574ef",
+      "bytes": 55831
+    }
+  },
+  "config_sha256": {
+    "weak": "e89abc59eac6c9da4b3967e7d8faed41ec4f82c168516714d2d8da6f2417636c",
+    "medium": "f60a43af8e89c32365e49bed80ee52e8f3860d1ee35dff8d6dd93d9c1cf730d1",
+    "strong": "1e162d577f52c7695087bbcaf5e95a9162e0fb955989fcfb57a50f3b62c82c95"
+  },
+  "single_category_config_sha256": {
+    "communication": "c05ef9bc40d1dba9ab6bafe9de868f18b6dc7c0020ce335e9a7b6fb1153b6566",
+    "uav": "9e04844da6d6cf601dd93eca721f9b1d1ebca049c5d3ed87a451daa82eb48197",
+    "task": "f9a078d882377021ac02f4b0435c512bd5bac21a8c57da7202ec4b4f234ee91e",
+    "wind": "a5d5e27ec3c3afc4e293ee2b513f9c55eb3827d9da6c9755cd38471974906f28"
+  },
+  "calibration_summary": [
+    {
+      "severity": "off",
+      "policy": "safe_greedy",
+      "episodes": 3,
+      "completion_rate_mean": 1.0,
+      "makespan_mean": 16.934804407642602,
+      "drop_rate": 0.0,
+      "mean_delay": 0.0,
+      "min_energy": 1.0,
+      "invalid_actions": 0,
+      "done_rate": 1.0
+    },
+    {
+      "severity": "weak",
+      "policy": "safe_greedy",
+      "episodes": 3,
+      "completion_rate_mean": 1.0,
+      "makespan_mean": 18.673366744474773,
+      "drop_rate": 0.00980392156862745,
+      "mean_delay": 0.12426798255940825,
+      "min_energy": 0.913817130147322,
+      "invalid_actions": 0,
+      "done_rate": 1.0
+    },
+    {
+      "severity": "medium",
+      "policy": "safe_greedy",
+      "episodes": 3,
+      "completion_rate_mean": 1.0,
+      "makespan_mean": 19.97133355138782,
+      "drop_rate": 0.10240963855421686,
+      "mean_delay": 0.38505304835415144,
+      "min_energy": 0.7569414979627755,
+      "invalid_actions": 0,
+      "done_rate": 1.0
+    },
+    {
+      "severity": "strong",
+      "policy": "safe_greedy",
+      "episodes": 3,
+      "completion_rate_mean": 1.0,
+      "makespan_mean": 20.90305504020046,
+      "drop_rate": 0.2884012539184953,
+      "mean_delay": 0.8368333847516879,
+      "min_energy": 0.5637666810829013,
+      "invalid_actions": 0,
+      "done_rate": 1.0
+    }
+  ],
+  "valid": true
+}
