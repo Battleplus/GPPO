@@ -28,8 +28,8 @@
   },
   "artifacts": {
     "sample_trajectory.json.gz": {
-      "sha256": "b09be50767b613e4b902632a7e3a4c66c7484333dff83e44dfde676557d6ea1e",
-      "bytes": 650063,
+      "sha256": "206de1c74ee5f7813a3a4cdcfe7287fa9cd3807d81ad23c1bcf0754342c77977",
+      "bytes": 668583,
       "uncompressed_bytes": 45077040
     },
     "calibration.json": {

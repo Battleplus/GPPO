@@ -8,3 +8,4 @@ build/
 *.egg-info/
 outputs/
 deliverables/phase1b/sample_trajectory.json
+*.pptx.inspect.ndjson
